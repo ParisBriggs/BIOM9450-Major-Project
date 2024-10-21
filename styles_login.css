@@ -1,2 +1,104 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
 
+.login-container {
+    width: 350px;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.login-container input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.login-container button:hover {
+    background-color: #012449;
+}
+
+.login-container .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+    font-size: 14px;
+}
+
+.login-container .remember-forgot .remember {
+    display: flex;
+    align-items: center;
+}
+
+.login-container .remember-forgot a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 14px;
+}
+
+.login-container .google-signin {
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.login-container .google-signin img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.login-container .signup {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.login-container .signup a {
+    text-decoration: none;
+    color: #007bff;
+}
 
