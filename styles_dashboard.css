@@ -1,0 +1,80 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+}
+
+/* Logout button styling */
+.logout {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.logout a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.logout img {
+    width: 27px; /* Adjust the width */
+    height: 27px; /* Adjust the height */
+    margin-right: 5px;}
+
+/* Container for the two-column layout */
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Left column styling */
+.left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.left-column .logo {
+    max-width: 700px;
+}
+
+/* Right column styling */
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.right-column button {
+    width: 85%;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 20px;
+    background-color: #b0c4de;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.right-column button:hover {
+    background-color: #8ca6bf;
+}

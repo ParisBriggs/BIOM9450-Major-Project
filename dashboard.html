@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrimed Health - Dashboard</title>
+    <link rel="stylesheet" href="styles_dashboard.css">
+</head>
+<body>
+    <!-- Logout button -->
+    <div id="logout-section" class="logout">
+        <a href="/logout" title="Logout"><img src="images/logout_symbol.webp" alt="Logout Icon"> LOGOUT</a>
+    </div>
+
+    <!-- Main container for two-column layout (logo and buttons)-->
+    <div id="main-container" class="container">
+        <!-- Left column with logo -->
+        <div id="logo-section" class="left-column">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+        </div>
+        
+        <!-- Right column with buttons -->
+        <div id="navigation-section" class="right-column">
+            <button id="medication-rounds-button" onclick="location.href='/medication-rounds'">Medication Rounds</button>
+            <button id="diet-regime-rounds-button" onclick="location.href='/diet-regime-rounds'">Diet Regime Rounds</button>
+            <button id="view-patient-records-button" onclick="location.href='/view-patient-records'">View Patient Records</button>
+            <button id="generate-reports-button" onclick="location.href='/generate-reports'">Generate Reports</button>
+            <button id="add-edit-patient-info-button" onclick="location.href='/add-edit-patient-info'">Add / Edit Patient Information</button>
+            <button id="dispensing-history-button" onclick="location.href='/dispensing-history'">View Dispensing History</button>
+        </div>
+    </div>
+</body>
+</html>
