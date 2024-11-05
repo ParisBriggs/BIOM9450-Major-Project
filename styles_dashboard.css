@@ -1,11 +1,10 @@
 /* General body styling */
 body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: Arial, sans-serif;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     background-color: #f8f8f8;
 }
 
@@ -29,14 +28,59 @@ body {
     height: 27px; /* Adjust the height */
     margin-right: 5px;}
 
+/* Header styling */
+header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 0;
+    background-color: #f8f8f8;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/* Centered Navbar styling */
+.navbar {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    border: 2px solid #b0c4de; /* Blue outline border */
+    border-radius: 15px;
+    padding: 5px 15px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    margin-bottom: 20px; /* Add spacing below navbar */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+.navbar a:hover {
+    background-color: #e6f0ff; /* Light blue background on hover */
+}
+
+.navbar a.active {
+    background-color: #e6f0ff;
+    border: 1px solid #b0c4de;
+    border-radius: 10px;
+}
+
 /* Container for the two-column layout */
 .container {
     display: flex;
+    flex-direction: row; /* Keep the two-column layout */
     width: 80%;
     max-width: 1200px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center the container */
 }
 
 /* Left column styling */

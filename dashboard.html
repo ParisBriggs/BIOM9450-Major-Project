@@ -12,6 +12,18 @@
         <a href="/logout" title="Logout"><img src="images/logout_symbol.webp" alt="Logout Icon"> LOGOUT</a>
     </div>
 
+    <!-- Navigation bar -->
+    <header>
+        <nav class="navbar">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="medication_rounds.html">Medication Rounds</a>
+            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="patient_records.html">Patient Records</a>
+            <a href="/generate-reports">Generate Reports</a>
+            <a href="edit_patient_info.html">Patient Information</a>
+        </nav>
+    </header>
+
     <!-- Main container for two-column layout (logo and buttons)-->
     <div id="main-container" class="container">
         <!-- Left column with logo -->
@@ -21,7 +33,7 @@
         
         <!-- Right column with buttons -->
         <div id="navigation-section" class="right-column">
-            <button id="medication-rounds-button" onclick="location.href='/medication-rounds'">Medication Rounds</button>
+            <button id="medication-rounds-button" onclick="location.href='medication_rounds.html'">Medication Rounds</button>
             <button id="diet-regime-rounds-button" onclick="location.href='/diet-regime-rounds'">Diet Regime Rounds</button>
             <button id="view-patient-records-button" onclick="location.href='/view-patient-records'">View Patient Records</button>
             <button id="generate-reports-button" onclick="location.href='/generate-reports'">Generate Reports</button>
