@@ -46,52 +46,82 @@ header {
     border-radius: 10px;
 }
 
-/* General layout */
-.container {
+/* Outer container for shadow box effect */
+.outer-container {
     display: flex;
-    height: 100vh;
+    width: 90%;
+    max-width: 1400px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Shadow effect */
+    padding: 20px;
+    margin: 20px auto;
+    gap: 20px; /* Space between sidebar and profile section */
+    margin-bottom: 100px;
 }
 
-/* Sidebar styling */
+/* Sidebar container */
 .sidebar {
-    width: 300px;
+    width: 250px;
     background-color: #f1f1f1;
     padding: 20px;
+    border-radius: 10px;
     overflow-y: auto;
 }
 
-.sidebar .search {
+/* Search input styling */
+.search {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
 }
 
 .search-input {
-    width: 100%;
+    width: 70%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
+/* Resident list styling */
 .resident-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+/* Resident item styling */
 .resident-item {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px;
     border-radius: 8px;
-    cursor: pointer;
-}
-
-.resident-item.active {
     background-color: #e6f0ff;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.resident-item:hover {
+    background-color: #d4e4ff;
+}
+
+/* Active resident item */
+.resident-item.active {
+    background-color: #d6d7da;
+    font-weight: bold;
+}
+
+/* Resident photo */
+.resident-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover; /* Ensures the image scales properly */
+}
+
+/* Room number and resident name styling */
 .room-number {
     font-weight: bold;
     color: #007bff;
@@ -99,16 +129,19 @@ header {
 
 .resident-name {
     font-size: 16px;
+    color: #333;
 }
 
-/* Main profile section styling */
+/* Profile section styling */
 .profile-section {
     flex-grow: 1;
+    background-color: #ffffff;
     padding: 20px;
+    border-radius: 10px;
     overflow-y: auto;
-    background-color: #fff;
 }
 
+/* Profile header and image styling */
 .profile-header {
     display: flex;
     gap: 20px;
@@ -116,40 +149,26 @@ header {
 }
 
 .profile-photo {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
 }
 
-.profile-info h2 {
-    margin: 0;
-}
-
-/* Health indicators styling */
+/* Health indicators with padding */
 .health-indicators {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.indicator {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: #fff;
-}
-
-.benzo { background-color: red; }
-.opioid { background-color: orange; }
-.high-risk { background-color: yellow; }
-
-/* Medication sections styling */
+/* Medication section headers and spacing */
 .medication-section {
     margin-bottom: 20px;
-    border-radius: 8px;
     padding: 15px;
+    border-radius: 8px;
 }
 
+/* Color for each section */
 .packed { background-color: #cce5ff; }
 .s8 { background-color: #f8d7da; }
 .non-packed { background-color: #e2e3e5; }
@@ -157,7 +176,7 @@ header {
 .medication-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid #ddd;
 }
 
