@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Rounds</title>
+    <link rel="stylesheet" href="styles_patient_records.css">
+</head>
+<body>
+    <!-- Logo and Centered Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="medication_rounds.html">Medication Rounds</a>
+            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="patient_records.html" class="active">Patient Records</a>
+            <a href="/generate-reports">Generate Reports</a>
+            <a href="edit_patient_info.html">Patient Information</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <!-- Sidebar with Resident List -->
+        <aside class="sidebar">
+            <div class="search">
+                <input type="text" placeholder="Search Room" class="search-input">
+                <input type="text" placeholder="Search Resident" class="search-input">
+            </div>
+            <div class="resident-list">
+                <div class="resident-item active">
+                    <img src="images/resident1.jpg" alt="Resident Photo" class="resident-photo">
+                    <span class="room-number">WB.01</span>
+                    <span class="resident-name">Justine Richard Brown</span>
+                </div>
+                <!-- Add more resident items as needed -->
+            </div>
+        </aside>
+    
+        <!-- Main Profile Section -->
+        <main class="profile-section">
+            <div class="profile-header">
+                <img src="images/profile_image_1.jpg" alt="Profile Photo" class="profile-photo">
+                <div class="profile-info">
+                    <h2>Richard Smith</h2>
+                    <p>Date of Birth: 07/01/1923</p>
+                    <p>Age: 89</p>
+                    <p>Sex: Male</p>
+                    <!-- More profile info fields as needed -->
+                </div>
+            </div>
+    
+            <!-- Health Indicators -->
+            <div class="health-indicators">
+                <span class="indicator benzo">Benzo</span>
+                <span class="indicator opioid">Opioid</span>
+                <span class="indicator high-risk">High Risk</span>
+                <!-- Add more indicators as needed -->
+            </div>
+    
+            <!-- Medication Sections -->
+            <section class="medication-section packed">
+                <h3>Packed Medications</h3>
+                <div class="medication-item">
+                    <span class="medication-name">Erythromycin 250mg Cap</span>
+                    <span class="medication-dose">500mg</span>
+                    <span class="medication-status">
+                        <input type="checkbox" checked>
+                    </span>
+                </div>
+                <!-- More medication items as needed -->
+            </section>
+    
+            <section class="medication-section s8">
+                <h3>S8/S4D Medications</h3>
+                <div class="medication-item">
+                    <span class="medication-name">Alprazolam 1mg Tab</span>
+                    <span class="medication-dose">1mg</span>
+                    <span class="medication-status">
+                        <button>Select</button>
+                    </span>
+                </div>
+                <!-- More medication items as needed -->
+            </section>
+    
+            <section class="medication-section non-packed">
+                <h3>Non-Packed Medications</h3>
+                <div class="medication-item">
+                    <span class="medication-name">Movicol 13g Sachet</span>
+                    <span class="medication-dose">1 Sachet</span>
+                    <span class="medication-status">
+                        <input type="checkbox">
+                    </span>
+                </div>
+                <!-- More medication items as needed -->
+            </section>
+        </main>
+    </div>    
+
+</body>
+</html>
