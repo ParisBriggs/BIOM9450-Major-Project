@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information - Nutrimed Health</title>
+    <link rel="stylesheet" href="styles/styles_edit_patient_info.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <nav class="navbar">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="medication_rounds.html">Medication Rounds</a>
+                <a href="diet_rounds.html">Diet Regime Rounds</a>
+                <a href="patient_records.html">Patient Records</a>
+                <a href="generate-reports">Generate Reports</a>
+                <a href="edit_patient_info.html" class="active">Patient Information</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="outer-container">
+        <form method="POST" action="../connections/process_patient.php" enctype="multipart/form-data" class="form-grid">
+            <!-- Patient Details Section -->
+            <div class="form-section">
+                <h2>Patient Details</h2>
+                
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+        
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}">
+                </div>
+        
+                <div class="form-group">
+                    <label>Sex:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="sex" value="male" required> Male
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="sex" value="female" required> Female
+                        </label>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="room">Room:</label>
+                    <select id="room" name="room" required>
+                        <option value="101">WB.101</option>
+                        <option value="102">WB.102</option>
+                        <option value="103">WB.103</option>
+                        <option value="104">WB.104</option>
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <label for="photo">Photo:</label>
+                    <div class="file-input">
+                        <label class="choose-file" for="photo">
+                            Choose File
+                        </label>
+                        <span class="file-name">No file chosen</span>
+                        <input type="file" id="photo" name="photo" accept="image/*" onchange="updateFileName(this)">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" name="notes" rows="4"></textarea>
+                </div>
+            </div>
+        
+            <!-- Emergency Contact Details Section -->
+            <div class="form-section">
+                <h2>Emergency Contact Details</h2>
+                
+                <div class="form-group">
+                    <label for="em_firstname">First Name:</label>
+                    <input type="text" id="em_firstname" name="em_firstname" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="em_lastname">Last Name:</label>
+                    <input type="text" id="em_lastname" name="em_lastname" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="em_email">Email:</label>
+                    <input type="email" id="em_email" name="em_email">
+                </div>
+        
+                <div class="form-group">
+                    <label for="em_phone">Phone:</label>
+                    <input type="tel" id="em_phone" name="em_phone" required maxlength="10" pattern="[0-9]{10}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="relationship">Relationship:</label>
+                    <input type="text" id="relationship" name="relationship" required>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="save-button">Save Patient Details</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    function updateFileName(input) {
+        const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
+        input.parentElement.querySelector('.file-name').textContent = fileName;
+    }
+    </script>

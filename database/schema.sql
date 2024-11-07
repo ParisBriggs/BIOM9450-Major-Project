@@ -21,7 +21,7 @@ CREATE TABLE Patients (
     firstName   VARCHAR(255) NOT NULL,
     lastName    VARCHAR(255) NOT NULL,
     sex         ENUM('male', 'female'),
-    photo       MEDIUMBLOB,
+    photo       VARCHAR(255), -- path to photo for frontend to use
     email       VARCHAR(255),
     phone       VARCHAR(10),
     notes       TEXT,
@@ -65,10 +65,10 @@ CREATE TABLE DietRegimes (
 DROP TABLE IF EXISTS MedicationOrder;
 CREATE TABLE MedicationOrder (
     id          INTEGER AUTO_INCREMENT,
-    patient    INTEGER,
-    medication INTEGER,
+    patient     INTEGER,
+    medication  INTEGER,
     dateOrdered DATE,
-    dateDue     DATE,
+    frequency   ENUM('1', '2', '3'),
     dosage      DECIMAL(10,2),
     PRIMARY KEY (id),
     FOREIGN KEY (patient) REFERENCES Patients(id),
@@ -77,11 +77,12 @@ CREATE TABLE MedicationOrder (
 
 DROP TABLE IF EXISTS MedicationRound;
 CREATE TABLE MedicationRound (
-    id           INTEGER AUTO_INCREMENT,
-    orderId        INTEGER,
-    practitioner INTEGER,
-    status       ENUM('given', 'refused', 'fasting', 'no stock', 'ceased'),
-    notes       TEXT,
+    id              INTEGER AUTO_INCREMENT,
+    orderId         INTEGER,
+    practitioner    INTEGER,
+    roundTime       ENUM('morning', 'afternoon', 'evening'),
+    status          ENUM('given', 'refused', 'fasting', 'no stock', 'ceased'),
+    notes           TEXT,
     PRIMARY KEY (id),
     FOREIGN KEY (orderId) REFERENCES MedicationOrder(id),
     FOREIGN KEY (practitioner) REFERENCES Practitioners(id)
@@ -91,10 +92,10 @@ CREATE TABLE MedicationRound (
 DROP TABLE IF EXISTS DietOrder;
 CREATE TABLE DietOrder (
     id          INTEGER AUTO_INCREMENT,
-    patient    INTEGER,
-    dietRegime INTEGER,
+    patient     INTEGER,
+    dietRegime  INTEGER,
     dateOrdered DATE,
-    dateDue     DATE,
+    frequency   ENUM('1', '2', '3'),
     PRIMARY KEY (id),
     FOREIGN KEY (patient) REFERENCES Patients(id),
     FOREIGN KEY (dietRegime) REFERENCES DietRegimes(id)
@@ -102,11 +103,12 @@ CREATE TABLE DietOrder (
 
 DROP TABLE IF EXISTS DietRound;
 CREATE TABLE DietRound (
-    id           INTEGER AUTO_INCREMENT,
-    orderId      INTEGER,
-    practitioner INTEGER,
-    status       ENUM('given', 'refused', 'fasting', 'no stock', 'ceased'),
-    notes       TEXT,
+    id              INTEGER AUTO_INCREMENT,
+    orderId         INTEGER,
+    practitioner    INTEGER,
+    roundTime       ENUM('morning', 'afternoon', 'evening'),
+    status          ENUM('given', 'refused', 'fasting', 'no stock', 'ceased'),
+    notes           TEXT,
     PRIMARY KEY (id),
     FOREIGN KEY (orderId) REFERENCES DietOrder(id),
     FOREIGN KEY (practitioner) REFERENCES Practitioners(id)
