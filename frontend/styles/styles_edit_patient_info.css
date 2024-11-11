@@ -6,12 +6,60 @@ body {
     padding: 0;
 }
 
-/* Header and nav container */
+/* Header Styling */
 header {
     display: flex;
-    justify-content: center;
-    padding: 30px 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
     background-color: #f8f8f8;
+}
+
+.header-left .logo {
+    width: 200px; /* Adjust width as needed */
+    height: auto; /* Keeps aspect ratio */
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 1%;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+/* Boxed Styling for Ward */
+.ward {
+    background-color: #cce5ff; /* Light blue background */
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+/* Boxed Styling for Profile */
+.profile-name {
+    background-color: #e2e3e5; /* Light gray background */
+    padding: 8px 12px;
+    color: #333;
+    text-align: left;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
 }
 
 .nav-container {
