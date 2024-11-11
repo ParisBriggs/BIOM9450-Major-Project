@@ -1,9 +1,14 @@
-/* Basic styling */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
 }
 
 /* Header Styling */
@@ -89,60 +94,81 @@ header {
     border-radius: 10px;
 }
 
-/* Selection Bar */
-.selection-bar {
+
+/* Search and Action Buttons Container */
+.search-container {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Align labels and dropdowns to the left */
-    gap: 10px; /* Add space between items */
-    margin: 20px;
-    margin-left: 165px;
-}
-
-.selection-bar label {
-    font-weight: bold;
-}
-
-.selection-bar select {
-    padding: 5px;
-    font-size: 1em;
-}
-
-/* Medication Table */
-.medication-table {
-    width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
     background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.add-button,
+.edit-button,
+.delete-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.edit-button {
+    background-color: #FFA500; /* Orange */
+}
+
+.delete-button {
+    background-color: #FF6347; /* Red */
+}
+
+/* Orders Table Section */
+.orders-section {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.medication-table th, .medication-table td {
+.orders-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 12px;
     border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+    text-align: left;
+    font-size: 14px;
 }
 
-.patient-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-/* Save Button */
-#save-button {
-    display: block;
-    width: 100px;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-#save-button:hover {
-    background-color: #45a049;
+.orders-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
 }
