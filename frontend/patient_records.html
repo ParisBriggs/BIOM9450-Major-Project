@@ -10,6 +10,9 @@
 <body>
     <!-- Logo and Centered Navigation Bar -->
     <header>
+        <div class="header-left">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+        </div>
         <nav class="navbar">
             <a href="dashboard.html">Dashboard</a>
             <a href="medication_rounds.html">Medication Rounds</a>
@@ -18,6 +21,12 @@
             <a href="/generate-reports">Generate Reports</a>
             <a href="edit_patient_info.html">Patient Information</a>
         </nav>
+        <div class="header-right">
+            <div class = "ward-profile"></div>
+                <span class="ward-info">Ward A</span>
+                <span class="profile-name">Rachel Sunway<br><small>Nurse</small></span>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content Section -->
@@ -59,54 +68,63 @@
                 <img src="images/profile_image_1.jpg" alt="Profile Photo" class="profile-photo">
                 <div class="profile-info">
                     <h2>Richard Smith</h2>
-                    <p>Date of Birth: 07/01/1923</p>
-                    <p>Age: 89</p>
+                    <p>Patient ID: 657891</p>
+                    <p>Date of Birth: 07/01/1944</p>
+                    <p>Room Number: WA.01</p>
                     <p>Sex: Male</p>
+                    <p>Blood Type: A</p>
+                    <p>Medicare Number: 4783 85527 314</p>
+                    <p>Primary GP: Dr Joseph Green (PH: 0413892472)</p>
+                    <p>Emergency Contact: Bethany Smith (PH: 0413892472)</p>
+                </div>
+                <div class="profile-buttons">
+                    <button>Edit Patient Profile</button>
+                    <button>Add New Patient</button>
                 </div>
             </div>
-    
-            <!-- Health Indicators -->
-            <div class="health-indicators">
-                <span class="indicator benzo">Benzo</span>
-                <span class="indicator opioid">Opioid</span>
-                <span class="indicator high-risk">High Risk</span>
-            </div>
+
+            <!-- Notes Section -->
+            <section class="notes-section">
+                <h3>Notes</h3>
+                <p>High fall risk</p>
+                <p>Type II diabetic</p>
+            </section>
     
             <!-- Medication Sections -->
-            <section class="medication-section packed">
-                <h3>Packed Medications</h3>
-                <div class="medication-item">
-                    <span class="medication-name">Erythromycin 250mg Cap</span>
-                    <span class="medication-dose">500mg</span>
-                    <span class="medication-status">
-                        <input type="checkbox" checked>
-                    </span>
-                </div>
+            <!-- Medication Section -->
+            <section class="medication-section">
+                <h3>Medication</h3>
+                <table>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Admin Route</th>
+                        <th>Date Prescribed</th>
+                        <th>Prescribed By</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Panadol lol</td>
+                        <td>50mg</td>
+                        <td>1x / day</td>
+                        <td>Oral</td>
+                        <td>3 Jan 2021</td>
+                        <td>Dr Phan Ho</td>
+                        <td><button>Prescribe New</button></td>
+                    </tr>
+                    <!-- Additional medications -->
+                </table>
             </section>
-    
-            <section class="medication-section s8">
-                <h3>S8/S4D Medications</h3>
-                <div class="medication-item">
-                    <span class="medication-name">Alprazolam 1mg Tab</span>
-                    <span class="medication-dose">1mg</span>
-                    <span class="medication-status">
-                        <button>Select</button>
-                    </span>
-                </div>
-            </section>
-    
-            <section class="medication-section non-packed">
-                <h3>Non-Packed Medications</h3>
-                <div class="medication-item">
-                    <span class="medication-name">Movicol 13g Sachet</span>
-                    <span class="medication-dose">1 Sachet</span>
-                    <span class="medication-status">
-                        <input type="checkbox">
-                    </span>
-                </div>
+
+            <!-- Diet Section -->
+            <section class="diet-section">
+                <h3>Diet</h3>
+                <p>Food: Low sodium, High fat</p>
+                <p>Exercise: 60min walk daily</p>
+                <p>Skincare: Moisturizer, Retinol</p>
             </section>
         </main>
     </div>
-
 </body>
 </html>
