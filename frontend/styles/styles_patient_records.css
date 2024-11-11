@@ -177,39 +177,80 @@ header {
     color: #333;
 }
 
-/* Profile section styling */
+/* Profile Section Layout */
 .profile-section {
-    flex-grow: 1;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    overflow-y: auto;
-}
-
-/* Profile Section */
-.profile-section {
-    flex-grow: 1;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .profile-header {
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .profile-photo {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     border-radius: 8px;
+    object-fit: cover;
 }
 
+/* Buttons Styling */
 .profile-buttons {
-    margin-top: 10px;
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
+}
+
+.edit-button,
+.add-button {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edit-button::before {
+    content: '✏️'; /* Optional: Use an icon if desired */
+}
+
+.add-button::before {
+    content: '+'; /* Optional: Use an icon if desired */
+}
+
+/* Patient Information Boxes */
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 10px;
+}
+
+.info-box {
+    background-color: #f0f0f0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-box label {
+    font-weight: bold;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.info-box span {
+    font-size: 14px;
+    color: #333;
 }
 
 .notes-section,
@@ -244,6 +285,5 @@ th, td {
 }
 
 th {
-    background-color: #f1f1f1;
     font-weight: bold;
 }
