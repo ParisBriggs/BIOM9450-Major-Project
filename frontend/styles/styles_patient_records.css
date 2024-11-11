@@ -6,15 +6,60 @@ body {
     padding: 0;
 }
 
-/* Header styling */
+/* Header Styling */
 header {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    padding: 10px 0;
+    justify-content: space-between;
+    padding: 10px 20px;
     background-color: #f8f8f8;
-    padding-top: 30px;
-    padding-bottom: 30px;
+}
+
+.header-left .logo {
+    width: 200px; /* Adjust width as needed */
+    height: auto; /* Keeps aspect ratio */
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 1%;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+/* Boxed Styling for Ward */
+.ward {
+    background-color: #cce5ff; /* Light blue background */
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+/* Boxed Styling for Profile */
+.profile-name {
+    background-color: #e2e3e5; /* Light gray background */
+    padding: 8px 12px;
+    color: #333;
+    text-align: left;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
 }
 
 /* Centered Navbar styling */
@@ -141,7 +186,14 @@ header {
     overflow-y: auto;
 }
 
-/* Profile header and image styling */
+/* Profile Section */
+.profile-section {
+    flex-grow: 1;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
 .profile-header {
     display: flex;
     gap: 20px;
@@ -154,32 +206,44 @@ header {
     border-radius: 8px;
 }
 
-/* Health indicators with padding */
-.health-indicators {
+.profile-buttons {
+    margin-top: 10px;
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
-/* Medication section headers and spacing */
-.medication-section {
-    margin-bottom: 20px;
+.notes-section,
+.medication-section,
+.diet-section {
+    margin-top: 20px;
     padding: 15px;
     border-radius: 8px;
 }
 
-/* Color for each section */
-.packed { background-color: #cce5ff; }
-.s8 { background-color: #f8d7da; }
-.non-packed { background-color: #e2e3e5; }
+.notes-section {
+    background-color: #d0e0e3;
+}
 
-.medication-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
+.medication-section {
+    background-color: #f5d5da;
+}
+
+.diet-section {
+    background-color: #e2e3e5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.medication-item:last-child {
-    border-bottom: none;
+th {
+    background-color: #f1f1f1;
+    font-weight: bold;
 }
