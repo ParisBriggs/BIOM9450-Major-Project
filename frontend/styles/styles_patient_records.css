@@ -93,7 +93,7 @@ header {
 /* Outer container for shadow box effect */
 .outer-container {
     display: flex;
-    width: 90%;
+    width: 75%;
     max-width: 1400px;
     background-color: #fff;
     border-radius: 10px;
@@ -145,6 +145,7 @@ header {
     background-color: #e6f0ff;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 15px;
 }
 
 .resident-item:hover {
@@ -172,7 +173,7 @@ header {
 }
 
 .resident-name {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
 }
 
