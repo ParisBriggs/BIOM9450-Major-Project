@@ -1,62 +1,86 @@
-/* General body styling */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
+/* General Reset */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
     background-color: #f8f8f8;
 }
 
-/* Logout button styling */
-.logout {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-.logout a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-}
-
-.logout img {
-    width: 27px; /* Adjust the width */
-    height: 27px; /* Adjust the height */
-    margin-right: 5px;}
-
-/* Header styling */
+/* Header Styling */
 header {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    padding: 10px 0;
+    justify-content: space-between;
+    padding: 10px 20px;
     background-color: #f8f8f8;
-    padding-top: 30px;
-    padding-bottom: 30px;
+}
+
+.header-left .logo {
+    width: 150px; /* Adjust width as needed */
+    height: auto; /* Keeps aspect ratio */
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ward {
+    background-color: #cce5ff; /* Light blue background */
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+
+.profile-name {
+    background-color: #e2e3e5; /* Light gray background */
+    padding: 8px 12px;
+    color: #333;
+    text-align: left;
+    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+}
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
 }
 
 /* Centered Navbar styling */
 .navbar {
-    width: 100%;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     border: 2px solid #b0c4de; /* Blue outline border */
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 5px 15px;
     background-color: #f8f8f8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    margin-bottom: 20px; /* Add spacing below navbar */
 }
 
 .navbar a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    font-size: 13px;
     padding: 8px 12px;
     border-radius: 10px;
 }
