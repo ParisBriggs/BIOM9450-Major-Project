@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="styles/styles_dashboard.css">
 </head>
 <body>
-    <!-- Logout button -->
-    <div id="logout-section" class="logout">
-        <a href="/logout" title="Logout"><img src="images/logout_symbol.webp" alt="Logout Icon"> LOGOUT</a>
-    </div>
 
-    <!-- Navigation bar -->
+    <!-- Logo and Centered Navigation Bar -->
     <header>
+        <div class="header-left">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+        </div>
         <nav class="navbar">
             <a href="dashboard.html" class="active">Dashboard</a>
             <a href="medication_rounds.html">Medication Rounds</a>
@@ -22,7 +21,14 @@
             <a href="manage_orders.html">Manage Orders</a>
             <a href="generate_reports.html">Generate Reports</a>
             <a href="patient_info.html">Patient Information</a>
+
         </nav>
+        <div class="header-right">
+            <div class = "ward-profile"></div>
+                <span class="ward-info">Ward A</span>
+                <span class="profile-name">Rachel Sunway<br><small>Nurse</small></span>
+            </div>
+        </div>
     </header>
 
     <!-- Main container for two-column layout (logo and buttons)-->

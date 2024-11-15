@@ -16,7 +16,7 @@ header {
 }
 
 .header-left .logo {
-    width: 200px; /* Adjust width as needed */
+    width: 150px; /* Adjust width as needed */
     height: auto; /* Keeps aspect ratio */
     margin-left: 10%;
     margin-top: 10%;
@@ -25,8 +25,8 @@ header {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-right: 1%;
+    gap: 5px;
+    font-size: 15px;
 }
 
 .ward-profile {
@@ -38,8 +38,6 @@ header {
     overflow: hidden;
 }
 
-
-/* Boxed Styling for Ward */
 .ward {
     background-color: #cce5ff; /* Light blue background */
     padding: 8px 12px;
@@ -47,7 +45,7 @@ header {
     color: #333;
     border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
 }
-/* Boxed Styling for Profile */
+
 .profile-name {
     background-color: #e2e3e5; /* Light gray background */
     padding: 8px 12px;
@@ -62,19 +60,12 @@ header {
     font-size: 12px;
 }
 
-.nav-container {
-    width: 90%;
-    max-width: 1400px; /* Matches the max-width from patient_records */
-    display: flex;
-    justify-content: center;
-}
-
-/* Navbar styling */
+/* Centered Navbar styling */
 .navbar {
     display: flex;
-    gap: 20px;
-    border: 2px solid #b0c4de;
-    border-radius: 15px;
+    gap: 10px;
+    border: 2px solid #b0c4de; /* Blue outline border */
+    border-radius: 10px;
     padding: 5px 15px;
     background-color: #f8f8f8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -84,12 +75,13 @@ header {
     text-decoration: none;
     color: #333;
     font-weight: bold;
+    font-size: 13px;
     padding: 8px 12px;
     border-radius: 10px;
 }
 
 .navbar a:hover {
-    background-color: #e6f0ff;
+    background-color: #e6f0ff; /* Light blue background on hover */
 }
 
 .navbar a.active {
@@ -97,7 +89,6 @@ header {
     border: 1px solid #b0c4de;
     border-radius: 10px;
 }
-
 
 /* Container styling */
 .outer-container {
