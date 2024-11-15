@@ -14,6 +14,24 @@ CREATE TABLE EmergencyContacts (
     PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS Wards;
+CREATE TABLE Wards (
+    id          INTEGER AUTO_INCREMENT,
+    wardName    VARCHAR(1),
+    numRooms    INTEGER,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS Rooms;
+CREATE TABLE Rooms (
+    id      INTEGER AUTO_INCREMENT,
+    ward    INTEGER,
+    RoomNum INTEGER,
+    available BOOLEAN,
+    PRIMARY KEY (id),
+    FOREIGN KEY (ward) REFERENCES wards(id)
+);
+
 -- drop tables if exist
 DROP TABLE IF EXISTS Patients;
 CREATE TABLE Patients (
@@ -27,8 +45,10 @@ CREATE TABLE Patients (
     notes       TEXT,
     emergencyContact INTEGER,
     room        INTEGER,
+    dob         DATE,
     PRIMARY KEY (id),
-    FOREIGN KEY (emergencyContact) REFERENCES EmergencyContacts(id)
+    FOREIGN KEY (emergencyContact) REFERENCES EmergencyContacts(id),
+    FOREIGN KEY (room) REFERENCES Rooms(id)
 );
 
 DROP TABLE IF EXISTS Practitioners;
@@ -37,8 +57,11 @@ CREATE TABLE Practitioners (
     firstName   VARCHAR(255) NOT NULL,
     lastName    VARCHAR(255) NOT NULL,
     userName    VARCHAR(255) NOT NULL,
+    position    ENUM('Nurse', 'Doctor'),
+    ward        INTEGER,
     password    VARCHAR(255) NOT NULL, -- change this to hash password
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (ward) REFERENCES wards(id)
 );
 
 
@@ -47,6 +70,7 @@ CREATE TABLE Medications (
     id          INTEGER AUTO_INCREMENT,
     name        VARCHAR(255) NOT NULL,
     routeAdmin  VARCHAR(255) NOT NULL,
+    requirements TEXT,
     PRIMARY KEY (id)
 );
 
@@ -68,11 +92,14 @@ CREATE TABLE MedicationOrder (
     patient     INTEGER,
     medication  INTEGER,
     dateOrdered DATE,
+    dateCeased  DATE,
+    orderedBy   INTEGER,
     frequency   ENUM('1', '2', '3'),
     dosage      DECIMAL(10,2),
     PRIMARY KEY (id),
     FOREIGN KEY (patient) REFERENCES Patients(id),
-    FOREIGN KEY (medication) REFERENCES Medications(id)
+    FOREIGN KEY (medication) REFERENCES Medications(id),
+    FOREIGN KEY (orderedBy) REFERENCES Practitioners(id)
 );
 
 DROP TABLE IF EXISTS MedicationRound;
@@ -95,10 +122,12 @@ CREATE TABLE DietOrder (
     patient     INTEGER,
     dietRegime  INTEGER,
     dateOrdered DATE,
+    orderedBy   INTEGER,
     frequency   ENUM('1', '2', '3'),
     PRIMARY KEY (id),
     FOREIGN KEY (patient) REFERENCES Patients(id),
-    FOREIGN KEY (dietRegime) REFERENCES DietRegimes(id)
+    FOREIGN KEY (dietRegime) REFERENCES DietRegimes(id),
+    FOREIGN KEY (orderedBy) REFERENCES Practitioners(id)
 );
 
 DROP TABLE IF EXISTS DietRound;

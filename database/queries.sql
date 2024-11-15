@@ -21,6 +21,20 @@ BEGIN
         p.room;
 END //
 
+DROP PROCEDURE IF EXISTS GetBasicPatientById //
+CREATE PROCEDURE GetBasicPatientById(IN id INTEGER)
+BEGIN
+    SELECT 
+        p.id AS patientID,
+        CONCAT(p.firstName, ' ', p.lastName) AS fullName,
+        p.photo AS photoUrl,
+        p.room
+    FROM 
+        Patients p
+    WHERE 
+        p.id = id;
+END //
+
 -- gets room, photo and name of patient searched for
 DROP PROCEDURE IF EXISTS GetBasicPatientByFullName //
 CREATE PROCEDURE GetBasicPatientByFullName(IN searchName VARCHAR(255))
@@ -181,7 +195,8 @@ CREATE PROCEDURE InsertPatientWithContact(
     IN p_email VARCHAR(255),
     IN p_phone VARCHAR(10),
     IN p_notes TEXT,
-    IN p_room INTEGER
+    IN p_room INTEGER,
+    IN p_dob DATE
 )
 BEGIN
     DECLARE new_contact_id INT;
@@ -213,7 +228,8 @@ BEGIN
         phone,
         notes,
         emergencyContact,
-        room
+        room,
+        dob
     ) VALUES (
         p_firstName,
         p_lastName,
@@ -223,7 +239,8 @@ BEGIN
         p_phone,
         p_notes,
         new_contact_id,
-        p_room
+        p_room,
+        p_dob
     );
 END //
 
