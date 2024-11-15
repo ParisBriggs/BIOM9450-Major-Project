@@ -6,7 +6,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f2f5;
+    background-image:url("frontend/images/Sample login page background.jpg");  
+    background-size: cover;  /* Ensure the image covers the full screen */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat;  /* Prevent tiling */
+    margin: 0;
+    height: 100vh;  /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-container {
@@ -22,6 +30,7 @@ body {
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .login-container input {
