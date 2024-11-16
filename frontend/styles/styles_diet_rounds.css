@@ -1,7 +1,7 @@
 /* Basic styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+    background: linear-gradient(180deg, #d9fbfa 0%, #ffffff 50%, #d9fbfa 100%);
     margin: 0;
     padding: 0;
 }
@@ -12,7 +12,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #f8f8f8;
+    background: linear-gradient(180deg, #d9fbfa 0%, #ffffff 50%, #d9fbfa 100%);
 }
 
 .header-left .logo {
