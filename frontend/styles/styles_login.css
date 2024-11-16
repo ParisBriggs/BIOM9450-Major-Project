@@ -6,15 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image:url("frontend/images/Sample login page background.jpg");  
-    background-size: cover;  /* Ensure the image covers the full screen */
-    background-position: center;  /* Center the image */
-    background-repeat: no-repeat;  /* Prevent tiling */
-    margin: 0;
-    height: 100vh;  /* Full viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-image: radial-gradient(circle, #d0f2f9, #013e3a);
 }
 
 .login-container {
@@ -50,7 +42,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-image: radial-gradient(#03746b,#46cbe5 );
     color: white;
     font-size: 16px;
     border: none;
