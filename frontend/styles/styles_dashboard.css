@@ -7,8 +7,8 @@
 
 /* Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+    font-family: 'Roboto', sans-serif; /* Body font */
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #b9e8cf 100%); /* Soft pastel gradient */
 }
 
 /* Header Styling */
@@ -17,132 +17,153 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #f8f8f8;
+background: white;    
+font-family: 'Poppins', sans-serif; /* Header font */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header-left .logo {
-    width: 150px; /* Adjust width as needed */
-    height: auto; /* Keeps aspect ratio */
-    margin-left: 10%;
-    margin-top: 10%;
+    width: 150px;
+    height: auto;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     font-size: 15px;
 }
 
-.ward-profile {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
 .ward {
-    background-color: #cce5ff; /* Light blue background */
+    background-color: #d9fbe5; /* Light green */
     padding: 8px 12px;
     font-weight: bold;
-    color: #333;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #005633; /* Dark green */
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .profile-name {
-    background-color: #e2e3e5; /* Light gray background */
+    background-color: #f2fcfc; /* Light blue */
     padding: 8px 12px;
-    color: #333;
-    text-align: left;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #0056b3; /* Dark blue */
+    border-radius: 8px;
+    text-align: center;
 }
 
-.profile-name small {
-    display: block;
-    color: #666;
-    font-size: 12px;
-}
-
-/* Centered Navbar styling */
-.navbar {
-    display: flex;
-    gap: 10px;
-    border: 2px solid #b0c4de; /* Blue outline border */
-    border-radius: 10px;
-    padding: 5px 15px;
-    background-color: #f8f8f8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 10px;
-}
-
-.navbar a:hover {
-    background-color: #e6f0ff; /* Light blue background on hover */
-}
-
-.navbar a.active {
-    background-color: #e6f0ff;
-    border: 1px solid #b0c4de;
-    border-radius: 10px;
-}
-
-/* Container for the two-column layout */
 .container {
     display: flex;
-    flex-direction: row; /* Keep the two-column layout */
-    width: 80%;
+    flex-direction: row;
+    width: 90%;
     max-width: 1200px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Center the container */
+    margin: 20px auto; /* Center the container */
+    overflow: hidden;
 }
 
-/* Left column styling */
+/* Left Column Styling */
 .left-column {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    background-color: #ffffff;
+
 }
 
 .left-column .logo {
-    max-width: 700px;
+    max-width: 300px;
 }
 
-/* Right column styling */
+/* Right Column Styling */
 .right-column {
-    flex: 1;
+    flex: 2;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 20px;
 }
 
 .right-column button {
-    width: 85%;
+    width: 80%;
     padding: 15px;
     margin: 10px 0;
-    font-size: 20px;
-    background-color: #b0c4de;
-    color: #333;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #d9fbe5;
+    color: #005633; /* Dark green */
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .right-column button:hover {
-    background-color: #8ca6bf;
+    background-color: #81bc9b; /* Pastel green */
+    color: #ffffff;
+}
+
+/* Map and Directions Section */
+.map-and-directions {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.map-container {
+    flex: 1;
+    min-width: 300px;
+    height: 600px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.directions-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+.directions-content h2 {
+    margin-bottom: 10px;
+    color: #1e7b44;    
+
+}
+
+.directions-content p {
+    margin-bottom: 15px;
+    color: #333;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.facilities-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.facilities-table td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.facilities-table td:first-child {
+    font-size: 20px;
+    text-align: center;
 }
