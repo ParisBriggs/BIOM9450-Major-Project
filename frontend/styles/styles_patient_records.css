@@ -97,7 +97,7 @@ header {
 
 /* Main Layout */
 .outer-container {
-    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #bedaf6 100%);
     border-radius: 10px;
     padding: 20px;
     display: flex;
@@ -141,13 +141,12 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 15px;
+    transition: all 0.3s ease-in-out;
 }
 
 .resident-item:hover {
@@ -159,6 +158,7 @@ header {
 .resident-item.active {
     background-color: #e8f3fc;
     border-left: 5px solid #0056b3;
+    
 }
 
 .resident-photo {
@@ -189,21 +189,28 @@ header {
     margin-bottom: 20px;
     padding: 15px;
     background: linear-gradient(90deg, #81bc9b, #0056b3);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);   
     color: white;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .profile-photo {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    
+}
+
+.profile-photo:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profile-header h2 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     color: white;
 }
@@ -211,8 +218,9 @@ header {
 /* Profile Buttons */
 .profile-buttons {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: flex-start;
 }
 
 .profile-buttons button:hover {
@@ -277,21 +285,22 @@ header {
 
 /* Notes Section */
 .notes-section {
-    background-color: #eef7fc;
-    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notes-section ul {
+    margin-left: 20px;
+    list-style: disc;
+    color: #555;
 }
 
 .notes-section h3 {
     color: #0056b3;
     margin-bottom: 10px;
-}
-
-.notes-section ul {
-    list-style: disc;
-    margin-left: 20px;
-    color: #555;
 }
 
 /* Medication Section */
@@ -343,6 +352,7 @@ header {
     border-radius: 5px;
     font-size: 12px;
     cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .prescribe-button:hover {
@@ -376,6 +386,9 @@ header {
 }
 
 .diet-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     background-color: #f9fcfd;
     padding: 10px;
     border-radius: 5px;
@@ -387,3 +400,4 @@ header {
 .diet-item strong {
     color: #333;
 }
+
