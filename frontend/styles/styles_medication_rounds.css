@@ -18,8 +18,8 @@ header {
     padding: 10px 20px;
     background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80px; /* Adjust as needed */
+
 }
 
 .header-left .logo {
