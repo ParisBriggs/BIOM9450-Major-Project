@@ -1,12 +1,10 @@
-/* Basic styling */
 body {
     font-family: 'Roboto', sans-serif; /* Modern font */
-    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%); /* Soft pastel gradient */
     margin: 0;
     padding: 0;
 }
 
-/* Header Styling */
 header {
     display: flex;
     align-items: center;
@@ -68,6 +66,7 @@ header {
     padding: 5px 15px;
     background-color: #f8f8f8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
 }
 
 .navbar a {
@@ -77,6 +76,7 @@ header {
     font-size: 13px;
     padding: 8px 12px;
     border-radius: 10px;
+    
 }
 
 .navbar a:hover {
@@ -89,7 +89,6 @@ header {
     font-weight: bold;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 /* Container styling */
 .outer-container {
     max-width: 1200px;
@@ -169,38 +168,32 @@ textarea:focus {
     outline: none;
 }
 
-input:hover,
-select:hover,
-textarea:hover {
-    border-color: #aacbe5; /* Slightly darker blue on hover */
+input:hover, select:hover, textarea:hover {
+    background-color: #eef7ff;
+    border-color: #aacbe5;
 }
 
-input[type="tel"] {
-    flex: 1;
+input, select, textarea {
     padding: 10px 15px;
-    font-size: 14px;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background-color: #f0f7ff;
-    transition: all 0.3s ease-in-out;
-    outline: none;
-    color: #333;
+    font-size: 16px;
 }
 
-/* Focus State for Phone Input */
-input[type="tel"]:focus {
-    border-color: #85a8d0;
-    box-shadow: 0 0 5px rgba(133, 168, 208, 0.5);
-    background-color: #ffffff;
-}
-
-/* intl-tel-input Styling */
 .iti {
-    width: 100%; /* Ensures full width */
+    width: 100%; /* Ensures the container spans the full width */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-left: 25px; /* Moves the flag dropdown and input together */
+    padding: 0; /* Reset any paddings */
 }
 
-.iti__flag-container {
-    margin-right: 8px;
+.iti input[type="tel"] {
+    width: 100%; /* Ensures the phone input matches the other input widths */
+    padding: 10px 14px; /* Match padding with other inputs */
+    border: 1px solid #c9d8e2; /* Same border style as other inputs */
+    border-radius: 8px; /* Match the rounded corners */
+    background-color: #f0f7ff; /* Same background color as other inputs */
+    font-size: 14px; /* Match font size */
+    box-sizing: border-box; /* Ensure consistent sizing */
 }
 
 .iti--allow-dropdown input[type="tel"] {
@@ -208,20 +201,33 @@ input[type="tel"]:focus {
 }
 
 .iti__selected-flag {
-    border: none;
-    background-color: transparent;
-    box-shadow: none;
+    height: 100%; /* Ensures flag matches input height */
+    display: flex;
+    align-items: center; /* Align flag vertically */
 }
 
-/* Hover State for Phone Input */
-input[type="tel"]:hover {
-    border-color: #b0c4de;
+.iti__flag-container {
+    margin-right: 10px; /* Adds space between the flag and text */
+    display: flex;
+    align-items: center; /* Centers the flag in its container */
 }
 
-/* Add Icon for Visual Enhancement (Optional) */
-input[type="tel"]::placeholder {
-    color: #b0c4de;
-    font-style: italic;
+input[type="tel"]:focus {
+    border-color: #5588c4; /* Same focus color as other inputs */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none; /* Removes default focus outline */
+}
+
+/* Adjust spacing in the form */
+.form-group {
+    display: flex;
+    align-items: center; /* Aligns all elements in the group */
+}
+
+.form-group input[type="tel"] {
+    flex: 1; /* Allows the phone input to expand */
+    margin: 0; /* Reset any default margins */
+
 }
 
 /* Radio button group styling */
