@@ -137,6 +137,8 @@ header {
     width: 120px;
     color: #333;
     font-size: 14px;
+    font-weight: bold;
+
 }
 
 /* Input styling */
@@ -171,6 +173,55 @@ input:hover,
 select:hover,
 textarea:hover {
     border-color: #aacbe5; /* Slightly darker blue on hover */
+}
+
+input[type="tel"] {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f0f7ff;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    color: #333;
+}
+
+/* Focus State for Phone Input */
+input[type="tel"]:focus {
+    border-color: #85a8d0;
+    box-shadow: 0 0 5px rgba(133, 168, 208, 0.5);
+    background-color: #ffffff;
+}
+
+/* intl-tel-input Styling */
+.iti {
+    width: 100%; /* Ensures full width */
+}
+
+.iti__flag-container {
+    margin-right: 8px;
+}
+
+.iti--allow-dropdown input[type="tel"] {
+    padding-left: 50px; /* Adjust for flag dropdown */
+}
+
+.iti__selected-flag {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Hover State for Phone Input */
+input[type="tel"]:hover {
+    border-color: #b0c4de;
+}
+
+/* Add Icon for Visual Enhancement (Optional) */
+input[type="tel"]::placeholder {
+    color: #b0c4de;
+    font-style: italic;
 }
 
 /* Radio button group styling */
@@ -229,4 +280,29 @@ input[type="file"] {
 
 .save-button:hover {
     background-color: #6b8bb3;
+}
+/* Dropdown styling */
+select {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f0f7ff; /* Soft pastel background */
+    font-size: 14px;
+    color: #333;
+    appearance: none; /* Removes default browser styling for dropdown */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+select:focus {
+    border-color: #5588c4; /* Highlighted border on focus */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none;
+}
+
+select:hover {
+    border-color: #aacbe5; /* Slightly darker blue on hover */
 }
