@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrimed Health - Dashboard</title>
     <link rel="stylesheet" href="styles/styles_dashboard.css">
@@ -12,6 +13,7 @@
     <header>
         <div class="header-left">
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+<<<<<<< HEAD
         </div>
         <nav class="navbar">
             <a href="dashboard.html" class="active">Home</a>
@@ -21,8 +23,11 @@
             <a href="manage_orders.html">Manage Orders</a>
             <a href="generate_reports.html">Generate Reports</a>
             <a href="patient_info.html">Patient Information</a>
+=======
+            <img src="images/powh.png" alt="POWH logo" class="logo">
+>>>>>>> Laila
 
-        </nav>
+        </div>
         <div class="header-right">
             <div class = "ward-profile"></div>
                 <span class="ward-info">Ward A</span>
@@ -31,22 +36,63 @@
         </div>
     </header>
 
-    <!-- Main container for two-column layout (logo and buttons)-->
-    <div id="main-container" class="container">
-        <!-- Left column with logo -->
-        <div id="logo-section" class="left-column">
+    <div class="container">
+        <!-- Left Column with Logo -->
+        <div class="left-column">
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
-        
-        <!-- Right column with buttons -->
-        <div id="navigation-section" class="right-column">
-            <button id="medication-rounds-button" onclick="location.href='medication_rounds.html'">Medication Rounds</button>
-            <button id="diet-regime-rounds-button" onclick="location.href='/diet-regime-rounds'">Diet Regime Rounds</button>
-            <button id="view-patient-records-button" onclick="location.href='/view-patient-records'">View Patient Records</button>
-            <button id="generate-reports-button" onclick="location.href='/generate-reports'">Generate Reports</button>
-            <button id="add-edit-patient-info-button" onclick="location.href='/add-edit-patient-info'">Add / Edit Patient Information</button>
-            <button id="dispensing-history-button" onclick="location.href='/dispensing-history'">View Dispensing History</button>
+    
+        <!-- Right Column with Navigation Buttons -->
+        <div class="right-column">
+            <button onclick="location.href='medication_rounds.html'">Medication Rounds</button>
+            <button onclick="location.href='diet_rounds.html'">Diet Regime Rounds</button>
+            <button onclick="location.href='patient_records.html'">View Patient Records</button>
+            <button onclick="location.href='generate_reports.html'">Generate Reports</button>
+            <button onclick="location.href='patient_info.html'">Add / Edit Patient Information</button>
+            <button onclick="location.href='dispensing_history.html'">View Dispensing History</button>
         </div>
+    </div>
+    
+    <section class="map-and-directions">
+        <div class="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3353.9688347855886!2d151.23655437576002!3d-33.919036173207296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12b22188c339c7%3A0xf017d68f9f009c0!2sPrince%20Of%20Wales%20Hospital!5e1!3m2!1sen!2sau!4v1731747352711!5m2!1sen!2sau"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        <div class="directions-content">
+            <h2>Directions to the Nutrimed Sydney Facility</h2>
+            <p>
+                Our Nutrimed Health Luxury Elderly Care Facility is conveniently located in Kensington, NSW. Accessible by public transport, the facility offers a welcoming environment for both staff and visitors.
+            </p>
+            <p>
+                Visitors can use the L2 Randwick light rail line, buses (348, 358, 370, 390x lines, among others) or park onsite.
+            </p>
+            <h3>Available Amenities</h3>
+            <table class="facilities-table">
+                <tr>
+                    <td>🚪</td>
+                    <td><strong>Accessibility</strong></td>
+                    <td>Wheelchair-accessible entrances, elevators, and facilities.</td>
+                </tr>
+                <tr>
+                    <td>🌐</td>
+                    <td><strong>Wi-Fi</strong></td>
+                    <td>Complimentary Wi-Fi throughout the premises.</td>
+                </tr>
+                <tr>
+                    <td>☕</td>
+                    <td><strong>Refreshments</strong></td>
+                    <td>Onsite cafeteria with hot and cold meal options.</td>
+                </tr>
+                <tr>
+                    <td>📱</td>
+                    <td><strong>Charging Stations</strong></td>
+                    <td>Charging points available for staff and visitors.</td>
+                </tr>
+            </table>
+        </div>
+    </section>
     </div>
 </body>
 </html>
