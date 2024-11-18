@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: radial-gradient(circle, #d0f2f9, #013e3a);
+    background-image: linear-gradient(to bottom, #baf9e1, #45b3f3);
 }
 
 .login-container {
@@ -42,7 +42,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-image: radial-gradient(#03746b,#46cbe5 );
+    background-image: radial-gradient(#74baf3,#016772 );
     color: white;
     font-size: 16px;
     border: none;
