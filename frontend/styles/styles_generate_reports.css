@@ -1,69 +1,64 @@
-/* General Reset */
 * {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins to all elements */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Fallback for body */
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/* Body Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    color: #333;
-}
-
-/* Header Styling */
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
     padding: 10px 20px;
-    background-color: #f8f8f8;
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80px; 
 }
 
 .header-left .logo {
-    width: 150px; /* Adjust width as needed */
-    height: auto; /* Keeps aspect ratio */
+    width: 150px;
+    height: auto;
     margin-left: 10%;
-    margin-top: 10%;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     font-size: 15px;
+    font-weight: bold;
 }
 
 .ward-profile {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 14px;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .ward {
-    background-color: #cce5ff; /* Light blue background */
+    background-color: #d9fbe5; /* Light green */
     padding: 8px 12px;
     font-weight: bold;
-    color: #333;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #005633; /* Dark green */
+    border-radius: 8px;
 }
 
 .profile-name {
-    background-color: #e2e3e5; /* Light gray background */
+    background-color: #f2fcfc; /* Light blue */
     padding: 8px 12px;
-    color: #333;
-    text-align: left;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #0056b3; /* Dark blue */
+    border-radius: 8px;
 }
 
 .profile-name small {
     display: block;
     color: #666;
     font-size: 12px;
+    font-weight: italic;
 }
 
 /* Centered Navbar styling */
