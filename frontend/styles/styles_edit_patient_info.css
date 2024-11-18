@@ -314,6 +314,7 @@ input[type="tel"]:focus {
     font-size: 14px;
 }
 
+
 input[type="file"] {
     display: none;
 }
@@ -400,4 +401,27 @@ select:hover {
     font-weight: bold;
     margin-right: 10px; /* Add spacing between label and input */
     text-align: left; /* Keep label text left-aligned */
+}
+
+/* Styling for the notes textarea */
+#notes {
+    padding: 10px;
+    border: 1px solid #c9d8e2; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f0f7ff; /* Soft pastel blue */
+    font-family: 'Poppins', sans-serif; /* Consistent font family */
+    font-size: 16px; /* Readable font size */
+    line-height: 1.6; /* Spacing between lines */
+    white-space: pre-line; /* Preserve new lines */
+}
+
+#notes::placeholder {
+    color: #aaa; /* Subtle placeholder color */
+}
+
+/* Optional: Add a border highlight on focus */
+#notes:focus {
+    border-color: #5588c4; /* Highlighted border on focus */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none; /* Remove default outline */
 }
