@@ -391,9 +391,9 @@ header {
 
 .contact-section {
     background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
-    padding: 50px 20px;
+    padding: 20px 20px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
     border-radius: 16px;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
