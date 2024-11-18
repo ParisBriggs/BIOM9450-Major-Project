@@ -1,103 +1,115 @@
-/* Basic styling */
+* {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins to all elements */
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+    font-family: 'Poppins', sans-serif; /* Fallback for body */
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
     margin: 0;
     padding: 0;
 }
 
-/* Header Styling */
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
     padding: 10px 20px;
-    background-color: #f8f8f8;
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80px; 
 }
 
 .header-left .logo {
-    width: 150px; /* Adjust width as needed */
-    height: auto; /* Keeps aspect ratio */
+    width: 150px;
+    height: auto;
     margin-left: 10%;
-    margin-top: 10%;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     font-size: 15px;
+    font-weight: bold;
 }
 
 .ward-profile {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 14px;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .ward {
-    background-color: #cce5ff; /* Light blue background */
+    background-color: #d9fbe5; /* Light green */
     padding: 8px 12px;
     font-weight: bold;
-    color: #333;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #005633; /* Dark green */
+    border-radius: 8px;
 }
 
 .profile-name {
-    background-color: #e2e3e5; /* Light gray background */
+    background-color: #f2fcfc; /* Light blue */
     padding: 8px 12px;
-    color: #333;
-    text-align: left;
-    border-radius: 8px; /* Apply full border-radius to make it look like a standalone box */
+    color: #0056b3; /* Dark blue */
+    border-radius: 8px;
 }
 
 .profile-name small {
     display: block;
     color: #666;
     font-size: 12px;
+    font-weight: italic;
 }
 
-/* Centered Navbar styling */
+/* Navbar Styling */
+
+/* Navbar Styling */
 .navbar {
     display: flex;
-    gap: 10px;
-    border: 2px solid #b0c4de; /* Blue outline border */
-    border-radius: 10px;
-    padding: 5px 15px;
+    justify-content: center; /* Centers the navbar content */
+    align-items: center;
+    gap: 5px; /* Reduce the gap between items */
+    padding: 5px 10px; /* Smaller padding to reduce overall height */
     background-color: #f8f8f8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #b0c4de; /* Thinner border */
+    border-radius: 8px; /* Slightly smaller rounding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 90%; /* Constrain the navbar width */
+    margin: 0 auto; /* Center the navbar */
 }
 
 .navbar a {
     text-decoration: none;
     color: #333;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 10px;
+    font-weight: 500; /* Slightly lighter font weight */
+    font-size: 13px; /* Reduce font size slightly */
+    padding: 5px 10px; /* Smaller padding to match navbar size */
+    border-radius: 6px; /* Less rounding */
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center;
+    line-height: 1.2; /* Slightly tighter spacing */
 }
 
 .navbar a:hover {
-    background-color: #e6f0ff; /* Light blue background on hover */
+    background-color: #e6f0ff;
 }
 
 .navbar a.active {
-    background-color: #e6f0ff;
-    border: 1px solid #b0c4de;
-    border-radius: 10px;
+    background-color: #81bc9b;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
-
 /* Container styling */
 .outer-container {
     max-width: 1200px;
     margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Increased padding for better spacing */
+    background-color: #f9fcfd; /* Soft pastel blue for the background */
+    border-radius: 12px; /* Softer, rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    border: 1px solid #e0e0e0; /* Subtle border for definition */
 }
 
 /* Form grid layout */
@@ -110,17 +122,19 @@ header {
 
 /* Form section styling */
 .form-section {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 25px; /* Increased padding for better spacing */
+    background-color: #ffffff; /* White background for contrast */
+    border-radius: 10px; /* Modern rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow for card effect */
+    border: 1px solid #dce7f3; /* Light blue border for elegance */
 }
 
 .form-section h2 {
-    color: #85a8d0;
-    font-weight: 300;
-    margin-bottom: 30px;
-    font-size: 24px;
+    color: #336699; /* Darker blue for better readability */
+    font-weight: 500; /* Slightly bolder for emphasis */
+    margin-bottom: 20px; /* Reduced margin for compactness */
+    font-size: 22px;
+    text-align: center; /* Centered title for alignment */
 }
 
 /* Form group styling */
@@ -134,6 +148,8 @@ header {
     width: 120px;
     color: #333;
     font-size: 14px;
+    font-weight: bold;
+
 }
 
 /* Input styling */
@@ -143,16 +159,87 @@ input[type="tel"],
 select,
 textarea {
     flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background-color: #f0f7ff;
+    padding: 10px 14px; /* Increased padding for usability */
+    border: 1px solid #c9d8e2; /* Subtle blue border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f0f7ff; /* Soft pastel blue background */
     font-size: 14px;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
 }
 
 textarea {
     resize: vertical;
     min-height: 100px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #5588c4; /* Highlighted blue border on focus */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow effect */
+    outline: none;
+}
+
+input:hover, select:hover, textarea:hover {
+    background-color: #eef7ff;
+    border-color: #aacbe5;
+}
+
+input, select, textarea {
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.iti {
+    width: 100%; /* Ensures the container spans the full width */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-left: 25px; /* Moves the flag dropdown and input together */
+    padding: 0; /* Reset any paddings */
+}
+
+.iti input[type="tel"] {
+    width: 100%; /* Ensures the phone input matches the other input widths */
+    padding: 10px 14px; /* Match padding with other inputs */
+    border: 1px solid #c9d8e2; /* Same border style as other inputs */
+    border-radius: 8px; /* Match the rounded corners */
+    background-color: #f0f7ff; /* Same background color as other inputs */
+    font-size: 14px; /* Match font size */
+    box-sizing: border-box; /* Ensure consistent sizing */
+}
+
+.iti--allow-dropdown input[type="tel"] {
+    padding-left: 50px; /* Adjust for flag dropdown */
+}
+
+.iti__selected-flag {
+    height: 100%; /* Ensures flag matches input height */
+    display: flex;
+    align-items: center; /* Align flag vertically */
+}
+
+.iti__flag-container {
+    margin-right: 10px; /* Adds space between the flag and text */
+    display: flex;
+    align-items: center; /* Centers the flag in its container */
+}
+
+input[type="tel"]:focus {
+    border-color: #5588c4; /* Same focus color as other inputs */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none; /* Removes default focus outline */
+}
+
+/* Adjust spacing in the form */
+.form-group {
+    display: flex;
+    align-items: center; /* Aligns all elements in the group */
+}
+
+.form-group input[type="tel"] {
+    flex: 1; /* Allows the phone input to expand */
+    margin: 0; /* Reset any default margins */
+
 }
 
 /* Radio button group styling */
@@ -211,4 +298,29 @@ input[type="file"] {
 
 .save-button:hover {
     background-color: #6b8bb3;
+}
+/* Dropdown styling */
+select {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f0f7ff; /* Soft pastel background */
+    font-size: 14px;
+    color: #333;
+    appearance: none; /* Removes default browser styling for dropdown */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+select:focus {
+    border-color: #5588c4; /* Highlighted border on focus */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none;
+}
+
+select:hover {
+    border-color: #aacbe5; /* Slightly darker blue on hover */
 }

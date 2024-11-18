@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information - Nutrimed Health</title>
     <link rel="stylesheet" href="styles/styles_edit_patient_info.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
 </head>
 <body>
     <!-- Logo and Centered Navigation Bar -->
@@ -19,8 +24,7 @@
             <a href="patient_records.html">Patient Records</a>
             <a href="manage_orders.html">Manage Orders</a>
             <a href="generate_reports.html">Generate Reports</a>
-            <a href="patient_info.html" class="active">Patient Information</a>
-
+            <a href="patient_info.html"class="active">Patient Information</a>
         </nav>
         <div class="header-right">
             <div class = "ward-profile"></div>
@@ -29,7 +33,6 @@
             </div>
         </div>
     </header>
-
     <div class="outer-container">
         <form method="POST" action="../connections/process_patient.php" enctype="multipart/form-data" class="form-grid">
             <!-- Patient Details Section -->
@@ -52,10 +55,10 @@
                 </div>
         
                 <div class="form-group">
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="phone" maxlength="10" pattern="[0-9]{10}">
+                    <label for="patient_phone">Phone:</label>
+                    <input id="patient_phone" type="tel" name="patient_phone" placeholder="Enter patient's phone number" required>
                 </div>
-        
+                
                 <div class="form-group">
                     <label>Sex:</label>
                     <div class="radio-group">
@@ -116,14 +119,22 @@
         
                 <div class="form-group">
                     <label for="em_phone">Phone:</label>
-                    <input type="tel" id="em_phone" name="em_phone" required maxlength="10" pattern="[0-9]{10}">
+                    <input id="em_phone" type="tel" name="em_phone" placeholder="Enter emergency contact's phone number" required>
                 </div>
         
                 <div class="form-group">
                     <label for="relationship">Relationship:</label>
-                    <input type="text" id="relationship" name="relationship" required>
+                    <select id="relationship" name="relationship" required>
+                        <option value="" disabled selected>Select Relationship</option>
+                        <option value="parent">Parent</option>
+                        <option value="partner">Partner</option>
+                        <option value="sibling">Sibling</option>
+                        <option value="child">Child</option>
+                        <option value="friend">Friend</option>
+                        <option value="relative">Relative</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
-            </div>
             
             <div class="form-actions">
                 <button type="submit" class="save-button">Save Patient Details</button>
@@ -138,4 +149,20 @@
         const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
         input.parentElement.querySelector('.file-name').textContent = fileName;
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Initialize intl-tel-input for Patient Phone
+        const patientPhoneInputField = document.querySelector("#patient_phone");
+        const patientPhoneInput = window.intlTelInput(patientPhoneInputField, {
+            preferredCountries: ["au", "us", "gb", "in", "nz"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        // Initialize intl-tel-input for Emergency Contact Phone
+        const emPhoneInputField = document.querySelector("#em_phone");
+        const emPhoneInput = window.intlTelInput(emPhoneInputField, {
+            preferredCountries: ["au", "us", "gb", "in", "nz"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    });
     </script>

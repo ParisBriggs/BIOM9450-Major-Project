@@ -7,7 +7,7 @@
 
 /* Body Styling */
 body {
-    font-family: 'Roboto', sans-serif; /* Body font */
+    font-family: 'Poppins', sans-serif; /* Body font */
     background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #b9e8cf 100%); /* Soft pastel gradient */
 }
 
@@ -167,4 +167,73 @@ font-family: 'Poppins', sans-serif; /* Header font */
 .facilities-table td:first-child {
     font-size: 20px;
     text-align: center;
+}
+/* Facility Details Section */
+.facility-details {
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Facility Image Styling */
+.facility-image {
+    flex: 1;
+    max-width: 45%;
+    min-width: 300px;
+}
+
+.facility-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Facility Info Styling */
+.facility-info {
+    flex: 2;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.facility-info h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #0056b3;
+}
+
+.facility-info p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.facility-info h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #005633;
+}
+
+.facility-info ul {
+    margin-left: 20px;
+    list-style-type: disc;
+    margin-bottom: 15px;
+}
+
+.facility-info ul li {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
 }
