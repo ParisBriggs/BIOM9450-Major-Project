@@ -98,13 +98,13 @@
                             Choose File
                         </label>
                         <span class="file-name">No file chosen</span>
-                        <input type="file" id="photo" name="photo" accept="image/*" onchange="updateFileName(this)">
+                        <input type="file" id="photo" name="photo" accept=".png, .jpeg, .jpg" onchange="updateFileName(this)">
                     </div>
                 </div>
         
                 <div class="form-group">
                     <label for="notes">Notes:</label>
-                    <textarea id="notes" name="notes" rows="4"></textarea>
+                    <textarea id="notes" name="notes" rows="4" placeholder="• Write your note here..."></textarea>
                 </div>
             </div>
         
@@ -191,4 +191,28 @@
         document.getElementById("other-relationship").value = ""; // Clear the text box value
     }
 }
+
+document.getElementById('notes').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        const value = this.value;
+        
+        // Add bullet point on new line
+        this.value = value.substring(0, start) + '\n• ' + value.substring(end);
+        
+        // Adjust cursor position
+        this.selectionStart = this.selectionEnd = start + 3;
+        
+        // Prevent default behavior of Enter key
+        e.preventDefault();
+    }
+});
+
+// Add a bullet point to the first line when the textarea gains focus
+document.getElementById('notes').addEventListener('focus', function () {
+    if (this.value.trim() === '') {
+        this.value = '• ';
+    }
+});
     </script>
