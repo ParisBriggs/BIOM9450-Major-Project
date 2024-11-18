@@ -129,10 +129,11 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
 }
 
 .search-input {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -412,4 +413,3 @@ header {
 .diet-item strong {
     color: #333;
 }
-
