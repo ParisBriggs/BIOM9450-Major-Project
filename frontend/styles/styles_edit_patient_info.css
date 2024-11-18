@@ -152,6 +152,46 @@ header {
 
 }
 
+/* Styling for the dropdown and text box to match */
+.form-group select,
+.form-group input[type="text"] {
+    width: 100%; /* Full width */
+    padding: 10px 15px; /* Consistent padding */
+    font-size: 16px; /* Same font size */
+    border: 1px solid #c9d8e2; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f0f7ff; /* Light background */
+    color: #333; /* Text color */
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+/* Focus state for dropdown and text box */
+.form-group select:focus,
+.form-group input[type="text"]:focus {
+    border-color: #5588c4; /* Highlighted border */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none; /* Remove default outline */
+}
+
+/* Label styling */
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block; /* Ensure label is on its own line */
+    color: #333;
+}
+
+/* Hide and show the "Other" section smoothly */
+#other-relationship-group {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Styling for consistent layout */
+.form-group {
+    margin-bottom: 20px;
+}
 /* Input styling */
 input[type="text"],
 input[type="email"],
@@ -194,7 +234,7 @@ input, select, textarea {
     width: 100%; /* Ensures the container spans the full width */
     display: flex;
     align-items: center; /* Align items vertically */
-    margin-left: 25px; /* Moves the flag dropdown and input together */
+    margin-left: 30px; /* Moves the flag dropdown and input together */
     padding: 0; /* Reset any paddings */
 }
 
@@ -323,4 +363,41 @@ select:focus {
 
 select:hover {
     border-color: #aacbe5; /* Slightly darker blue on hover */
+}
+.form-group input[type="date"] {
+    width: 100%; /* Match the width of other inputs */
+    padding: 10px 15px; /* Same padding as other inputs */
+    font-size: 16px; /* Consistent font size */
+    border: 1px solid #c9d8e2; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f0f7ff; /* Light background */
+    color: #837979; /* Text color */
+    box-sizing: border-box; /* Include padding in width */
+    margin-left: 30px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    display: inline-block; /* Ensure consistent inline alignment */
+}
+
+.form-group input[type="date"]:focus {
+    border-color: #5588c4; /* Highlighted border */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none; /* Remove default outline */
+}
+
+/* Adjust the form-group layout for alignment */
+.form-group {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 20px;
+
+}
+
+.form-group label {
+    width: 120px; /* Align label width with other fields */
+    color: #393232;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px; /* Add spacing between label and input */
+    text-align: left; /* Keep label text left-aligned */
 }

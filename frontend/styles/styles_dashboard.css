@@ -8,7 +8,7 @@
 /* Body Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(180deg, #eaf8ff 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #aaddf7 0%, #ffffff 50%, #d4fbc7 100%); /* Pastel blue-green gradient */
     margin: 0;
     padding: 0;
     color: #333;
@@ -127,46 +127,47 @@ header {
     color: #ffffff;
 }
 
-/* Map and Directions Section */
 .map-and-directions {
     width: 90%;
     max-width: 1200px;
     margin: 50px auto;
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allow wrapping for better responsiveness */
+    gap: 20px; /* Space between elements */
+    align-items: flex-start; /* Align items at the top */
 }
 
 .map-container {
     flex: 1;
     min-width: 300px;
-    height: 550px;
+    height: 795px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
+    background-color: #f9fcfd; /* Background color for consistency */
 }
 
 .directions-content {
-    flex: 1;
-    height: 550px;
+    flex: 1; /* Increase the space allocated for text content */
+    min-width: 400px; /* Ensure sufficient width */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
-    
 }
 
 .directions-content h2 {
     margin-bottom: 10px;
     color: #10793c;    
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for headings */
+    font-size: 24px; /* Slightly larger font for better hierarchy */
 }
 
 .directions-content p {
     margin-bottom: 15px;
     color: #333;
-    line-height: 1.5;
+    line-height: 1.6; /* Increase line height for better readability */
     font-style: italic;
     text-align: justify; /* Justify text alignment */
 }
@@ -175,18 +176,41 @@ header {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    background-color: #f9fcfd; /* Soft background for better readability */
+    border-radius: 12px; /* Rounded corners */
+    overflow: hidden; /* Clipping for a cleaner look */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.facilities-table tr:nth-child(odd) {
+    background-color: #eef7fc; /* Alternating row colors */
+}
+
+.facilities-table tr:nth-child(even) {
+    background-color: #ffffff; /* Alternating row colors */
 }
 
 .facilities-table td {
-    padding: 10px;
+    padding: 15px;
     vertical-align: top;
+    font-size: 14px; /* Uniform font size */
+    text-align: left; /* Align text for readability */
+    border-bottom: 1px solid #e0e0e0; /* Subtle row divider */
 }
 
 .facilities-table td:first-child {
-    font-size: 20px;
-    text-align: center;
+    font-size: 24px; /* Larger size for icons */
+    text-align: center; /* Center-align the icons */
 }
 
+.facilities-table td:last-child {
+    font-size: 14px; /* Slightly smaller for descriptions */
+    line-height: 1.5; /* Improve readability */
+}
+
+.facilities-table tr:last-child td {
+    border-bottom: none; /* Remove border for the last row */
+}
 .facility-container {
     display: flex;
     align-items: center; /* Align items vertically */
@@ -276,4 +300,177 @@ header {
 .facility-image img:hover {
     transform: scale(1.05); /* Slight zoom effect on hover */
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.testimonials {
+    background-image: url('images/blue-bg2.jpg'); /* Path relative to your CSS file */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px 20px;
+    text-align: center;
+    margin: 50px auto;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 1200px;
+    position: relative;
+    overflow: hidden; /* Clip child elements */
+}
+
+.testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7); /* White overlay with low opacity */
+    z-index: 1; /* Place below the text content */
+}
+
+.testimonials h2 {
+    font-size: 28px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2; /* Place above the background */
+}
+
+.testimonial-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid layout */
+    gap: 20px; /* Space between testimonials */
+    position: relative;
+    z-index: 2; /* Place above the background */
+}
+
+.testimonial {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: left; /* Align text to the left for professionalism */
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonial::before {
+    content: '“'; /* Add a decorative quotation mark */
+    font-size: 50px;
+    color: #27ae60; /* Green for positivity */
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    opacity: 0.2; /* Subtle effect */
+}
+
+.testimonial p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-align: justify; /* Make it more readable */
+}
+
+.testimonial h4 {
+    font-size: 18px;
+    color: #134f8c;
+    font-weight: 600;
+    text-align: right; /* Align the name to the right */
+    margin-top: 10px;
+}
+
+.testimonial h4::before {
+    content: '— '; /* Add a dash before the name */
+    color: #27ae60;
+}
+
+.contact-section {
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    padding: 50px 20px;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-section h2 {
+    font-size: 28px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-section p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.contact-item {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-item h3 {
+    font-size: 18px;
+    color: #27ae60;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.contact-item p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin: 5px 0;
+}
+
+.contact-item a {
+    color: #134f8c;
+    text-decoration: none;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.extra-contact {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.extra-contact h3 {
+    font-size: 20px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.extra-contact p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
 }

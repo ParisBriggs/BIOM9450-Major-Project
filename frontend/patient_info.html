@@ -50,6 +50,11 @@
                 </div>
         
                 <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email">
                 </div>
@@ -124,7 +129,7 @@
         
                 <div class="form-group">
                     <label for="relationship">Relationship:</label>
-                    <select id="relationship" name="relationship" required>
+                    <select id="relationship" name="relationship" required onchange="toggleOtherTextbox()">
                         <option value="" disabled selected>Select Relationship</option>
                         <option value="parent">Parent</option>
                         <option value="partner">Partner</option>
@@ -134,6 +139,10 @@
                         <option value="relative">Relative</option>
                         <option value="other">Other</option>
                     </select>
+                </div>
+                <div class="form-group" id="other-relationship-group" style="display: none;">
+                    <label for="other-relationship">Please Specify:</label>
+                    <input type="text" id="other-relationship" name="other-relationship" placeholder="Specify other relationship">
                 </div>
             
             <div class="form-actions">
@@ -165,4 +174,16 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     });
+
+    function toggleOtherTextbox() {
+    const relationshipSelect = document.getElementById("relationship");
+    const otherRelationshipGroup = document.getElementById("other-relationship-group");
+
+    if (relationshipSelect.value === "other") {
+        otherRelationshipGroup.style.display = "block"; // Show the text box
+    } else {
+        otherRelationshipGroup.style.display = "none"; // Hide the text box
+        document.getElementById("other-relationship").value = ""; // Clear the text box value
+    }
+}
     </script>
