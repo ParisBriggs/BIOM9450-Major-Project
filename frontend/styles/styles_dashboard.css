@@ -7,8 +7,11 @@
 
 /* Body Styling */
 body {
-    font-family: 'Poppins', sans-serif; /* Body font */
-    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #b9e8cf 100%); /* Soft pastel gradient */
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #eaf8ff 0%, #ffffff 100%);
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 /* Header Styling */
@@ -16,11 +19,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-background: white;    
-font-family: 'Poppins', sans-serif; /* Header font */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 40px;
+    background: linear-gradient(90deg, #ffffff, #f8fcff);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e0e6ed;
 }
+
 
 .header-left .logo {
     width: 150px;
@@ -32,6 +36,13 @@ font-family: 'Poppins', sans-serif; /* Header font */
     align-items: center;
     gap: 10px;
     font-size: 15px;
+    font-weight: bold;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .ward {
@@ -40,16 +51,22 @@ font-family: 'Poppins', sans-serif; /* Header font */
     font-weight: bold;
     color: #005633; /* Dark green */
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;}
+}
 
 .profile-name {
-    background-color: #b2cece; /* Light blue */
+    background-color: #f2fcfc; /* Light blue */
     padding: 8px 12px;
-    color: #022f5e; /* Dark blue */
+    color: #0056b3; /* Dark blue */
     border-radius: 8px;
-    text-align: center;
-    font-style: italic;
 }
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    font-weight: italic;
+}
+
 
 .container {
     display: flex;
@@ -67,15 +84,15 @@ font-family: 'Poppins', sans-serif; /* Header font */
 .left-column {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Center vertically */
+    justify-content: flex-end; /* Move closer to the center */
     padding: 20px;
     background-color: #ffffff;
-
 }
 
 .left-column .logo {
     max-width: 300px;
+    margin-left: 40px; /* Add margin to push it towards the center */
 }
 
 /* Right Column Styling */
@@ -142,8 +159,8 @@ font-family: 'Poppins', sans-serif; /* Header font */
 
 .directions-content h2 {
     margin-bottom: 10px;
-    color: #1e7b44;    
-
+    color: #10793c;    
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for headings */
 }
 
 .directions-content p {
@@ -151,6 +168,7 @@ font-family: 'Poppins', sans-serif; /* Header font */
     color: #333;
     line-height: 1.5;
     font-style: italic;
+    text-align: justify; /* Justify text alignment */
 }
 
 .facilities-table {
@@ -168,72 +186,94 @@ font-family: 'Poppins', sans-serif; /* Header font */
     font-size: 20px;
     text-align: center;
 }
-/* Facility Details Section */
-.facility-details {
-    margin: 40px auto;
-    max-width: 1200px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.facility-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Spread text and image evenly */
+    gap: 40px; /* Spacing between text and image */
+    padding: 30px; /* Internal padding for breathing space */
+    background: linear-gradient(145deg, #ffffff, #f4f8fa); /* Subtle gradient */
+    border-radius: 16px; /* Rounded corners for a modern look */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    margin: 40px auto; /* Center container on the page */
+    max-width: 1200px; /* Limit the container width */
+    background: linear-gradient(135deg, #bfe1f2 0%, #ffffff 50%, #bfe1f2 100%); /* Softer and elegant gradient */
+
 }
 
-/* Facility Image Styling */
-.facility-image {
-    flex: 1;
-    max-width: 45%;
-    min-width: 300px;
-}
-
-.facility-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Facility Info Styling */
 .facility-info {
-    flex: 2;
-    padding: 20px;
+    flex: 1; /* Make the text section take up equal space */
     font-family: 'Poppins', sans-serif;
-    color: #333;
+    color: #333; /* Text color */
+    padding-right: 20px; /* Add space between text and image */
 }
 
 .facility-info h2 {
-    font-size: 24px;
+    font-size: 28px; /* Larger heading for emphasis */
+    color: #134f8c; /* Darker, professional color */
     font-weight: 600;
-    margin-bottom: 15px;
-    color: #0056b3;
-}
-
-.facility-info p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: #555;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for headings */
 }
 
 .facility-info h3 {
     font-size: 20px;
-    font-weight: 500;
+    color: #3498db; /* Bright blue for highlights */
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #005633;
+    text-transform: uppercase; /* Add emphasis with uppercase */
+    letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+.facility-info p {
+    font-size: 16px;
+    line-height: 1.8; /* Better readability */
+    margin-bottom: 20px;
+    text-align: justify; /* Justify text alignment */
 }
 
 .facility-info ul {
-    margin-left: 20px;
-    list-style-type: disc;
-    margin-bottom: 15px;
+    list-style: none; /* Remove default bullets */
+    padding-left: 0;
+    margin-top: 10px;
 }
 
 .facility-info ul li {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 10px;
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align the icon and text */
+    margin-bottom: 15px; /* Spacing between items */
+    font-size: 16px; /* Consistent font size */
+    line-height: 1.6; /* Improve readability */
+    gap: 10px; /* Add consistent spacing between icon and text */
+}
+
+.facility-info ul li::before {
+    content: '✔️'; /* Add custom checkmark */
+    flex-shrink: 0; /* Prevent the icon from resizing */
+    font-size: 18px; /* Icon size consistent with text */
+    color: #27ae60; /* Green for positivity */
+    margin-right: 5px; /* Fine-tune spacing */
+}
+
+.facility-info ul li span {
+    flex: 1; /* Ensure text takes the remaining space */
+    word-wrap: break-word; /* Prevent text overflow */
+}
+
+.facility-image {
+    flex: 1; /* Make the image take up equal space */
+    display: flex;
+    justify-content: flex-end; /* Align image to the right */
+}
+
+.facility-image img {
+    max-width: 100%; /* Ensure image fits within the container */
+    height: auto;
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+.facility-image img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
