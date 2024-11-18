@@ -7,8 +7,11 @@
 
 /* Body Styling */
 body {
-    font-family: 'Poppins', sans-serif; /* Body font */
-    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #b9e8cf 100%); /* Soft pastel gradient */
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #aaddf7 0%, #ffffff 50%, #d4fbc7 100%); /* Pastel blue-green gradient */
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 /* Header Styling */
@@ -16,11 +19,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-background: white;    
-font-family: 'Poppins', sans-serif; /* Header font */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 40px;
+    background: linear-gradient(90deg, #ffffff, #f8fcff);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e0e6ed;
 }
+
 
 .header-left .logo {
     width: 150px;
@@ -32,6 +36,13 @@ font-family: 'Poppins', sans-serif; /* Header font */
     align-items: center;
     gap: 10px;
     font-size: 15px;
+    font-weight: bold;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .ward {
@@ -40,16 +51,22 @@ font-family: 'Poppins', sans-serif; /* Header font */
     font-weight: bold;
     color: #005633; /* Dark green */
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;}
+}
 
 .profile-name {
-    background-color: #b2cece; /* Light blue */
+    background-color: #f2fcfc; /* Light blue */
     padding: 8px 12px;
-    color: #022f5e; /* Dark blue */
+    color: #0056b3; /* Dark blue */
     border-radius: 8px;
-    text-align: center;
-    font-style: italic;
 }
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    font-weight: italic;
+}
+
 
 .container {
     display: flex;
@@ -67,15 +84,15 @@ font-family: 'Poppins', sans-serif; /* Header font */
 .left-column {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Center vertically */
+    justify-content: flex-end; /* Move closer to the center */
     padding: 20px;
     background-color: #ffffff;
-
 }
 
 .left-column .logo {
     max-width: 300px;
+    margin-left: 40px; /* Add margin to push it towards the center */
 }
 
 /* Right Column Styling */
@@ -110,130 +127,486 @@ font-family: 'Poppins', sans-serif; /* Header font */
     color: #ffffff;
 }
 
-/* Map and Directions Section */
 .map-and-directions {
     width: 90%;
     max-width: 1200px;
     margin: 50px auto;
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allow wrapping for better responsiveness */
+    gap: 20px; /* Space between elements */
+    align-items: flex-start; /* Align items at the top */
 }
 
 .map-container {
     flex: 1;
     min-width: 300px;
-    height: 550px;
+    height: 795px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
+    background-color: #f9fcfd; /* Background color for consistency */
 }
 
 .directions-content {
-    flex: 1;
-    height: 550px;
+    flex: 1; /* Increase the space allocated for text content */
+    min-width: 400px; /* Ensure sufficient width */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Poppins', sans-serif;
-    
 }
 
 .directions-content h2 {
     margin-bottom: 10px;
-    color: #1e7b44;    
-
+    color: #10793c;    
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for headings */
+    font-size: 24px; /* Slightly larger font for better hierarchy */
 }
 
 .directions-content p {
     margin-bottom: 15px;
     color: #333;
-    line-height: 1.5;
+    line-height: 1.6; /* Increase line height for better readability */
     font-style: italic;
+    text-align: justify; /* Justify text alignment */
 }
 
 .facilities-table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    background-color: #f9fcfd; /* Soft background for better readability */
+    border-radius: 12px; /* Rounded corners */
+    overflow: hidden; /* Clipping for a cleaner look */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.facilities-table tr:nth-child(odd) {
+    background-color: #eef7fc; /* Alternating row colors */
+}
+
+.facilities-table tr:nth-child(even) {
+    background-color: #ffffff; /* Alternating row colors */
 }
 
 .facilities-table td {
-    padding: 10px;
+    padding: 15px;
     vertical-align: top;
+    font-size: 14px; /* Uniform font size */
+    text-align: left; /* Align text for readability */
+    border-bottom: 1px solid #e0e0e0; /* Subtle row divider */
 }
 
 .facilities-table td:first-child {
-    font-size: 20px;
-    text-align: center;
+    font-size: 24px; /* Larger size for icons */
+    text-align: center; /* Center-align the icons */
 }
-/* Facility Details Section */
-.facility-details {
-    margin: 40px auto;
-    max-width: 1200px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.facilities-table td:last-child {
+    font-size: 14px; /* Slightly smaller for descriptions */
+    line-height: 1.5; /* Improve readability */
+}
+
+.facilities-table tr:last-child td {
+    border-bottom: none; /* Remove border for the last row */
+}
+.facility-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Spread text and image evenly */
+    gap: 40px; /* Spacing between text and image */
+    padding: 30px; /* Internal padding for breathing space */
+    border-radius: 16px; /* Rounded corners for a modern look */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    margin: 40px auto; /* Center container on the page */
+    max-width: 1200px; /* Limit the container width */
+    background: linear-gradient(135deg, #dcfae7 0%, #ffffff 50%, #bfe1f2 100%); /* Softer and elegant gradient */
+
 }
 
-/* Facility Image Styling */
-.facility-image {
-    flex: 1;
-    max-width: 45%;
-    min-width: 300px;
-}
-
-.facility-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Facility Info Styling */
 .facility-info {
-    flex: 2;
-    padding: 20px;
+    flex: 1; /* Make the text section take up equal space */
     font-family: 'Poppins', sans-serif;
-    color: #333;
+    color: #333; /* Text color */
+    padding-right: 20px; /* Add space between text and image */
 }
 
 .facility-info h2 {
-    font-size: 24px;
+    font-size: 28px; /* Larger heading for emphasis */
+    color: #134f8c; /* Darker, professional color */
     font-weight: 600;
-    margin-bottom: 15px;
-    color: #0056b3;
-}
-
-.facility-info p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: #555;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for headings */
 }
 
 .facility-info h3 {
     font-size: 20px;
-    font-weight: 500;
+    color: #3498db; /* Bright blue for highlights */
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #005633;
+    text-transform: uppercase; /* Add emphasis with uppercase */
+    letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+.facility-info p {
+    font-size: 16px;
+    line-height: 1.8; /* Better readability */
+    margin-bottom: 20px;
+    text-align: justify; /* Justify text alignment */
 }
 
 .facility-info ul {
-    margin-left: 20px;
-    list-style-type: disc;
-    margin-bottom: 15px;
+    list-style: none; /* Remove default bullets */
+    padding-left: 0;
+    margin-top: 10px;
 }
 
 .facility-info ul li {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Vertically align the icon and text */
+    margin-bottom: 15px; /* Spacing between items */
+    font-size: 16px; /* Consistent font size */
+    line-height: 1.6; /* Improve readability */
+    gap: 10px; /* Add consistent spacing between icon and text */
+}
+
+.facility-info ul li::before {
+    content: '✔️'; /* Add custom checkmark */
+    flex-shrink: 0; /* Prevent the icon from resizing */
+    font-size: 18px; /* Icon size consistent with text */
+    color: #27ae60; /* Green for positivity */
+    margin-right: 5px; /* Fine-tune spacing */
+}
+
+.facility-info ul li span {
+    flex: 1; /* Ensure text takes the remaining space */
+    word-wrap: break-word; /* Prevent text overflow */
+}
+
+.facility-image {
+    flex: 1; /* Make the image take up equal space */
+    display: flex;
+    justify-content: flex-end; /* Align image to the right */
+}
+
+.facility-image img {
+    max-width: 100%; /* Ensure image fits within the container */
+    height: auto;
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+.facility-image img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.testimonials {
+    background-image: url('images/blue-bg2.jpg'); /* Path relative to your CSS file */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px 20px;
+    text-align: center;
+    margin: 50px auto;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 1200px;
+    position: relative;
+    overflow: hidden; /* Clip child elements */
+}
+
+.testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7); /* White overlay with low opacity */
+    z-index: 1; /* Place below the text content */
+}
+
+.testimonials h2 {
+    font-size: 28px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2; /* Place above the background */
+}
+
+.testimonial-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid layout */
+    gap: 20px; /* Space between testimonials */
+    position: relative;
+    z-index: 2; /* Place above the background */
+}
+
+.testimonial {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: left; /* Align text to the left for professionalism */
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonial::before {
+    content: '“'; /* Add a decorative quotation mark */
+    font-size: 50px;
+    color: #27ae60; /* Green for positivity */
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    opacity: 0.2; /* Subtle effect */
+}
+
+.testimonial p {
     font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
     line-height: 1.6;
+    text-align: justify; /* Make it more readable */
+}
+
+.testimonial h4 {
+    font-size: 18px;
+    color: #134f8c;
+    font-weight: 600;
+    text-align: right; /* Align the name to the right */
+    margin-top: 10px;
+}
+
+.testimonial h4::before {
+    content: '— '; /* Add a dash before the name */
+    color: #27ae60;
+}
+.contact-section {
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    padding: 20px 20px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px; /* Reduce extra padding at the bottom of the section */
+
+}
+
+.contact-section h2 {
+    font-size: 28px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-section p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.contact-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contact-item h3 {
     margin-bottom: 10px;
+    font-size: 18px;
+    color: #10793c; /* Accent color */
+    font-weight: 600;
+}
+
+.contact-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.contact-item a {
+    color: #007bff; /* Blue links */
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+.extra-contact {
+    margin-top: 10px; /* Adjusted margin to remove excess space */
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.extra-contact h3 {
+    font-size: 20px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 10px; /* Reduce space under the heading */
+}
+
+.extra-contact p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 5px; /* Reduce space under the contact line */
+}
+
+.gallery-section {
+    background: linear-gradient(180deg, #f9fcfd 0%, #ffffff 100%);
+    padding: 40px 20px;
+    text-align: center;
+    margin: 40px auto;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+}
+
+.gallery-section h2 {
+    font-size: 28px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+}
+
+.gallery-section p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fills the frame without distortion */
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img:hover {
+    transform: scale(1.1);
+}
+
+/* Practitioner Wellness and Support Section */
+.practitioner-wellness-support {
+    background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 1000px;
+}
+
+.practitioner-wellness-support h2 {
+    font-size: 28px;
+    color: #10793c;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.wellness-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.wellness-tips, .resource-center {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wellness-tips:hover, .resource-center:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.wellness-tips h3, .resource-center h3 {
+    font-size: 20px;
+    color: #134f8c;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.wellness-tips ul, .resource-center ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wellness-tips li, .resource-center li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.resource-center a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.resource-center a:hover {
+    text-decoration: underline;
 }
