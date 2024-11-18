@@ -61,35 +61,45 @@ header {
     font-weight: italic;
 }
 
-/* Centered Navbar styling */
+/* Navbar Styling */
 .navbar {
     display: flex;
-    gap: 10px;
-    border: 2px solid #b0c4de; /* Blue outline border */
-    border-radius: 10px;
-    padding: 5px 15px;
+    justify-content: center; /* Centers the navbar content */
+    align-items: center;
+    gap: 5px; /* Reduce the gap between items */
+    padding: 5px 10px; /* Smaller padding to reduce overall height */
     background-color: #f8f8f8;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #b0c4de; /* Thinner border */
+    border-radius: 8px; /* Slightly smaller rounding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 90%; /* Constrain the navbar width */
+    margin: 0 auto; /* Center the navbar */
 }
 
 .navbar a {
     text-decoration: none;
     color: #333;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 10px;
+    font-weight: 500; /* Slightly lighter font weight */
+    font-size: 13px; /* Reduce font size slightly */
+    padding: 5px 10px; /* Smaller padding to match navbar size */
+    border-radius: 6px; /* Less rounding */
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center;
+    line-height: 1.2; /* Slightly tighter spacing */
 }
 
 .navbar a:hover {
-    background-color: #e6f0ff; /* Light blue background on hover */
+    background-color: #e6f0ff;
 }
 
 .navbar a.active {
-    background-color: #e6f0ff;
-    border: 1px solid #b0c4de;
-    border-radius: 10px;
+    background-color: #81bc9b;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 
 /* Report Generator Section */
 .report-generator {
