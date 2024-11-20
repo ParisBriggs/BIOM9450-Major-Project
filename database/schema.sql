@@ -1,3 +1,4 @@
+-- schema.sql
 -- Drop database if it exists and create new one
 DROP DATABASE IF EXISTS biom9450;
 CREATE DATABASE biom9450;
@@ -14,11 +15,30 @@ CREATE TABLE EmergencyContacts (
     PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS GeneralGPs;
+CREATE TABLE GeneralGPs (
+    id              INTEGER AUTO_INCREMENT,
+    firstName       VARCHAR(255) NOT NULL,
+    lastName        VARCHAR(255) NOT NULL,
+    practiceName    VARCHAR(255) NOT NULL,
+    phone           VARCHAR(20) NOT NULL,
+    email          VARCHAR(255),
+    address        TEXT,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS FoodAllergies;
+CREATE TABLE FoodAllergies (
+    id          INTEGER AUTO_INCREMENT,
+    name        VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS Wards;
 CREATE TABLE Wards (
     id          INTEGER AUTO_INCREMENT,
-    wardName    VARCHAR(1),
-    numRooms    INTEGER,
+    wardName    ENUM('A', 'B', 'C') NOT NULL,
+    numRooms    INTEGER CHECK (numRooms = 15),
     PRIMARY KEY (id)
 );
 
@@ -32,23 +52,34 @@ CREATE TABLE Rooms (
     FOREIGN KEY (ward) REFERENCES wards(id)
 );
 
--- drop tables if exist
 DROP TABLE IF EXISTS Patients;
 CREATE TABLE Patients (
     id          INTEGER AUTO_INCREMENT,
     firstName   VARCHAR(255) NOT NULL,
     lastName    VARCHAR(255) NOT NULL,
     sex         ENUM('male', 'female'),
-    photo       VARCHAR(255), -- path to photo for frontend to use
+    photo       VARCHAR(255),
     email       VARCHAR(255),
     phone       VARCHAR(10),
     notes       TEXT,
     emergencyContact INTEGER,
     room        INTEGER,
     dob         DATE,
+    bloodType   ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+    generalGP   INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (emergencyContact) REFERENCES EmergencyContacts(id),
-    FOREIGN KEY (room) REFERENCES Rooms(id)
+    FOREIGN KEY (room) REFERENCES Rooms(id),
+    FOREIGN KEY (generalGP) REFERENCES GeneralGPs(id)
+);
+
+DROP TABLE IF EXISTS PatientAllergies;
+CREATE TABLE PatientAllergies (
+    patient_id      INTEGER,
+    allergy_id      INTEGER,
+    PRIMARY KEY (patient_id, allergy_id),
+    FOREIGN KEY (patient_id) REFERENCES Patients(id),
+    FOREIGN KEY (allergy_id) REFERENCES FoodAllergies(id)
 );
 
 DROP TABLE IF EXISTS Practitioners;
@@ -59,21 +90,19 @@ CREATE TABLE Practitioners (
     userName    VARCHAR(255) NOT NULL,
     position    ENUM('Nurse', 'Doctor'),
     ward        INTEGER,
-    password    VARCHAR(255) NOT NULL, -- change this to hash password
+    password    VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (ward) REFERENCES wards(id)
 );
-
 
 DROP TABLE IF EXISTS Medications;
 CREATE TABLE Medications (
     id          INTEGER AUTO_INCREMENT,
     name        VARCHAR(255) NOT NULL,
     routeAdmin  VARCHAR(255) NOT NULL,
-    requirements TEXT,
+    requirements ENUM('before food', 'after food', 'with food', 'no requirements') NOT NULL DEFAULT 'no requirements',
     PRIMARY KEY (id)
 );
-
 
 DROP TABLE IF EXISTS DietRegimes;
 CREATE TABLE DietRegimes (
@@ -84,7 +113,6 @@ CREATE TABLE DietRegimes (
     beauty      TEXT NOT NULL,
     PRIMARY KEY (id)
 );
-
 
 DROP TABLE IF EXISTS MedicationOrder;
 CREATE TABLE MedicationOrder (
@@ -114,7 +142,6 @@ CREATE TABLE MedicationRound (
     FOREIGN KEY (orderId) REFERENCES MedicationOrder(id),
     FOREIGN KEY (practitioner) REFERENCES Practitioners(id)
 );
-
 
 DROP TABLE IF EXISTS DietOrder;
 CREATE TABLE DietOrder (

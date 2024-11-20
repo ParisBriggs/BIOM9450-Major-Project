@@ -1,6 +1,47 @@
+-- data.sql
 USE biom9450;
 
--- Emergency Contacts first (no foreign key dependencies)
+-- Wards first
+INSERT INTO Wards (wardName, numRooms) VALUES
+('A', 15),
+('B', 15),
+('C', 15);
+
+-- Then Rooms
+INSERT INTO Rooms (ward, RoomNum, available) VALUES
+-- Ward A
+(1, 101, true), (1, 102, true), (1, 103, true), (1, 104, true), (1, 105, true),
+(1, 106, true), (1, 107, true), (1, 108, true), (1, 109, true), (1, 110, true),
+(1, 111, true), (1, 112, true), (1, 113, true), (1, 114, true), (1, 115, true),
+-- Ward B
+(2, 201, true), (2, 202, true), (2, 203, true), (2, 204, true), (2, 205, true),
+(2, 206, true), (2, 207, true), (2, 208, true), (2, 209, true), (2, 210, true),
+(2, 211, true), (2, 212, true), (2, 213, true), (2, 214, true), (2, 215, true),
+-- Ward C
+(3, 301, true), (3, 302, true), (3, 303, true), (3, 304, true), (3, 305, true),
+(3, 306, true), (3, 307, true), (3, 308, true), (3, 309, true), (3, 310, true),
+(3, 311, true), (3, 312, true), (3, 313, true), (3, 314, true), (3, 315, true);
+
+-- Insert General GPs
+INSERT INTO GeneralGPs (firstName, lastName, practiceName, phone, email, address) VALUES
+('Robert', 'Williams', 'Citywide Medical Practice', '0298765432', 'r.williams@citymed.com', '123 Medical Lane, Sydney NSW 2000'),
+('Sarah', 'Chen', 'Eastside Family Practice', '0291234567', 's.chen@eastmed.com', '45 Health Street, Bondi NSW 2026'),
+('James', 'Thompson', 'Northern Medical Center', '0294567890', 'j.thompson@northmed.com', '78 Care Road, Chatswood NSW 2067'),
+('Maria', 'Rodriguez', 'Westside Healthcare', '0297654321', 'm.rodriguez@westmed.com', '90 Wellness Ave, Parramatta NSW 2150'),
+('David', 'Kumar', 'Southern Family Clinic', '0293456789', 'd.kumar@southmed.com', '34 Doctor Street, Hurstville NSW 2220');
+
+-- Insert Food Allergies
+INSERT INTO FoodAllergies (name) VALUES
+('Peanuts'),
+('Shellfish'),
+('Dairy'),
+('Eggs'),
+('Gluten'),
+('Soy'),
+('Tree Nuts'),
+('Fish');
+
+-- Emergency Contacts
 INSERT INTO EmergencyContacts (firstName, lastName, relationship, email, phone) VALUES
 ('Mary', 'Smith', 'Wife', 'mary.smith@email.com', '0412345678'),
 ('David', 'Clarke', 'Husband', 'david.clarke@email.com', '0423456789'),
@@ -9,37 +50,46 @@ INSERT INTO EmergencyContacts (firstName, lastName, relationship, email, phone) 
 ('Jennifer', 'Park', 'Sister', 'jen.park@email.com', '0456789012');
 
 -- Patients with complete information
-INSERT INTO Patients (firstName, lastName, sex, email, phone, notes, emergencyContact, room, photo) VALUES
-('John', 'Smith', 'male', 'john.smith@email.com', '0400123456', 'Has dementia and high blood pressure. Needs regular monitoring.', 1, 101, 'images/profile_image_1.jpg'),
-('Kelly', 'Clarke', 'female', 'kelly.clarke@email.com', '0400234567', 'Type 2 diabetes. Regular glucose monitoring required.', 2, 102, 'images/profile_image_2.jpg'),
-('Sarah', 'Johnson', 'female', 'sarah.johnson@email.com', '0400345678', 'Celiac disease and acid reflux. Strict dietary requirements.', 3, 103, 'images/profile_image_3.jpg'),
-('Toby', 'Wilson', 'male', 'toby.wilson@email.com', '0400456789', 'Parkinsons disease. Requires assistance with daily activities.', 4, 104, 'images/profile_image_6.jpg'),
-('Alex', 'Park', 'male', 'alex.park@email.com', '0400567890', 'Osteoporosis. Weekly medication schedule.', 5, 105, 'images/profile_image_5.jpeg');
+INSERT INTO Patients (firstName, lastName, sex, email, phone, notes, emergencyContact, room, photo, dob, bloodType, generalGP) VALUES
+('John', 'Smith', 'male', 'john.smith@email.com', '0400123456', 'Has dementia and high blood pressure. Needs regular monitoring.', 1, 1, 'images/profile_image_1.jpg', '1950-05-15', 'O+', 1),
+('Kelly', 'Clarke', 'female', 'kelly.clarke@email.com', '0400234567', 'Type 2 diabetes. Regular glucose monitoring required.', 2, 2, 'images/profile_image_2.jpg', '1965-08-22', 'A+', 2),
+('Sarah', 'Johnson', 'female', 'sarah.johnson@email.com', '0400345678', 'Celiac disease and acid reflux. Strict dietary requirements.', 3, 3, 'images/profile_image_3.jpg', '1972-03-10', 'B-', 3),
+('Toby', 'Wilson', 'male', 'toby.wilson@email.com', '0400456789', 'Parkinsons disease. Requires assistance with daily activities.', 4, 4, 'images/profile_image_6.jpg', '1945-11-30', 'AB+', 4),
+('Alex', 'Park', 'male', 'alex.park@email.com', '0400567890', 'Osteoporosis. Weekly medication schedule.', 5, 5, 'images/profile_image_5.jpeg', '1958-07-25', 'A-', 5);
+
+-- Link Patients with their Food Allergies
+INSERT INTO PatientAllergies (patient_id, allergy_id) VALUES
+(1, 1),  -- John Smith is allergic to peanuts
+(2, 3),  -- Kelly Clarke is allergic to dairy
+(3, 5),  -- Sarah Johnson is allergic to gluten
+(4, 2),  -- Toby Wilson is allergic to shellfish
+(5, 6);  -- Alex Park is allergic to soy
 
 -- Practitioners
-INSERT INTO Practitioners (firstName, lastName, userName, password) VALUES
-('Emma', 'Brown', 'emma.brown', 'password123'),
-('Michael', 'Lee', 'michael.lee', 'password456'),
-('Sarah', 'Wilson', 'sarah.wilson', 'password789'),
-('James', 'Taylor', 'james.taylor', 'password101'),
-('Lisa', 'Anderson', 'lisa.anderson', 'password102'),
-('David', 'Martinez', 'david.martinez', 'password103');
+INSERT INTO Practitioners (firstName, lastName, userName, position, ward, password) VALUES
+('Emma', 'Brown', 'emma.brown', 'Nurse', 1, 'password123'),
+('Michael', 'Lee', 'michael.lee', 'Doctor', 1, 'password456'),
+('Sarah', 'Wilson', 'sarah.wilson', 'Nurse', 2, 'password789'),
+('James', 'Taylor', 'james.taylor', 'Doctor', 2, 'password101'),
+('Lisa', 'Anderson', 'lisa.anderson', 'Nurse', 3, 'password102'),
+('David', 'Martinez', 'david.martinez', 'Doctor', 3, 'password103');
 
 -- Medications
-INSERT INTO Medications (name, routeAdmin) VALUES
-('Donepezil', 'oral'),
-('Lisinopril', 'oral'),
-('Repaglinide', 'oral'),
-('Insulin', 'injection'),
-('Sitagliptin', 'oral'),
-('Calcium Carbonate', 'oral'),
-('Levodopa-Carbidopa', 'infusion'),
-('Pramipexole', 'oral'),
-('Eldepryl', 'oral'),
-('Alendronate', 'oral'),
-('Risedronate', 'oral'),
-('Vitamin D', 'oral'),
-('Calcium', 'oral');
+INSERT INTO Medications (name, routeAdmin, requirements) VALUES
+('Donepezil', 'oral', 'after food'),
+('Lisinopril', 'oral', 'before food'),
+('Repaglinide', 'oral', 'with food'),
+('Insulin', 'injection', 'with food'),
+('Sitagliptin', 'oral', 'before food'),
+('Calcium Carbonate', 'oral', 'with food'),
+('Levodopa-Carbidopa', 'infusion', 'before food'),
+('Pramipexole', 'oral', 'with food'),
+('Eldepryl', 'oral', 'after food'),
+('Alendronate', 'oral', 'before food'),
+('Risedronate', 'oral', 'before food'),
+('Vitamin D', 'oral', 'with food'),
+('Calcium', 'oral', 'with food');
+
 
 -- Diet Regimes
 INSERT INTO DietRegimes (name, food, excercise, beauty) VALUES
@@ -84,31 +134,31 @@ INSERT INTO DietRegimes (name, food, excercise, beauty) VALUES
  'Weight-bearing exercises to support bone health', 
  'Monitor bone density and calcium levels');
 
--- Medication Orders for past week (23-29 Nov), current week (30 Nov-7 Dec), and future week (8-14 Dec)
-INSERT INTO MedicationOrder (patient, medication, dateOrdered, frequency, dosage) VALUES
+-- Medication Orders
+INSERT INTO MedicationOrder (patient, medication, dateOrdered, frequency, dosage, orderedBy) VALUES
 -- John Smith
-(1, 2, '2023-11-23', '2', 5.0),  -- Lisinopril twice daily
-(1, 1, '2023-11-23', '1', 5.0),  -- Donepezil once daily (evening)
+(1, 2, '2023-11-23', '2', 5.0, 2),  -- Lisinopril twice daily
+(1, 1, '2023-11-23', '1', 5.0, 2),  -- Donepezil once daily
 
 -- Kelly Clarke
-(2, 3, '2023-11-23', '3', 2.0),  -- Repaglinide three times daily (with meals)
-(2, 4, '2023-11-23', '3', NULL), -- Insulin three times daily (variable dosage)
-(2, 5, '2023-11-23', '1', 25.0), -- Sitagliptin once daily
+(2, 3, '2023-11-23', '3', 2.0, 4),  -- Repaglinide three times daily
+(2, 4, '2023-11-23', '3', NULL, 4), -- Insulin three times daily
+(2, 5, '2023-11-23', '1', 25.0, 4), -- Sitagliptin once daily
 
 -- Sarah Johnson
-(3, 6, '2023-11-23', '2', 640.0), -- Calcium Carbonate twice daily
+(3, 6, '2023-11-23', '2', 640.0, 6), -- Calcium Carbonate twice daily
 
 -- Toby Wilson
-(4, 7, '2023-11-23', '3', 0.125), -- Levodopa-Carbidopa three times daily
-(4, 8, '2023-11-23', '3', 0.125), -- Pramipexole three times daily
-(4, 9, '2023-11-23', '2', 5.0),   -- Eldepryl twice daily
+(4, 7, '2023-11-23', '3', 0.125, 2), -- Levodopa-Carbidopa three times daily
+(4, 8, '2023-11-23', '3', 0.125, 2), -- Pramipexole three times daily
+(4, 9, '2023-11-23', '2', 5.0, 2),   -- Eldepryl twice daily
 
 -- Alex Park
-(5, 10, '2023-11-23', '1', 35.0), -- Weekly Alendronate once daily
-(5, 11, '2023-11-23', '1', 5.0),  -- Risedronate once daily
-(5, 12, '2023-11-23', '1', 600.0); -- Vitamin D once daily
+(5, 10, '2023-11-23', '1', 35.0, 4), -- Weekly Alendronate once daily
+(5, 11, '2023-11-23', '1', 5.0, 4),  -- Risedronate once daily
+(5, 12, '2023-11-23', '1', 600.0, 4); -- Vitamin D once daily
 
--- Updated Medication Rounds with roundTime
+-- Medication Rounds
 INSERT INTO MedicationRound (orderId, practitioner, roundTime, status, notes) VALUES
 -- John Smith's rounds
 (1, 1, 'morning', 'given', 'Taken with water'),
@@ -134,24 +184,24 @@ INSERT INTO MedicationRound (orderId, practitioner, roundTime, status, notes) VA
 -- Alex Park's rounds
 (10, 1, 'morning', 'given', 'Taken with breakfast');
 
--- Diet Orders - matched to patient conditions
-INSERT INTO DietOrder (patient, dietRegime, dateOrdered, frequency) VALUES
+-- Diet Orders
+INSERT INTO DietOrder (patient, dietRegime, dateOrdered, frequency, orderedBy) VALUES
 -- John Smith (has dementia + high blood pressure)
-(1, 1, '2023-11-23', '3'),  -- Low Sodium Diet, 3 meals per day
+(1, 1, '2023-11-23', '3', 2),  -- Low Sodium Diet, 3 meals per day
 
 -- Kelly Clarke (Type 2 diabetes)
-(2, 2, '2023-11-23', '3'),  -- Low Glycemic Index Diet, 3 meals per day
+(2, 2, '2023-11-23', '3', 4),  -- Low Glycemic Index Diet, 3 meals per day
 
 -- Sarah Johnson (Celiac disease and acid reflux)
-(3, 3, '2023-11-23', '3'),  -- Gluten-Free Diet, 3 meals per day
+(3, 3, '2023-11-23', '3', 6),  -- Gluten-Free Diet, 3 meals per day
 
 -- Toby Wilson (Parkinson's Disease)
-(4, 4, '2023-11-23', '3'),  -- High Protein Diet, 3 meals per day
+(4, 4, '2023-11-23', '3', 2),  -- High Protein Diet, 3 meals per day
 
 -- Alex Park (Osteoporosis)
-(5, 5, '2023-11-23', '3');  -- High Calcium Diet, 3 meals per day
+(5, 5, '2023-11-23', '3', 4);  -- High Calcium Diet, 3 meals per day
 
--- Diet Rounds with specific notes related to diet types
+-- Diet Rounds
 INSERT INTO DietRound (orderId, practitioner, roundTime, status, notes) VALUES
 -- John Smith - Low Sodium Diet rounds
 (1, 1, 'morning', 'given', 'Fresh fruit and unsalted oatmeal served. Patient ate well.'),

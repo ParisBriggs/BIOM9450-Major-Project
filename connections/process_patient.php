@@ -30,14 +30,13 @@ try {
             $new_filename = uniqid() . '.' . $file_extension;
             
             // Set correct paths
-            $upload_directory = '../frontend/images/';  // Physical path relative to this file
+            $upload_directory = '../frontend/images/';
             $target_file = $upload_directory . $new_filename;
-            $db_file_path = 'images/' . $new_filename;  // Path for database/display
+            $db_file_path = 'images/' . $new_filename;
 
             error_log("Upload directory: " . $upload_directory);
             error_log("Target file: " . $target_file);
             
-            // Create directory if it doesn't exist
             if (!file_exists($upload_directory)) {
                 error_log("Creating directory: " . $upload_directory);
                 if (!mkdir($upload_directory, 0777, true)) {
@@ -45,7 +44,6 @@ try {
                 }
             }
 
-            // Try to move the file
             if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
                 error_log("Failed to move uploaded file. Error code: " . $_FILES['photo']['error']);
                 throw new Exception("Failed to save uploaded file");
@@ -56,13 +54,22 @@ try {
             error_log("Database path set to: " . $photo_path);
         }
 
-        // Process other form data
+        // Emergency Contact Details
         $ec_firstname = trim($_POST['em_firstname']);
         $ec_lastname = trim($_POST['em_lastname']);
         $ec_relationship = trim($_POST['relationship']);
         $ec_email = trim($_POST['em_email']);
         $emergency_phone = preg_replace('/[^0-9]/', '', $_POST['em_phone']);
+
+        // GP Details
+        $gp_firstname = trim($_POST['gp_firstname']);
+        $gp_lastname = trim($_POST['gp_lastname']);
+        $gp_practicename = trim($_POST['gp_practicename']);
+        $gp_phone = preg_replace('/[^0-9]/', '', $_POST['gp_phone']);
+        $gp_email = trim($_POST['gp_email']);
+        $gp_address = trim($_POST['gp_address']);
         
+        // Patient Details
         $p_firstname = trim($_POST['firstname']);
         $p_lastname = trim($_POST['lastname']);
         $p_sex = strtolower($_POST['sex']);
@@ -70,6 +77,9 @@ try {
         $patient_phone = preg_replace('/[^0-9]/', '', $_POST['phone']);
         $p_notes = trim($_POST['notes']);
         $p_room = $_POST['room'];
+        $p_dob = $_POST['dob'];
+        $p_bloodtype = $_POST['bloodtype'];
+        $p_allergies = isset($_POST['allergies']) ? $_POST['allergies'] : '';
 
         // Validate phone numbers
         if (strlen($patient_phone) > 0 && strlen($patient_phone) != 10) {
@@ -78,21 +88,33 @@ try {
         if (strlen($emergency_phone) != 10) {
             throw new Exception("Invalid emergency contact phone number");
         }
+        if (strlen($gp_phone) != 10) {
+            throw new Exception("Invalid GP phone number");
+        }
 
-        // Debug values before database insert
+        // Debug values
         error_log("Values to be inserted:");
         error_log("Photo path: " . $photo_path);
         error_log("Patient name: " . $p_firstname . " " . $p_lastname);
 
-        // Prepare and execute statement
-        $stmt = $pdo->prepare("CALL InsertPatientWithContact(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // Prepare and execute statement with new parameters
+        $stmt = $pdo->prepare("CALL InsertPatientWithContact(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         $params = [
+            // Emergency Contact Details
             $ec_firstname,
             $ec_lastname, 
             $ec_relationship,
             $ec_email,
             $emergency_phone,
+            // GP Details
+            $gp_firstname,
+            $gp_lastname,
+            $gp_practicename,
+            $gp_phone,
+            $gp_email,
+            $gp_address,
+            // Patient Details
             $p_firstname,
             $p_lastname,
             $p_sex,
@@ -100,7 +122,10 @@ try {
             $p_email,
             $patient_phone,
             $p_notes,
-            $p_room
+            $p_room,
+            $p_dob,
+            $p_bloodtype,
+            $p_allergies
         ];
         
         error_log("Executing stored procedure with parameters: " . print_r($params, true));
@@ -119,3 +144,4 @@ try {
     header("Location: /frontend/edit_patient_info.html?status=error&message=" . urlencode($e->getMessage()));
     exit();
 }
+?>

@@ -2,7 +2,6 @@ USE biom9450;
 
 DELIMITER //
 
-
 --                                          Patient Record Page                                                --
 
 -- get list of patients including photo, name and room
@@ -17,6 +16,8 @@ BEGIN
         p.room
     FROM 
         Patients p
+    GROUP BY 
+        p.id
     ORDER BY 
         p.room;
 END //
@@ -32,7 +33,9 @@ BEGIN
     FROM 
         Patients p
     WHERE 
-        p.id = id;
+        p.id = id
+    GROUP BY 
+        p.id;
 END //
 
 -- gets room, photo and name of patient searched for
@@ -47,7 +50,9 @@ BEGIN
     FROM 
         Patients p
     WHERE 
-        LOWER(CONCAT(p.firstName, ' ', p.lastName)) LIKE LOWER(CONCAT('%', searchName, '%'));
+        LOWER(CONCAT(p.firstName, ' ', p.lastName)) LIKE LOWER(CONCAT('%', searchName, '%'))
+    GROUP BY 
+        p.id;
 END //
 
 -- gets room, photo and name of patient searched for
@@ -62,7 +67,9 @@ BEGIN
     FROM 
         Patients p
     WHERE 
-        p.room = room;
+        p.room = room
+    GROUP BY 
+        p.id;
 END //
 
 -- get basic patient and emergency contact info for a specific patient
@@ -80,16 +87,30 @@ BEGIN
         p.phone AS patientPhone,
         p.room,
         p.notes,
+        p.dob,
+        p.bloodType,
         ec.firstName AS emergencyContactFirstName,
         ec.lastName AS emergencyContactLastName,
         ec.relationship,
         ec.email AS emergencyContactEmail,
-        ec.phone AS emergencyContactPhone
+        ec.phone AS emergencyContactPhone,
+        gp.firstName AS gpFirstName,
+        gp.lastName AS gpLastName,
+        gp.practiceName AS gpPracticeName,
+        gp.phone AS gpPhone,
+        gp.email AS gpEmail,
+        gp.address AS gpAddress,
+        GROUP_CONCAT(fa.name) AS foodAllergies
     FROM 
         Patients p
         LEFT JOIN EmergencyContacts ec ON p.emergencyContact = ec.id
+        LEFT JOIN GeneralGPs gp ON p.generalGP = gp.id
+        LEFT JOIN PatientAllergies pa ON p.id = pa.patient_id
+        LEFT JOIN FoodAllergies fa ON pa.allergy_id = fa.id
     WHERE 
-        p.firstName LIKE firstName AND p.lastName LIKE lastName;
+        p.firstName LIKE firstName AND p.lastName LIKE lastName
+    GROUP BY 
+        p.id;
 END //
 
 -- get basic patient and emergency contact info for a specific room
@@ -107,16 +128,30 @@ BEGIN
         p.phone AS patientPhone,
         p.room,
         p.notes,
+        p.dob,
+        p.bloodType,
         ec.firstName AS emergencyContactFirstName,
         ec.lastName AS emergencyContactLastName,
         ec.relationship,
         ec.email AS emergencyContactEmail,
-        ec.phone AS emergencyContactPhone
+        ec.phone AS emergencyContactPhone,
+        gp.firstName AS gpFirstName,
+        gp.lastName AS gpLastName,
+        gp.practiceName AS gpPracticeName,
+        gp.phone AS gpPhone,
+        gp.email AS gpEmail,
+        gp.address AS gpAddress,
+        GROUP_CONCAT(fa.name) AS foodAllergies
     FROM 
         Patients p
         LEFT JOIN EmergencyContacts ec ON p.emergencyContact = ec.id
+        LEFT JOIN GeneralGPs gp ON p.generalGP = gp.id
+        LEFT JOIN PatientAllergies pa ON p.id = pa.patient_id
+        LEFT JOIN FoodAllergies fa ON pa.allergy_id = fa.id
     WHERE 
-        p.room = room;
+        p.room = room
+    GROUP BY 
+        p.id;
 END //
 
 -- get all of a patients medications given their id
@@ -128,6 +163,7 @@ BEGIN
         m.name AS medicationName,
         mo.dosage AS dosage,
         m.routeAdmin AS administrationRoute,
+        m.requirements AS requirements,
         mo.frequency AS timesPerDay
     FROM 
         MedicationOrder mo
@@ -162,7 +198,7 @@ BEGIN
     WHERE 
         do.patient = patientId
         AND do.dateOrdered = (
-            -- Get the most recent order for each medication
+            -- Get the most recent order for each diet regime
             SELECT MAX(do2.dateOrdered)
             FROM DietOrder do2
             WHERE do2.patient = patientId
@@ -171,10 +207,6 @@ BEGIN
     ORDER BY 
         d.name;
 END //
-
---                                         Medication Rounds Page                                              --
-
---                                        Diet Regime Rounds Page                                              --
 
 --                                        Insert Patient Record Page                                           --
 
@@ -187,6 +219,13 @@ CREATE PROCEDURE InsertPatientWithContact(
     IN ec_relationship VARCHAR(255),
     IN ec_email VARCHAR(255),
     IN ec_phone VARCHAR(10),
+    -- GP Details
+    IN gp_firstName VARCHAR(255),
+    IN gp_lastName VARCHAR(255),
+    IN gp_practiceName VARCHAR(255),
+    IN gp_phone VARCHAR(20),
+    IN gp_email VARCHAR(255),
+    IN gp_address TEXT,
     -- Patient Details
     IN p_firstName VARCHAR(255),
     IN p_lastName VARCHAR(255),
@@ -196,10 +235,19 @@ CREATE PROCEDURE InsertPatientWithContact(
     IN p_phone VARCHAR(10),
     IN p_notes TEXT,
     IN p_room INTEGER,
-    IN p_dob DATE
+    IN p_dob DATE,
+    IN p_bloodType ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+    -- Food Allergies (comma-separated list of allergy IDs)
+    IN p_allergies VARCHAR(255)
 )
 BEGIN
     DECLARE new_contact_id INT;
+    DECLARE new_gp_id INT;
+    DECLARE new_patient_id INT;
+    DECLARE allergy_id VARCHAR(10);
+    DECLARE str_length INT;
+    DECLARE start_pos INT;
+    DECLARE comma_pos INT;
     
     -- Insert Emergency Contact
     INSERT INTO EmergencyContacts (
@@ -218,6 +266,25 @@ BEGIN
     
     SET new_contact_id = LAST_INSERT_ID();
     
+    -- Insert General GP
+    INSERT INTO GeneralGPs (
+        firstName,
+        lastName,
+        practiceName,
+        phone,
+        email,
+        address
+    ) VALUES (
+        gp_firstName,
+        gp_lastName,
+        gp_practiceName,
+        gp_phone,
+        gp_email,
+        gp_address
+    );
+    
+    SET new_gp_id = LAST_INSERT_ID();
+    
     -- Insert Patient
     INSERT INTO Patients (
         firstName,
@@ -229,7 +296,9 @@ BEGIN
         notes,
         emergencyContact,
         room,
-        dob
+        dob,
+        bloodType,
+        generalGP
     ) VALUES (
         p_firstName,
         p_lastName,
@@ -240,12 +309,35 @@ BEGIN
         p_notes,
         new_contact_id,
         p_room,
-        p_dob
+        p_dob,
+        p_bloodType,
+        new_gp_id
     );
+    
+    SET new_patient_id = LAST_INSERT_ID();
+    
+    -- Handle food allergies (parsing comma-separated list)
+    SET str_length = LENGTH(p_allergies);
+    SET start_pos = 1;
+    
+    WHILE start_pos <= str_length DO
+        SET comma_pos = LOCATE(',', p_allergies, start_pos);
+        IF comma_pos = 0 THEN
+            SET allergy_id = SUBSTR(p_allergies, start_pos);
+            SET start_pos = str_length + 1;
+        ELSE
+            SET allergy_id = SUBSTR(p_allergies, start_pos, comma_pos - start_pos);
+            SET start_pos = comma_pos + 1;
+        END IF;
+        
+        IF allergy_id IS NOT NULL AND LENGTH(TRIM(allergy_id)) > 0 THEN
+            INSERT INTO PatientAllergies (patient_id, allergy_id)
+            VALUES (new_patient_id, TRIM(allergy_id));
+        END IF;
+    END WHILE;
 END //
 
 --                                        Other util queries                                           --
-
 
 -- remove patient with id
 DROP PROCEDURE IF EXISTS DeletePatient //
@@ -254,6 +346,9 @@ CREATE PROCEDURE DeletePatient(IN patientID INTEGER)
 BEGIN
     -- First get the emergency contact ID
     DECLARE contactID INTEGER;
+    
+    -- Delete any food allergy associations
+    DELETE FROM PatientAllergies WHERE patient_id = patientID;
     
     -- Get emergency contact ID before deleting patient
     SELECT emergencyContact INTO contactID FROM Patients WHERE id = patientID;
@@ -265,6 +360,31 @@ BEGIN
     IF contactID IS NOT NULL THEN
         DELETE FROM EmergencyContacts WHERE id = contactID;
     END IF;
+END //
+
+-- Get all food allergies
+DROP PROCEDURE IF EXISTS GetAllFoodAllergies //
+
+CREATE PROCEDURE GetAllFoodAllergies()
+BEGIN
+    SELECT id, name
+    FROM FoodAllergies
+    ORDER BY name;
+END //
+
+-- Get all general GPs
+DROP PROCEDURE IF EXISTS GetAllGeneralGPs //
+
+CREATE PROCEDURE GetAllGeneralGPs()
+BEGIN
+    SELECT id, 
+           CONCAT(firstName, ' ', lastName) as fullName,
+           practiceName,
+           phone,
+           email,
+           address
+    FROM GeneralGPs
+    ORDER BY lastName, firstName;
 END //
 
 DELIMITER ;
