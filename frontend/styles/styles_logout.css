@@ -1,0 +1,72 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.logout-container {
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.status-icon {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background-color: #e0f7ea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-icon .checkmark {
+    font-size: 48px;
+    color: #4caf50;
+}
+
+h1 {
+    font-size: 20px;
+    color: #333;
+    margin: 20px 0;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+/* Back to Login Link */
+.login-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4caf50;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.login-link:hover {
+    background-color: #45a049;
+}
