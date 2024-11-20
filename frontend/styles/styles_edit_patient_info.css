@@ -425,3 +425,11 @@ select:hover {
     box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
     outline: none; /* Remove default outline */
 }
+
+.required {
+    color: red;
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: normal; /* Make the asterisk red * for the required symbol/
+    /* Add some spacing between the label and the asterisk */
+}
