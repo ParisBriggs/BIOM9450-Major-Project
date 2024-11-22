@@ -337,11 +337,12 @@ header {
     display: flex;
     gap: 15px;
     margin: 20px 0;
-    justify-content: flex-start;
+    justify-content: flex-end;
 }
 
 .profile-buttons button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none; /* Ensure underline doesn't appear on hover */
 }
 
 .edit-button,
@@ -361,7 +362,8 @@ header {
 }
 
 .edit-button:hover {
-    background-color: #004399;
+    background-color: #042958;
+    text-decoration: none; /* Ensure underline doesn't appear on hover */
 }
 
 .add-button {
@@ -371,6 +373,7 @@ header {
 
 .add-button:hover {
     background-color: #1d9448;
+    text-decoration: none; /* Ensure underline doesn't appear on hover */
 }
 
 /* Profile Information */

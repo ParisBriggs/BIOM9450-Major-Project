@@ -42,7 +42,6 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
             <a href="patient_records.php" class="active">Patient Records</a>
             <a href="manage_orders.html">Manage Orders</a>
             <a href="generate_reports.html">Generate Reports</a>
-            <a href="patient_info.html">Patient Information</a>
         </nav>
         <div class="header-right">
             <div class="ward-profile">
@@ -87,14 +86,15 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
         <!-- Main Profile Section -->
         <main class="profile-section">
             <?php if ($selectedPatient): ?>
+                <div class="profile-buttons">
+                    <button class="edit-button">Delete this patient</button>
+                    <a href="patient_info.html" class="add-button">Add New Patient</a>
+                </div>
                 <div class="profile-header">
                     <img src="<?php echo $selectedPatient['photo']; ?>" alt="Profile Photo" class="profile-photo">
                     <h2><?php echo $selectedPatient['firstName'] . ' ' . $selectedPatient['lastName']; ?></h2>
                 </div>
-                <div class="profile-buttons">
-                    <button class="edit-button">Edit Patient Profile</button>
-                    <button class="add-button">Add New Patient</button>
-                </div>
+
                 
                 <!-- Patient Information with Boxes -->
                 <div class="profile-info-grid">
