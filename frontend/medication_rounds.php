@@ -46,7 +46,7 @@ $medicationData = getMedicationData($date, $round);
         <a href="medication_rounds.php" class="active">Medication Rounds</a>
         <a href="diet_rounds.html">Diet Regime Rounds</a>
         <a href="patient_records.php">Patient Records</a>
-        <a href="manage_orders.html">Manage Orders</a>
+        <a href="manage_orders.php">Manage Orders</a>
         <a href="generate_reports.html">Generate Reports</a>
     </nav>
 </header>

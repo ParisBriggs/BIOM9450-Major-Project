@@ -56,130 +56,110 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication Orders</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 16px;
-            text-align: left;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        form {
-            margin: 20px 0;
-        }
-    </style>
+    <title>Medication Rounds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="styles/styles_manage_orders.css">
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
-    <h1>Medication Orders</h1>
+     <!-- Logo and Centered Navigation Bar -->
+     <header>
+        <div class="header-left">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+        </div>
+        <nav class="navbar">
+            <a href="dashboard.html">Home</a>
+            <a href="medication_rounds.html">Medication Rounds</a>
+            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="patient_records.php">Patient Records</a>
+            <a href="manage_orders.php"class="active">Manage Orders</a>
+            <a href="generate_reports.html">Generate Reports</a>
+        </nav>
+        <div class="header-right">
+            <div class="ward-profile">
+                <span class="ward-info">Ward A</span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </header>
 
-    <!-- Display Success Message -->
-    <?php if (isset($_GET['message'])): ?>
-        <p id="confirmation-message" style="color: green;">
-            <?php echo htmlspecialchars($_GET['message']); ?>
-        </p>
-        <script>
-            // Hide the success message after 20 seconds
-            setTimeout(() => {
-                const messageElement = document.getElementById('confirmation-message');
-                if (messageElement) {
-                    messageElement.style.display = 'none';
-                }
-            }, 5000);
-        </script>
-    <?php endif; ?>
+    <!-- Search and Action Buttons -->
+    <div class="search-container">
+        <input type="text" placeholder="Search Patient Name" class="search-input">
+        <input type="text" placeholder="Search Patient ID" class="search-input">
+        <button class="add-button">Add New Prescription</button>
+    </div>
 
-    <!-- Display Error Message -->
-    <?php if (isset($_GET['error'])): ?>
-        <p id="error-message" style="color: red;">
-            <?php echo htmlspecialchars($_GET['error']); ?>
-        </p>
-        <script>
-            // Hide the error message after 20 seconds
-            setTimeout(() => {
-                const errorElement = document.getElementById('error-message');
-                if (errorElement) {
-                    errorElement.style.display = 'none';
-                }
-            }, 5000);
-        </script>
-    <?php endif; ?>
+     <!-- Main Content Section -->
+     <main class="orders-section">
+        <h2>All Past Orders</h2>
 
-    <!-- Display Orders -->
-    <form method="POST" action="fetch_medication_orders.php">
-        <table>
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>ID</th>
-                    <th>Patient</th>
-                    <th>Medication</th>
-                    <th>Date Ordered</th>
-                    <th>Daily Frequency</th>
-                    <th>Dosage</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($orders as $order): ?>
+        <!-- Display Success or Error Messages -->
+        <?php if (isset($_GET['message'])): ?>
+            <p id="confirmation-message" style="color: green;">
+                <?php echo htmlspecialchars($_GET['message']); ?>
+            </p>
+            <script>
+                setTimeout(() => {
+                    const messageElement = document.getElementById('confirmation-message');
+                    if (messageElement) {
+                        messageElement.style.display = 'none';
+                    }
+                }, 5000);
+            </script>
+        <?php endif; ?>
+
+        <?php if (isset($_GET['error'])): ?>
+            <p id="error-message" style="color: red;">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+            </p>
+            <script>
+                setTimeout(() => {
+                    const errorElement = document.getElementById('error-message');
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                }, 5000);
+            </script>
+        <?php endif; ?>
+
+        <!-- Table for Orders -->
+        <form method="POST" action="manage_orders.php">
+            <table class="orders-table">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" name="order_ids[]" value="<?php echo $order['id']; ?>"></td>
-                        <td><?php echo $order['id']; ?></td>
-                        <td><?php echo $order['patientName']; ?></td>
-                        <td><?php echo $order['medicationName']; ?></td>
-                        <td><?php echo $order['dateOrdered']; ?></td>
-                        <td><?php echo $order['frequency']; ?></td>
-                        <td><?php echo $order['dosage']; ?></td>
+                        <th>Select</th>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Medication</th>
+                        <th>Date Ordered</th>
+                        <th>Daily Frequency</th>
+                        <th>Dosage</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-
-    <!-- Delete Orders Button -->
-        <button type="submit" name="delete_orders">Delete Selected Orders</button>
-    </form>
-
-    <!-- Add New Order Form -->
-    <h2>Add New Order</h2>
-    <form method="POST" action="medication_order_actions.php">
-        <label for="patient">Patient:</label>
-        <select name="patient" id="patient" required>
-            <option value="">Select Patient</option>
-            <?php foreach ($patients as $patient): ?>
-                <option value="<?php echo $patient['id']; ?>">
-                    <?php echo $patient['name']; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br>
-        <label for="medication">Medication:</label>
-        <select name="medication" id="medication" required>
-            <option value="">Select Medication</option>
-            <?php foreach ($medications as $medication): ?>
-                <option value="<?php echo $medication['id']; ?>">
-                    <?php echo $medication['name']; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br>
-        <label for="dateOrdered">Date Ordered:</label>
-        <input type="date" name="dateOrdered" id="dateOrdered" required>
-        <br>
-        <label for="frequency">Frequency:</label>
-        <input type="number" name="frequency" id="frequency" required>
-        <br>
-        <label for="dosage">Dosage:</label>
-        <input type="number" step="0.01" name="dosage" id="dosage" required>
-        <br>
-        <button type="submit" name="add_order">Add New Order</button>
-    </form>
-
+                </thead>
+                <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td><input type="checkbox" name="order_ids[]" value="<?php echo $order['id']; ?>"></td>
+                            <td><?php echo $order['id']; ?></td>
+                            <td><?php echo $order['patientName']; ?></td>
+                            <td><?php echo $order['medicationName']; ?></td>
+                            <td><?php echo $order['dateOrdered']; ?></td>
+                            <td><?php echo $order['frequency']; ?></td>
+                            <td><?php echo $order['dosage']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <button type="submit" name="delete_orders" class="delete-button">Delete Selected Orders</button>
+        </form>
+    </main>
 </body>
 </html>
