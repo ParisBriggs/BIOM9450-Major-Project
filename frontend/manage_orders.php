@@ -94,7 +94,8 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
     <div class="search-container">
         <input type="text" placeholder="Search Patient Name" class="search-input">
         <input type="text" placeholder="Search Patient ID" class="search-input">
-        <button class="add-button">Add New Prescription</button>
+        <a href="add_prescription.php" class="add-button">Add New Prescription</a>
+
     </div>
 
      <!-- Main Content Section -->
