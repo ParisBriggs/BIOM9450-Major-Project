@@ -69,7 +69,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
         </div>
         <nav class="navbar">
             <a href="dashboard.html">Home</a>
-            <a href="medication_rounds.html">Medication Rounds</a>
+            <a href="medication_rounds.php">Medication Rounds</a>
             <a href="diet_rounds.html">Diet Regime Rounds</a>
             <a href="patient_records.php">Patient Records</a>
             <a href="manage_orders.php"class="active">Manage Orders</a>

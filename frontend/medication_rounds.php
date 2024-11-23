@@ -8,10 +8,21 @@ $currentDate = date('Y-m-d');
 $dateFiltered = isset($_GET['date']) ? $_GET['date'] : $currentDate;
 $roundTimeFiltered = isset($_GET['roundTime']) ? $_GET['roundTime'] : 'morning';
 
-$query = "SELECT MedicationRound.id AS roundId, orderId, patient, medication, roundTime, status, notes, roundDate
+$query = "SELECT 
+            MedicationRound.id AS roundId, 
+            MedicationRound.orderId, 
+            CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName, 
+            Patients.photo AS patientImage, 
+            MedicationOrder.medication, 
+            MedicationRound.roundTime, 
+            MedicationRound.status, 
+            MedicationRound.notes, 
+            MedicationRound.roundDate
           FROM MedicationRound
           JOIN MedicationOrder ON MedicationRound.orderId = MedicationOrder.id
-          WHERE roundDate = ? AND roundTime = ?";
+          JOIN Patients ON MedicationOrder.patient = Patients.id
+          WHERE MedicationRound.roundDate = ? AND MedicationRound.roundTime = ?";
+
 $stmt = $conn->prepare($query);
 $stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
 $stmt->execute();
@@ -41,75 +52,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medication Rounds</title>
-    <link rel="stylesheet" href="styles_medication_rounds.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/styles_medication_rounds.css">
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
-    <h1>Medication Rounds</h1>
+    <!-- Logo and Centered Navigation Bar -->
+    <header>
+        <div class="header-left">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
+        </div>
+        <nav class="navbar">
+            <a href="dashboard.html">Home</a>
+            <a href="medication_rounds.php" class="active">Medication Rounds</a>
+            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="patient_records.php">Patient Records</a>
+            <a href="manage_orders.php">Manage Orders</a>
+            <a href="generate_reports.html">Generate Reports</a>
+        </nav>
+        <div class="header-right">
+            <div class="ward-profile">
+                <span class="ward-info">Ward A</span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </header>
 
     <!-- Filters -->
-    <form method="GET" id="filters">
-        <label for="date">Select Date:</label>
-        <input type="date" id="date" name="date" value="<?php echo $dateFiltered; ?>" onchange="this.form.submit()">
 
-        <label for="roundTime">Select Round:</label>
-        <select id="roundTime" name="roundTime" onchange="this.form.submit()">
-            <option value="morning" <?php echo ($roundTimeFiltered === 'morning') ? 'selected' : ''; ?>>Morning</option>
-            <option value="afternoon" <?php echo ($roundTimeFiltered === 'afternoon') ? 'selected' : ''; ?>>Afternoon</option>
-            <option value="evening" <?php echo ($roundTimeFiltered === 'evening') ? 'selected' : ''; ?>>Evening</option>
-        </select>
-    </form>
+
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Dropdowns for Day and Round Selection -->
+        <div class="selection-bar">
+            <form method="GET" id="filters">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" value="<?php echo $dateFiltered; ?>" onchange="this.form.submit()">
+
+            <label for="roundTime">Select Round:</label>
+            <select id="roundTime" name="roundTime" onchange="this.form.submit()">
+                <option value="morning" <?php echo ($roundTimeFiltered === 'morning') ? 'selected' : ''; ?>>Morning</option>
+                <option value="afternoon" <?php echo ($roundTimeFiltered === 'afternoon') ? 'selected' : ''; ?>>Afternoon</option>
+                <option value="evening" <?php echo ($roundTimeFiltered === 'evening') ? 'selected' : ''; ?>>Evening</option>
+            </select>
+            </form>
+        </div>
 
     <!-- Medications Table -->
     <form method="POST">
-        <table>
-            <thead>
-                <tr>
-                    <th>Patient</th>
-                    <th>Medication</th>
-                    <th>Round Time</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($medications)): ?>
-                    <?php foreach ($medications as $medication): ?>
-                        <tr>
-                            <td><?php echo $medication['patient']; ?></td>
-                            <td><?php echo $medication['medication']; ?></td>
-                            <td><?php echo ucfirst($medication['roundTime']); ?></td>
-                            <td>
-                                <?php if ($medication['roundDate'] === $currentDate): ?>
-                                    <select name="status[]">
-                                        <option value="" <?php echo ($medication['status'] === NULL) ? 'selected' : ''; ?>>Select</option>
-                                        <option value="given" <?php echo ($medication['status'] === 'given') ? 'selected' : ''; ?>>Given</option>
-                                        <option value="refused" <?php echo ($medication['status'] === 'refused') ? 'selected' : ''; ?>>Refused</option>
-                                        <option value="no stock" <?php echo ($medication['status'] === 'no stock') ? 'selected' : ''; ?>>No Stock</option>
-                                        <option value="fasting" <?php echo ($medication['status'] === 'fasting') ? 'selected' : ''; ?>>Fasting</option>
-                                    </select>
-                                <?php else: ?>
-                                    <?php echo ucfirst($medication['status']); ?>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <?php if ($medication['roundDate'] === $currentDate): ?>
-                                    <input type="text" name="notes[]" value="<?php echo isset($medication['notes']) ? htmlspecialchars($medication['notes']) : ''; ?>">
-                                    <?php else: ?>
-                                    <?php echo htmlspecialchars($medication['notes']); ?>
-                                <?php endif; ?>
-                            </td>
-                            <input type="hidden" name="roundId[]" value="<?php echo $medication['roundId']; ?>">
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
+    <table class="medication-table">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Medication</th>
+                <th>Round Time</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($medications)): ?>
+                <?php foreach ($medications as $medication): ?>
                     <tr>
-                        <td colspan="5">No medications found for <?php echo $dateFiltered; ?> - <?php echo ucfirst($roundTimeFiltered); ?> Round.</td>
+
+                        <!-- Patient Name -->
+                        <td><?php echo htmlspecialchars($medication['patientName']); ?></td>
+
+                        <!-- Medication -->
+                        <td><?php echo htmlspecialchars($medication['medication']); ?></td>
+
+                        <!-- Round Time -->
+                        <td><?php echo ucfirst($medication['roundTime']); ?></td>
+
+                        <!-- Status -->
+                        <td>
+                            <?php if ($medication['roundDate'] === $currentDate): ?>
+                                <select name="status[]">
+                                    <option value="" <?php echo ($medication['status'] === NULL) ? 'selected' : ''; ?>>Select</option>
+                                    <option value="given" <?php echo ($medication['status'] === 'given') ? 'selected' : ''; ?>>Given</option>
+                                    <option value="refused" <?php echo ($medication['status'] === 'refused') ? 'selected' : ''; ?>>Refused</option>
+                                    <option value="no stock" <?php echo ($medication['status'] === 'no stock') ? 'selected' : ''; ?>>No Stock</option>
+                                    <option value="fasting" <?php echo ($medication['status'] === 'fasting') ? 'selected' : ''; ?>>Fasting</option>
+                                </select>
+                            <?php else: ?>
+                                <?php echo ucfirst($medication['status']); ?>
+                            <?php endif; ?>
+                        </td>
+
+                        <!-- Notes -->
+                        <td>
+                            <?php if ($medication['roundDate'] === $currentDate): ?>
+                                <input type="text" name="notes[]" value="<?php echo isset($medication['notes']) ? htmlspecialchars($medication['notes']) : ''; ?>">
+                            <?php else: ?>
+                                <?php echo htmlspecialchars($medication['notes']); ?>
+                            <?php endif; ?>
+                        </td>
+                        <input type="hidden" name="roundId[]" value="<?php echo $medication['roundId']; ?>">
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No medications found for <?php echo $dateFiltered; ?> - <?php echo ucfirst($roundTimeFiltered); ?> Round.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
         <?php if ($dateFiltered === $currentDate): ?>
-            <button type="submit" name="updateRounds">Update Rounds</button>
+            <button id="save-button" type="submit" name="updateRounds">Update Rounds</button>
         <?php endif; ?>
     </form>
 </body>
