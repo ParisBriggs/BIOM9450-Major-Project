@@ -16,7 +16,8 @@ function getMedicationData($date, $round) {
             mr.practitioner,
             mr.roundTime,
             mr.status,
-            mr.notes
+            mr.notes,
+            mr.roundDate
         FROM 
             MedicationOrder AS mo
         INNER JOIN 
