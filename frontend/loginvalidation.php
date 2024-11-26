@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 ini_set('display_errors', 1);
@@ -23,11 +20,11 @@ if ($conn->connect_error) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the submitted username and password
-    $submitted_username = $_POST["userName"];
+    $submitted_userName = $_POST["userName"];
     $submitted_password = $_POST["password"];
 
     // Prepare and execute SQL query to check if the username and password are correct
-    $sql = "SELECT * FROM Practitioners_tbl WHERE userName = ? AND password = ?";
+    $sql = "SELECT * FROM practitioners where userName=? AND password=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $submitted_userName, $submitted_password);
     $stmt->execute();
@@ -36,12 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if a matching user is found
     if ($result->num_rows > 0) {
         // User is authenticated, redirect to dashboard.html
+
         header("Location: dashboard.html");
         exit();
-    } else {
-        // Invalid credentials
-        echo "Invalid username or password.";
-    }
+
+
+} else {
+    // Invalid credentials, redirect back to login.html with an error message
+   echo('Incorrect username or password');
+}
 
     // Close the prepared statement and connection
     $stmt->close();
