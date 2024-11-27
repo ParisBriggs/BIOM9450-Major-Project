@@ -2,6 +2,7 @@
 include_once 'db_connection.php';
 
 // Get current date
+date_default_timezone_set('Australia/Sydney'); // Use your server's local timezone
 $currentDate = date('Y-m-d');
 
 // Fetch filtered data
@@ -18,11 +19,11 @@ if ($dateFiltered === $currentDate) {
         SELECT 
             MedicationOrder.id AS orderId,
             CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName,
-            Patients.photo AS patientImage,
-            MedicationOrder.medication,
-            MedicationOrder.frequency
+            Medications.name AS medicationName, 
+            MedicationOrder.frequency          
         FROM MedicationOrder
         JOIN Patients ON MedicationOrder.patient = Patients.id
+        JOIN Medications ON MedicationOrder.medication = Medications.id
     ";
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -83,21 +84,23 @@ if ($dateFiltered === $currentDate) {
                 MedicationRound.id AS roundId, 
                 MedicationRound.orderId, 
                 CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName, 
-                MedicationOrder.medication, 
+                Medications.name AS medicationName,
                 MedicationRound.roundTime, 
                 MedicationRound.status, 
                 MedicationRound.notes, 
                 MedicationRound.roundDate
             FROM MedicationRound
             JOIN MedicationOrder ON MedicationRound.orderId = MedicationOrder.id
+            JOIN Medications ON MedicationOrder.medication = Medications.id 
             JOIN Patients ON MedicationOrder.patient = Patients.id
             WHERE MedicationRound.roundDate = ? AND MedicationRound.roundTime = ?";
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $medications = $result->fetch_all(MYSQLI_ASSOC);
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $medications = $result->fetch_all(MYSQLI_ASSOC);
 } 
 ?>
 
@@ -160,86 +163,87 @@ if ($dateFiltered === $currentDate) {
 
     <!-- Medications Table -->
     <form method="POST">
-    <table class="medication-table">
-        <thead>
-            <tr>
-                <th>Patient Name</th>
-                <th>Medication</th>
-                <th>Round Time</th>
-                <th>Status</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($medications)): ?>
-                <?php foreach ($medications as $medication): ?>
-                    <tr>
-                        <!-- Patient Name -->
-                        <td><?php echo htmlspecialchars($medication['patientName']); ?></td>
+    <div class="table-container">
 
-                        <!-- Medication -->
-                        <td><?php echo htmlspecialchars($medication['medication']); ?></td>
+        <table class="medication-table">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Medication</th>
+                    <th>Round Time</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($medications)): ?>
+                    <?php foreach ($medications as $medication): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($medication['patientName']); ?></td>
+                            <td><?php echo htmlspecialchars($medication['medicationName']); ?></td>
+                            <td><?php echo ucfirst($medication['roundTime']); ?></td>
 
-                        <!-- Round Time -->
-                        <td><?php echo ucfirst($medication['roundTime']); ?></td>
+                            <!-- Status -->
+                            <td>
+                                <?php if ($medication['roundDate'] === $currentDate): ?>
+                                    <select name="status[]" class="status-select" required>
+                                        <option value="" <?php echo ($medication['status'] === NULL) ? 'selected' : ''; ?>>Select</option>
+                                        <option value="given" <?php echo ($medication['status'] === 'given') ? 'selected' : ''; ?>>Given</option>
+                                        <option value="refused" <?php echo ($medication['status'] === 'refused') ? 'selected' : ''; ?>>Refused</option>
+                                        <option value="no stock" <?php echo ($medication['status'] === 'no stock') ? 'selected' : ''; ?>>No Stock</option>
+                                        <option value="fasting" <?php echo ($medication['status'] === 'fasting') ? 'selected' : ''; ?>>Fasting</option>
+                                    </select>
+                                <?php else: ?>
+                                    <?php echo ucfirst($medication['status']); ?>
+                                <?php endif; ?>
+                            </td>
 
-                        <!-- Status -->
-                        <td>
-                            <?php if ($medication['roundDate'] === $currentDate): ?>
-                                <select name="status[]" class="status-select" required>
-                                    <option value="" <?php echo ($medication['status'] === NULL) ? 'selected' : ''; ?>>Select</option>
-                                    <option value="given" <?php echo ($medication['status'] === 'given') ? 'selected' : ''; ?>>Given</option>
-                                    <option value="refused" <?php echo ($medication['status'] === 'refused') ? 'selected' : ''; ?>>Refused</option>
-                                    <option value="no stock" <?php echo ($medication['status'] === 'no stock') ? 'selected' : ''; ?>>No Stock</option>
-                                    <option value="fasting" <?php echo ($medication['status'] === 'fasting') ? 'selected' : ''; ?>>Fasting</option>
-                                </select>
-                            <?php else: ?>
-                                <?php echo ucfirst($medication['status']); ?>
-                            <?php endif; ?>
-                        </td>
+                            <!-- Notes -->
+                            <td>
+                                <?php if ($medication['roundDate'] === $currentDate): ?>
+                                    <input type="text" name="notes[]" value="<?php echo isset($medication['notes']) ? htmlspecialchars($medication['notes']) : ''; ?>">
+                                <?php else: ?>
+                                    <?php echo htmlspecialchars($medication['notes']); ?>
+                                <?php endif; ?>
+                            </td>
+                            <input type="hidden" name="roundId[]" value="<?php echo $medication['roundId']; ?>">
+                        </tr>
+                    <?php endforeach; ?>
+                <?php elseif (!empty($generatedRounds)): ?>
+                    <?php foreach ($generatedRounds as $index => $round): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($round['patientName']); ?></td>
+                            <td><?php echo htmlspecialchars($round['medicationName']); ?></td>
+                            <td><?php echo htmlspecialchars($round['roundTime']); ?></td>
+                            <td>
+                            <select name="status[]" class="status-select" required>
+                                <option value="">Select</option>
+                                <option value="given">Given</option>
+                                <option value="refused">Refused</option>
+                                <option value="no stock">No Stock</option>
+                                <option value="fasting">Fasting</option>
+                            </select>
+                            </td>
+                            <td><input type="text" name="notes[]" class="notes-input" placeholder="Add notes..."></td>
+                            <input type="hidden" name="generatedRounds[]" value="<?php echo htmlspecialchars(json_encode($round)); ?>">
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="5">No medication rounds found for <?php echo htmlspecialchars($dateFiltered); ?>.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
 
-                        <!-- Notes -->
-                        <td>
-                            <?php if ($medication['roundDate'] === $currentDate): ?>
-                                <input type="text" name="notes[]" value="<?php echo isset($medication['notes']) ? htmlspecialchars($medication['notes']) : ''; ?>">
-                            <?php else: ?>
-                                <?php echo htmlspecialchars($medication['notes']); ?>
-                            <?php endif; ?>
-                        </td>
-                        <input type="hidden" name="roundId[]" value="<?php echo $medication['roundId']; ?>">
-                    </tr>
-                <?php endforeach; ?>
-            <?php elseif (!empty($generatedRounds)): ?>
-                <?php foreach ($generatedRounds as $index => $round): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($round['patientName']); ?></td>
-                        <td><?php echo htmlspecialchars($round['medication']); ?></td>
-                        <td><?php echo htmlspecialchars($round['roundTime']); ?></td>
-                        <td>
-                        <select name="status[]" class="status-select" required>
-                            <option value="">Select</option>
-                            <option value="given">Given</option>
-                            <option value="refused">Refused</option>
-                            <option value="no stock">No Stock</option>
-                            <option value="fasting">Fasting</option>
-                        </select>
-                        </td>
-                        <td><input type="text" name="notes[]" class="notes-input" placeholder="Add notes..."></td>
-                        <input type="hidden" name="generatedRounds[]" value="<?php echo htmlspecialchars(json_encode($round)); ?>">
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr><td colspan="5">No medication rounds found for <?php echo htmlspecialchars($dateFiltered); ?>.</td></tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-
+    </div>
+    
+    <!-- Update rounds button -->
     <?php if ($dateFiltered === $currentDate): ?>
         <button id="save-button" type="submit" name="updateRounds">Update Rounds</button>
     <?php endif; ?>
     
     </form>
 
+    <!-- Success message after updating database successfully -->
     <?php if (isset($_GET['message'])): ?>
         <div class="success-message">
             <?php echo htmlspecialchars($_GET['message']); ?>
