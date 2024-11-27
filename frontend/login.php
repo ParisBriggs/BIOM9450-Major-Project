@@ -31,12 +31,12 @@
                     <input type="checkbox" name="remember">
                     <label for="remember"> Remember for 30 days</label>
                 </div>
-                <a href="#">Forgot password?</a>
+                <a href="forgetpassword.php">Forgot password?</a>
             </div>
             <button type="submit">Login</button>
         </form>
         <div class="signup">
-            Don't have an account? <a href="#">Sign up</a>
+            Don't have an account? <a href="signup.php">Sign up</a>
         </div>
     </div>
 
