@@ -1,5 +1,5 @@
 <?php
-include_once 'db_connection.php'; // Ensure this connects to your database
+include_once 'db_connection.php';
 
 // Get current date
 $currentDate = date('Y-m-d');
@@ -8,42 +8,79 @@ $currentDate = date('Y-m-d');
 $dateFiltered = isset($_GET['date']) ? $_GET['date'] : $currentDate;
 $roundTimeFiltered = isset($_GET['roundTime']) ? $_GET['roundTime'] : 'morning';
 
-$query = "SELECT 
-            MedicationRound.id AS roundId, 
-            MedicationRound.orderId, 
-            CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName, 
-            Patients.photo AS patientImage, 
-            MedicationOrder.medication, 
-            MedicationRound.roundTime, 
-            MedicationRound.status, 
-            MedicationRound.notes, 
-            MedicationRound.roundDate
-          FROM MedicationRound
-          JOIN MedicationOrder ON MedicationRound.orderId = MedicationOrder.id
-          JOIN Patients ON MedicationOrder.patient = Patients.id
-          WHERE MedicationRound.roundDate = ? AND MedicationRound.roundTime = ?";
+// Initialize variables
+$medications = [];
+$generatedRounds = [];
 
-$stmt = $conn->prepare($query);
-$stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
-$stmt->execute();
-$result = $stmt->get_result();
-$medications = $result->fetch_all(MYSQLI_ASSOC);
+// For current day
+if ($dateFiltered === $currentDate) {
+    $query = "
+        SELECT 
+            MedicationOrder.id AS orderId,
+            CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName,
+            Patients.photo AS patientImage,
+            MedicationOrder.medication,
+            MedicationOrder.frequency
+        FROM MedicationOrder
+        JOIN Patients ON MedicationOrder.patient = Patients.id
+    ";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $orders = $result->fetch_all(MYSQLI_ASSOC);
 
-// Handle Form Submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
-    foreach ($_POST['roundId'] as $key => $roundId) {
-        $status = $_POST['status'][$key] ?? NULL;
-        $notes = $_POST['notes'][$key] ?? NULL;
-
-        $updateQuery = "UPDATE MedicationRound SET status = ?, notes = ? WHERE id = ?";
-        $updateStmt = $conn->prepare($updateQuery);
-        $updateStmt->bind_param('ssi', $status, $notes, $roundId);
-        $updateStmt->execute();
+    foreach ($orders as $order) {
+        $frequency = $order['frequency'];
+        if ($frequency >= 1 && $roundTimeFiltered === 'morning') {
+            $generatedRounds[] = $order + ['roundTime' => 'morning'];
+        }
+        if ($frequency >= 2 && $roundTimeFiltered === 'afternoon') {
+            $generatedRounds[] = $order + ['roundTime' => 'afternoon'];
+        }
+        if ($frequency == 3 && $roundTimeFiltered === 'evening') {
+            $generatedRounds[] = $order + ['roundTime' => 'evening'];
+        }
     }
 
-    header("Location: medication_rounds.php?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Updated successfully");
-    exit;
-}
+    // Handle Form Submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
+        foreach ($_POST['generatedRounds'] as $key => $round) {
+            $roundData = json_decode($round, true);
+            $insertQuery = "
+                INSERT INTO MedicationRound (orderId, roundTime, roundDate, status, notes)
+                VALUES (?, ?, ?, ?, ?)
+            ";
+            $status = $_POST['status'][$key];
+            $notes = $_POST['notes'][$key] ?? NULL;
+            $insertStmt = $conn->prepare($insertQuery);
+            $insertStmt->bind_param('issss', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes);
+            $insertStmt->execute();
+        }
+
+        header("Location: medication_rounds.php?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Rounds updated successfully");
+        exit; // Prevent further execution
+    }
+} else {
+    $query = "SELECT 
+                MedicationRound.id AS roundId, 
+                MedicationRound.orderId, 
+                CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName, 
+                MedicationOrder.medication, 
+                MedicationRound.roundTime, 
+                MedicationRound.status, 
+                MedicationRound.notes, 
+                MedicationRound.roundDate
+            FROM MedicationRound
+            JOIN MedicationOrder ON MedicationRound.orderId = MedicationOrder.id
+            JOIN Patients ON MedicationOrder.patient = Patients.id
+            WHERE MedicationRound.roundDate = ? AND MedicationRound.roundTime = ?";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $medications = $result->fetch_all(MYSQLI_ASSOC);
+} 
 ?>
 
 <!DOCTYPE html>
@@ -85,10 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
         </div> 
     </header>
 
-    <!-- Filters -->
-
-
-
     <!-- Main Content Section -->
     <main>
         <!-- Dropdowns for Day and Round Selection -->
@@ -122,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
             <?php if (!empty($medications)): ?>
                 <?php foreach ($medications as $medication): ?>
                     <tr>
-
                         <!-- Patient Name -->
                         <td><?php echo htmlspecialchars($medication['patientName']); ?></td>
 
@@ -135,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
                         <!-- Status -->
                         <td>
                             <?php if ($medication['roundDate'] === $currentDate): ?>
-                                <select name="status[]">
+                                <select name="status[]" class="status-select" required>
                                     <option value="" <?php echo ($medication['status'] === NULL) ? 'selected' : ''; ?>>Select</option>
                                     <option value="given" <?php echo ($medication['status'] === 'given') ? 'selected' : ''; ?>>Given</option>
                                     <option value="refused" <?php echo ($medication['status'] === 'refused') ? 'selected' : ''; ?>>Refused</option>
@@ -158,17 +190,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
                         <input type="hidden" name="roundId[]" value="<?php echo $medication['roundId']; ?>">
                     </tr>
                 <?php endforeach; ?>
+            <?php elseif (!empty($generatedRounds)): ?>
+                <?php foreach ($generatedRounds as $index => $round): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($round['patientName']); ?></td>
+                        <td><?php echo htmlspecialchars($round['medication']); ?></td>
+                        <td><?php echo htmlspecialchars($round['roundTime']); ?></td>
+                        <td>
+                        <select name="status[]" class="status-select" required>
+                            <option value="">Select</option>
+                            <option value="given">Given</option>
+                            <option value="refused">Refused</option>
+                            <option value="no stock">No Stock</option>
+                            <option value="fasting">Fasting</option>
+                        </select>
+                        </td>
+                        <td><input type="text" name="notes[]" class="notes-input" placeholder="Add notes..."></td>
+                        <input type="hidden" name="generatedRounds[]" value="<?php echo htmlspecialchars(json_encode($round)); ?>">
+                    </tr>
+                <?php endforeach; ?>
             <?php else: ?>
-                <tr>
-                    <td colspan="6">No medications found for <?php echo $dateFiltered; ?> - <?php echo ucfirst($roundTimeFiltered); ?> Round.</td>
-                </tr>
+                <tr><td colspan="5">No medication rounds found for <?php echo htmlspecialchars($dateFiltered); ?>.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>
 
-        <?php if ($dateFiltered === $currentDate): ?>
-            <button id="save-button" type="submit" name="updateRounds">Update Rounds</button>
-        <?php endif; ?>
+    <?php if ($dateFiltered === $currentDate): ?>
+        <button id="save-button" type="submit" name="updateRounds">Update Rounds</button>
+    <?php endif; ?>
+    
     </form>
+
+    <?php if (isset($_GET['message'])): ?>
+        <div class="success-message">
+            <?php echo htmlspecialchars($_GET['message']); ?>
+        </div>
+    <?php endif; ?>
+
 </body>
 </html>
+
