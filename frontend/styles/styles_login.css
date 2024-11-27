@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: linear-gradient(to bottom, #baf9e1, #45b3f3);
+    background-image: linear-gradient(to bottom,  #ffffff, #b8e0e6, #5a8ab6);
 }
 
 .login-container {
@@ -42,7 +42,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-image: radial-gradient(#74baf3,#016772 );
+    background-image: linear-gradient(to right, #66d9d9, #007bff);
     color: white;
     font-size: 16px;
     border: none;
@@ -54,7 +54,7 @@ body {
 
 
 .login-container button:hover {
-    background-color: #012449;
+    background-color: #454a4e;
 }
 
 .login-container .remember-forgot {
