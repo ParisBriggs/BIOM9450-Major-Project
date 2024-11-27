@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
-
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
     <!-- Logo and Centered Navigation Bar -->
@@ -27,11 +27,18 @@
             <a href="patient_info.html"class="active">Patient Information</a>
         </nav>
         <div class="header-right">
-            <div class = "ward-profile"></div>
+            <div class="ward-profile">
                 <span class="ward-info">Ward A</span>
-                <span class="profile-name">Rachel Sunway<br><small>Nurse</small></span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> 
     </header>
     <div class="outer-container">
         <form method="POST" action="../connections/process_patient.php" enctype="multipart/form-data" class="form-grid">

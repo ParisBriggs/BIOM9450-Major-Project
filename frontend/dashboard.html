@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles/styles_dashboard.css">
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
 
@@ -17,11 +18,18 @@
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <div class="header-right">
-            <div class = "ward-profile"></div>
+            <div class="ward-profile">
                 <span class="ward-info">Ward A</span>
-                <span class="profile-name">Rachel Sunway<br><small>Nurse</small></span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> 
     </header>
 
     <div class="container">

@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Generator</title>
+    <title>Medication Rounds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles_generate_reports.css">
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Logo and Centered Navigation Bar -->
     <header>
         <div class="header-left">
-            <img src="images/company_logo.png" alt="Healthcare Logo" class="logo">
+            <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
             <a href="dashboard.html">Home</a>
@@ -20,14 +22,22 @@
             <a href="manage_orders.html">Manage Orders</a>
             <a href="generate_reports.html" class="active">Generate Reports</a>
             <a href="patient_info.html">Patient Information</a>
+
         </nav>
         <div class="header-right">
-            <div class="ward-profile"></div>
-            <span class="ward-info">Ward A</span>
-            <span class="profile-name">Dr. Alex Moore<br><small>Admin</small></span>
-        </div>
+            <div class="ward-profile">
+                <span class="ward-info">Ward A</span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </header>
-
     <!-- Report Generator Form -->
     <section class="report-generator">
         <h2>Select Report:</h2>

@@ -6,6 +6,7 @@
     <title>Medication Rounds</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles_medication_rounds.css">
+    <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
     <!-- Logo and Centered Navigation Bar -->
@@ -24,11 +25,18 @@
 
         </nav>
         <div class="header-right">
-            <div class = "ward-profile"></div>
+            <div class="ward-profile">
                 <span class="ward-info">Ward A</span>
-                <span class="profile-name">Rachel Sunway<br><small>Nurse</small></span>
+                <div class="dropdown">
+                    <button class="dropdown-button" onclick="toggleDropdown()">
+                        Rachel Sunway<br><small>Nurse</small>
+                    </button>
+                    <div id="dropdown-content" class="dropdown-content">
+                        <a href="logout.html">Logout</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> 
     </header>
 
     <!-- Main Content Section -->
