@@ -43,9 +43,26 @@ if ($dateFiltered === $currentDate) {
     }
 
     // Handle Form Submission
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generatedRounds'])) {
         foreach ($_POST['generatedRounds'] as $key => $round) {
             $roundData = json_decode($round, true);
+    
+            // Check if the round already exists
+            $checkQuery = "
+                SELECT id FROM MedicationRound
+                WHERE orderId = ? AND roundTime = ? AND roundDate = ?
+            ";
+            $checkStmt = $conn->prepare($checkQuery);
+            $checkStmt->bind_param('iss', $roundData['orderId'], $roundData['roundTime'], $dateFiltered);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+    
+            if ($checkResult->num_rows > 0) {
+                // Skip insertion if the round already exists
+                continue;
+            }
+    
+            // Insert new round if it doesn't exist
             $insertQuery = "
                 INSERT INTO MedicationRound (orderId, roundTime, roundDate, status, notes)
                 VALUES (?, ?, ?, ?, ?)
@@ -56,10 +73,11 @@ if ($dateFiltered === $currentDate) {
             $insertStmt->bind_param('issss', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes);
             $insertStmt->execute();
         }
-
+    
         header("Location: medication_rounds.php?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Rounds updated successfully");
-        exit; // Prevent further execution
+        exit;
     }
+    
 } else {
     $query = "SELECT 
                 MedicationRound.id AS roundId, 
@@ -128,7 +146,8 @@ if ($dateFiltered === $currentDate) {
         <div class="selection-bar">
             <form method="GET" id="filters">
             <label for="date">Select Date:</label>
-            <input type="date" id="date" name="date" value="<?php echo $dateFiltered; ?>" onchange="this.form.submit()">
+            <input type="date" id="date" name="date" value="<?php echo $dateFiltered; ?>" 
+               max="<?php echo date('Y-m-d'); ?>" onchange="this.form.submit()">
 
             <label for="roundTime">Select Round:</label>
             <select id="roundTime" name="roundTime" onchange="this.form.submit()">
