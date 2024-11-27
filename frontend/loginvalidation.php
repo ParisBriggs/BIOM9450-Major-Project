@@ -38,10 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
 
 
-} else {
-    // Invalid credentials, redirect back to login.html with an error message
-   echo('Incorrect username or password');
-}
+    } else {
+        // If the credentials are invalid, redirect back to the login page with an error message
+        header("Location: login.php?error=invalid_credentials"); // Error query parameter
+        exit;
+    }
 
     // Close the prepared statement and connection
     $stmt->close();
