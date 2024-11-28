@@ -6,7 +6,7 @@
 $servername = "localhost";
 $username = "root";
 $password = ""; // Your database password
-$dbname = "biom9450";
+$dbname = "major_project_database";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

@@ -4,7 +4,7 @@
 $servername = "localhost"; // your database server
 $username = "root"; // your database username
 $password = ""; // your database password
-$dbname = "biom9450"; // the database name
+$dbname = "major_project_database"; // the database name
 
 // Create a connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);
