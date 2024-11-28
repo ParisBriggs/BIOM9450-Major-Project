@@ -11,9 +11,9 @@
         <div class="status-icon">
             <span class="checkmark">&#10003;</span>
         </div>
-        <h1>You have been logged out</h1>
-        <p>Thank you</p>
-        <a href="login.html" class="login-link">Back to Login</a>
+        <h1>You have been logged out successfully!</h1>
+        <p>Thank you for using our service.</p>
+        <a href="login.php" class="login-link">Back to Login</a>
     </div>
 </body>
 </html>
