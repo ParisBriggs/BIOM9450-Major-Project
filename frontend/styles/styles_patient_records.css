@@ -225,7 +225,7 @@ header {
     flex-direction: column;
     gap: 20px;
     overflow-y: auto; /* Add vertical scrolling */
-    max-height: 68vh; /* Constrain height for the sidebar */
+    max-height: 75vh; /* Constrain height for the sidebar */
 }
 
 
@@ -254,6 +254,22 @@ header {
     border-radius: 5px;
 }
 
+.add-patient-button {
+    display: inline-block;
+    background-color: #26b567; /* Green color for the button */
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.add-patient-button:hover {
+    background-color: #1d9448; /* Darker green for hover effect */
+    text-decoration: none; /* Ensure no underline appears on hover */
+}
 
 .resident-item {
     display: flex;
@@ -367,10 +383,7 @@ header {
 
 /* Notes Section */
 .notes-section {
-    background-color: #e8f3fc;
-    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 15px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -385,27 +398,21 @@ header {
     margin-bottom: 10px;
 }
 
-hr {
-    border: none;
-    height: 20px; /* Acts as spacing */
-    background: none;
-}
-
 
 .notes-section, .medication-section, .diet-section {
     margin: 20px 0;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fdecec; /* Medications: light red */
+    background-color: #fdecec;
 }
 
 .diet-section {
-    background-color: #e8f3fc; /* Diet: light blue */
+    background-color: #e8f3fc;
 }
 
 .notes-section {
-    background-color: #efeeee; /* Diet: light blue */
+    background-color: #eceaeafb;
 }
 
 /* Table Styling */

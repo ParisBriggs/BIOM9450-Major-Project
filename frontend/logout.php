@@ -13,7 +13,7 @@
         </div>
         <h1>You have been logged out</h1>
         <p>Thank you</p>
-        <a href="login.html" class="login-link">Back to Login</a>
+        <a href="login.php" class="login-link">Back to Login</a>
     </div>
 </body>
 </html>
