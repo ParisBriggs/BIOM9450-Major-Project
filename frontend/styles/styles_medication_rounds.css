@@ -188,18 +188,20 @@ header {
 
 /* Table Styling */
 .medication-table {
-    width: 90%;
     margin: 20px auto;
     border-collapse: separate;
     border-spacing: 0;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 92%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures consistent column widths */
 }
 
 /* Container for Scrollable Table */
 .table-container {
-    max-height: 360px; /* Adjust the height as needed */
+    max-height: 430px; /* Adjust the height as needed */
     overflow-y: auto;  /* Enable vertical scrolling */
     border-radius: 8px; /* Optional: Add rounded corners */
 }
@@ -226,6 +228,8 @@ header {
     text-align: center; /* Center aligns all content */
 }
 
+
+
 .medication-table th:first-child, 
 .medication-table td:first-child {
     border-top-left-radius: 10px;
@@ -244,6 +248,20 @@ header {
     background-color: #eef7fc; /* Slightly darker hover */
     transform: scale(1.01);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Always show scrollbar */
+.table-container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #464749; /* Scrollbar color */
+    border-radius: 4px; /* Rounded corners for the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Scrollbar track color */
 }
 
 /* Save Button */
