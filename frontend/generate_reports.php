@@ -1,11 +1,23 @@
 <?php
 include_once 'fetch_report_data.php';
 
-/// get med rounds
+// get med rounds
 $medRounds = getMedicationRounds();
 
 // get diet rounds
 $dietRounds = getDietRounds();
+
+// Get unique patients for dropdown
+$patients = array();
+foreach ($medRounds as $round) {
+    if (!isset($patients[$round['patient_name']])) {
+        $patients[$round['patient_name']] = $round['room_number'];
+    }
+}
+ksort($patients);
+
+// Set placeholder practitioner info
+$currentPractitionerUsername = 'emma.brown';
 ?>
 
 <!DOCTYPE html>
@@ -50,29 +62,28 @@ $dietRounds = getDietRounds();
     <!-- Report Generator Form -->
     <section class="report-generator">
         <h2>Select Report:</h2>
-        <div class="button-group">
-            <button id="patientReportButton" onclick="selectReportType('patient')" class="toggle-button">Patient Report</button>
-            <button id="practitionerReportButton" onclick="selectReportType('practitioner')" class="toggle-button">Practitioner Report</button>
-        </div>
+        <form action="generate_pdf.php" method="POST" target="_blank">
+            <div class="button-group">
+                <button type="button" id="patientReportButton" class="toggle-button">Patient Report</button>
+                <button type="button" id="practitionerReportButton" class="toggle-button">Practitioner Report</button>
+            </div>
 
-        <!-- Patient Selection Dropdown -->
-        <div id="patientSelection" class="conditional-field" style="display: none;">
-            <label for="patientSelect">Select Patient:</label>
-            <select id="patientSelect">
-                <?php
-                // Get unique patients from medication rounds
-                $patients = array();
-                foreach ($medRounds as $round) {
-                    $patients[$round['patient_name']] = $round['room_number'];
-                }
-                foreach ($patients as $name => $room) {
-                    echo "<option value=\"$room\">$name</option>";
-                }
-                ?>
-            </select>
-        </div>
+            <!-- Hidden inputs for form submission -->
+            <input type="hidden" name="reportType" id="reportType" value="patient">
+            <input type="hidden" name="practitionerUsername" value="<?php echo htmlspecialchars($currentPractitionerUsername); ?>">
 
-        <button type="button" onclick="generateReport()" class="generate-button">Generate Report</button>
+            <!-- Patient Selection Dropdown -->
+            <div id="patientSelection" class="conditional-field">
+                <label for="patientSelect">Select Patient:</label>
+                <select name="patientSelect" id="patientSelect">
+                    <?php foreach ($patients as $name => $room): ?>
+                        <option value="<?php echo htmlspecialchars($room); ?>"><?php echo htmlspecialchars($name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <button type="submit" class="generate-button">Generate Report</button>
+        </form>
     </section>
 
     <!-- Medication Distribution Table -->
@@ -136,13 +147,43 @@ $dietRounds = getDietRounds();
     </section>
 
     <script>
-        // Pass PHP data to JavaScript with proper JSON encoding options
-        const medicalRounds = <?php echo json_encode($medRounds, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
-        const dietRounds = <?php echo json_encode($dietRounds, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
-        
-        // Debug logs with full data expansion
-        console.log('Medical Rounds Data:', JSON.stringify(medicalRounds, null, 2));
-        console.log('Diet Rounds Data:', JSON.stringify(dietRounds, null, 2));
+        document.addEventListener('DOMContentLoaded', function() {
+        const patientButton = document.getElementById('patientReportButton');
+        const practitionerButton = document.getElementById('practitionerReportButton');
+        const patientSelection = document.getElementById('patientSelection');
+        const reportTypeInput = document.getElementById('reportType');
+        const generateButton = document.querySelector('.generate-button');
+
+        // Initially hide the patient selection and disable generate button
+        patientSelection.style.display = 'none';
+        generateButton.disabled = true;
+        reportTypeInput.value = '';
+
+        // Remove 'selected' class from both buttons initially
+        patientButton.classList.remove('selected');
+        practitionerButton.classList.remove('selected');
+
+        // Function to handle report type selection
+        function selectReportType(type) {
+            if (type === 'patient') {
+                patientButton.classList.add('selected');
+                practitionerButton.classList.remove('selected');
+                patientSelection.style.display = 'block';
+                reportTypeInput.value = 'patient';
+            } else {
+                practitionerButton.classList.add('selected');
+                patientButton.classList.remove('selected');
+                patientSelection.style.display = 'none';
+                reportTypeInput.value = 'practitioner';
+            }
+            generateButton.disabled = false; // Enable generate button once a type is selected
+        }
+
+        // Add click event listeners to buttons
+        patientButton.addEventListener('click', () => selectReportType('patient'));
+        practitionerButton.addEventListener('click', () => selectReportType('practitioner'));
+    });
+    
     </script>
 
     <script src="generate_reports.js"></script>
