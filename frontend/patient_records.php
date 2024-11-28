@@ -1,4 +1,17 @@
 <?php
+session_set_cookie_params([
+    'secure' => false, // For local testing over HTTP
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if the user is not logged in
+    header('Location: login.php');
+    exit();
+}
 
 include_once 'db_connection.php'; // Ensure this connects to your database
 
@@ -44,7 +57,6 @@ function getPatientByRoomFromDatabase($room) {
         WHERE 
             p.room = ?
     ";
-
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $room);
@@ -176,17 +188,17 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
         </nav>
         <div class="header-right">
             <div class="ward-profile">
-                <span class="ward-info">Ward A</span>
+                
                 <div class="dropdown">
-                    <button class="dropdown-button" onclick="toggleDropdown()">
-                        Rachel Sunway<br><small>Nurse</small>
+                    <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
+                        <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>         
     </header>
 
     <!-- Main Content Section -->
