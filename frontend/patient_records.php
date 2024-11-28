@@ -31,6 +31,7 @@ function getPatientByRoomFromDatabase($room) {
             p.notes, 
             p.phone, 
             p.email,
+            DATE_FORMAT(p.DOB, '%d-%m-%Y') AS DOB,
             CONCAT(ec.firstName, ' ', ec.lastName) AS emergencyContactName, 
             ec.phone AS emergencyContactPhone, 
             ec.email AS emergencyContactEmail 
@@ -196,6 +197,7 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
             <div class="add-new-patient">
                 <a href="patient_info.php" class="add-patient-button">Add New Patient</a>
             </div>
+
             <!-- Search inputs -->
             <div class="search">
                 <input type="text" id="search-room" placeholder="Search Room" class="search-input" onkeypress="handleSearch(event)">
@@ -272,7 +274,7 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
                     </div>
                     <div class="info-box">
                         <label>Date of Birth</label>
-                        <span><?php echo isset($selectedPatient['dob']) ? $selectedPatient['dob'] : 'N/A'; ?></span>
+                        <span><?php echo isset($selectedPatient['DOB']) ? $selectedPatient['DOB'] : 'N/A'; ?></span>
                     </div>
                     <div class="info-box">
                         <label>Room Number</label>
