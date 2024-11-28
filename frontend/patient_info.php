@@ -64,7 +64,7 @@ if (!isset($_SESSION['user_id'])) {
         <form method="POST" action="../connections/process_patient.php" enctype="multipart/form-data" class="form-grid">
             <!-- Patient Details Section -->
             <div class="form-section">
-                <h2>Patient Details</h2>
+                <h2>Create New Patient Account</h2>
                 
                 <div class="form-group">
                     <label for="firstname">First Name:</label>
@@ -237,4 +237,4 @@ document.getElementById('notes').addEventListener('focus', function () {
         this.value = '• ';
     }
 });
-    </script>
+</script>

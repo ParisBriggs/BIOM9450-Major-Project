@@ -4,6 +4,7 @@ session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'Strict',
 ]);
+
 session_start();
 
 // Check if the user is logged in
@@ -18,6 +19,21 @@ include_once 'db_connection.php';
 // Set the timezone
 date_default_timezone_set(timezoneId: 'Australia/Sydney');
 $currentDate = date('Y-m-d');
+
+// Fetch the practitioner's ID based on the logged-in user's username
+$loggedInUserName = $_SESSION['user_name'];
+$practitionerQuery = "SELECT id FROM Practitioners WHERE userName = ?";
+$practitionerStmt = $conn->prepare($practitionerQuery);
+$practitionerStmt->bind_param('s', $loggedInUserName);
+$practitionerStmt->execute();
+$practitionerResult = $practitionerStmt->get_result();
+$practitionerData = $practitionerResult->fetch_assoc();
+
+if (!$practitionerData) {
+    die("Error: Practitioner not found for username $loggedInUserName.");
+}
+
+$practitioner = $practitionerData['id']; // Retrieve the practitioner's ID
 
 // Fetch filtered data
 $dateFiltered = isset($_GET['date']) ? $_GET['date'] : $currentDate;
@@ -82,13 +98,14 @@ if (empty($diets) && $dateFiltered === $currentDate) {
         foreach ($_POST['generatedRounds'] as $key => $round) {
             $roundData = json_decode($round, true);
             $insertQuery = "
-                INSERT INTO DietRound (orderId, roundTime, roundDate, status, notes)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO DietRound (orderId, roundTime, roundDate, status, notes, practitioner)
+                VALUES (?, ?, ?, ?, ?, ?)
             ";
             $status = $_POST['status'][$key];
             $notes = $_POST['notes'][$key] ?? NULL;
+
             $insertStmt = $conn->prepare($insertQuery);
-            $insertStmt->bind_param('issss', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes);
+            $insertStmt->bind_param('issssi', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes, $practitioner);
             $insertStmt->execute();
         }
 
