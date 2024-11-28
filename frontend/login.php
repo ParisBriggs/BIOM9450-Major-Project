@@ -11,7 +11,6 @@
 <body>
 <div class="login-container">
         <h1><img src="images/company_logo.png" class="company_logo"></h1>
-        <h1>NutriMed Login Page</h1>
         <h3>Login to get started</h3>
         
         <!-- Error Message -->
@@ -20,7 +19,7 @@
             echo "<p style='color: red; text-align: center;'>Invalid username or password. Please try again.</p>";
         }
         ?>
-         
+        
 
         <!-- Login Form -->
         <form action="loginvalidation.php" method="POST">
