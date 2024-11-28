@@ -289,7 +289,7 @@ header {
 
 .form-group input,
 .form-group select {
-    width: 100%;
+    width: 98%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -298,11 +298,11 @@ header {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+
 .form-group input:focus,
 .form-group select:focus {
     border-color: #4CAF50;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-    outline: none;
 }
 
 /* Submit Button */
@@ -322,3 +322,4 @@ header {
     background-color: #3e8e41;
     transform: scale(1.05);
 }
+
