@@ -225,7 +225,7 @@ header {
     flex-direction: column;
     gap: 20px;
     overflow-y: auto; /* Add vertical scrolling */
-    max-height: 80vh; /* Constrain height for the sidebar */
+    max-height: 68vh; /* Constrain height for the sidebar */
 }
 
 

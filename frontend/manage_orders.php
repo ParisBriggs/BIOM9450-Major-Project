@@ -133,6 +133,8 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
 
         <!-- Table for Orders -->
         <form method="POST" action="manage_orders.php">
+
+        <div class="orders-table-container">
             <table class="orders-table">
                 <thead>
                     <tr>
@@ -159,6 +161,8 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
+
             <button type="submit" name="delete_orders" class="delete-button">Delete Selected Orders</button>
         </form>
     </main>
