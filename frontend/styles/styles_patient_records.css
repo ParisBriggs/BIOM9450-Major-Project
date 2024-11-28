@@ -338,51 +338,6 @@ header {
     color: white;
 }
 
-/* Profile Buttons */
-.profile-buttons {
-    display: flex;
-    gap: 15px;
-    margin: 20px 0;
-    justify-content: flex-end;
-}
-
-.profile-buttons button:hover {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-decoration: none; /* Ensure underline doesn't appear on hover */
-}
-
-.edit-button,
-.add-button {
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.edit-button {
-    background-color: #0056b3;
-    color: white;
-}
-
-.edit-button:hover {
-    background-color: #042958;
-    text-decoration: none; /* Ensure underline doesn't appear on hover */
-}
-
-.add-button {
-    background-color: #26B567;
-    color: white;
-    text-decoration: none; /* REMOVE UNDERLINE */
-}
-
-.add-button:hover {
-    background-color: #1d9448;
-    text-decoration: none; /* Ensure underline doesn't appear on hover */
-}
-
 /* Profile Information */
 .profile-info-grid {
     display: grid;
@@ -436,23 +391,39 @@ hr {
     background: none;
 }
 
-/* Medication Section */
-.medication-section {
-    background-color: #fdecec;
+
+.notes-section, .medication-section, .diet-section {
+    margin: 20px 0;
     padding: 15px;
     border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fdecec; /* Medications: light red */
 }
 
-.medication-section h3 {
-    color: #b31a1a;
-    margin-bottom: 10px;
+.diet-section {
+    background-color: #e8f3fc; /* Diet: light blue */
 }
 
-.medication-section table {
+.notes-section {
+    background-color: #efeeee; /* Diet: light blue */
+}
+
+/* Table Styling */
+.medication-section table, .diet-section table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
+.medication-section th, .diet-section th {
+    background-color: #ffcccc; /* Medications: slightly darker red */
+    color: #b31a1a; /* Medications: red text */
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Medication Section */
 .medication-section table th,
 .medication-section table td {
     padding: 12px 15px;
@@ -465,74 +436,71 @@ hr {
     color: #b31a1a;
 }
 
-.medication-section table tr:nth-child(odd) {
+
+.diet-section th {
+    background-color: #cce6ff; /* Diet: slightly darker blue */
+    color: #0056b3; /* Diet: blue text */
+}
+
+.medication-section td, .diet-section td {
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.medication-section tr:nth-child(even), .diet-section tr:nth-child(even) {
+    background-color: #ffe6e6; /* Medications: light red */
+}
+
+.diet-section tr:nth-child(even) {
+    background-color: #f2f9ff; /* Diet: light blue */
+}
+
+.medication-section tr:nth-child(odd), .diet-section tr:nth-child(odd) {
     background-color: #fff;
 }
 
-.medication-section table tr:nth-child(even) {
-    background-color: #fdecec;
-}
-
-.prescribe-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 5px 10px;
-    background-color: #26B567;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.prescribe-button:hover {
-    background-color: #1d9448;
-}
-
-.prescribe-button i {
-    font-size: 14px;
-}
-
-/* Diet Section */
-.diet-section {
-    background-color: #e8f3fc; /* Soft pastel blue background */
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+/* Section Headings */
+.medication-section h3, .diet-section h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #b31a1a; /* Medications: red heading */
+    font-weight: bold;
+    border-bottom: 2px solid #ffcccc; /* Red underline */
+    padding-bottom: 5px;
 }
 
 .diet-section h3 {
-    color: #0056b3; /* Dark blue */
-    font-size: 18px;
-    margin-bottom: 10px;
+    color: #0056b3; /* Diet: blue heading */
+    border-bottom: 2px solid #cce6ff; /* Blue underline */
+}
+
+.notes-section h3 {
+    font-size: 20px;
+    margin: 0;
     font-weight: bold;
+    color: #3d3f41; /* Diet: blue heading */
+    border-bottom: 2px solid #d4d4d4; /* Blue underline */
 }
 
-.profile-section hr {
-    border: none;
-    border-top: 1px solid #d5e2f0;
-    margin: 20px 0;
+/* Improved Table Layout */
+table th:first-child, table td:first-child {
+    width: 30%; /* Adjust for 'Diet Regime' column */
 }
 
-.diet-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #f9fcfd;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
+table th, table td {
+    vertical-align: top; /* Align content to the top */
 }
 
-.diet-item strong {
-    color: #333;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .medication-section table, .diet-section table {
+        font-size: 12px; /* Smaller font size for smaller screens */
+    }
+
+    .medication-section th, .diet-section th, 
+    .medication-section td, .diet-section td {
+        padding: 8px; /* Reduce padding */
+    }
 }
-
-
-
