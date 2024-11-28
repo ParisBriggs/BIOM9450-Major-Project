@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
             <a href="diet_rounds.html">Diet Regime Rounds</a>
             <a href="patient_records.php">Patient Records</a>
             <a href="manage_orders.php">Manage Orders</a>
-            <a href="generate_reports.html">Generate Reports</a>
+            <a href="generate_reports.php">Generate Reports</a>
         </nav>
         <div class="header-right">
             <div class="ward-profile">
