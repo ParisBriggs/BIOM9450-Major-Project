@@ -235,6 +235,11 @@ header {
     gap: 10px;
 }
 
+.resident-list a {
+    text-decoration: none; /* Remove underline */
+
+}
+
 .search {
     display: flex;
     flex-direction: column;
@@ -370,6 +375,7 @@ header {
 .add-button {
     background-color: #26B567;
     color: white;
+    text-decoration: none; /* REMOVE UNDERLINE */
 }
 
 .add-button:hover {
