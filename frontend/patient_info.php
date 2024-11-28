@@ -1,3 +1,22 @@
+<?php
+session_set_cookie_params([
+    'secure' => false, // For local testing over HTTP
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+session_start();
+
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if the user is not logged in
+    header('Location: login.php');
+    exit();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,20 +37,20 @@
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
-            <a href="dashboard.html">Home</a>
-            <a href="medication_rounds.html">Medication Rounds</a>
-            <a href="diet_rounds.html">Diet Regime Rounds</a>
-            <a href="patient_records.html">Patient Records</a>
-            <a href="manage_orders.html">Manage Orders</a>
-            <a href="generate_reports.html">Generate Reports</a>
-            <a href="patient_info.html"class="active">Patient Information</a>
+            <a href="dashboard.php">Home</a>
+            <a href="medication_rounds.php">Medication Rounds</a>
+            <a href="diet_rounds.php">Diet Regime Rounds</a>
+            <a href="patient_records.php">Patient Records</a>
+            <a href="manage_orders.php">Manage Orders</a>
+            <a href="generate_reports.php">Generate Reports</a>
+            <a href="patient_info.php"class="active">Patient Information</a>
         </nav>
         <div class="header-right">
             <div class="ward-profile">
-                <span class="ward-info">Ward A</span>
+                
                 <div class="dropdown">
-                    <button class="dropdown-button" onclick="toggleDropdown()">
-                        Rachel Sunway<br><small>Nurse</small>
+                    <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
+                        <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="logout.html">Logout</a>
