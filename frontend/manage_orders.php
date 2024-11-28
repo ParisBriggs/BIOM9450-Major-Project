@@ -62,8 +62,8 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
     <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
-     <!-- Logo and Centered Navigation Bar -->
-     <header>
+    <!-- Header Section -->
+    <header>
         <div class="header-left">
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
@@ -92,79 +92,79 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
 
     <!-- Search and Action Buttons -->
     <div class="search-container">
-        <input type="text" placeholder="Search Patient Name" class="search-input">
-        <input type="text" placeholder="Search Patient ID" class="search-input">
+        <input type="text" id="search-name" placeholder="Search Patient Name" class="search-input" onkeypress="handleSearch(event)">
+        <input type="text" id="search-id" placeholder="Search Patient ID" class="search-input" onkeypress="handleSearch(event)">
         <a href="add_prescription.php" class="add-button">Add New Prescription</a>
-
     </div>
 
-     <!-- Main Content Section -->
-     <main class="orders-section">
+    <!-- Main Content Section -->
+    <main class="orders-section">
         <h2>All Past Orders</h2>
 
-        <!-- Display Success or Error Messages -->
-        <?php if (isset($_GET['message'])): ?>
-            <p id="confirmation-message" style="color: green;">
-                <?php echo htmlspecialchars($_GET['message']); ?>
-            </p>
-            <script>
-                setTimeout(() => {
-                    const messageElement = document.getElementById('confirmation-message');
-                    if (messageElement) {
-                        messageElement.style.display = 'none';
-                    }
-                }, 5000);
-            </script>
-        <?php endif; ?>
-
-        <?php if (isset($_GET['error'])): ?>
-            <p id="error-message" style="color: red;">
-                <?php echo htmlspecialchars($_GET['error']); ?>
-            </p>
-            <script>
-                setTimeout(() => {
-                    const errorElement = document.getElementById('error-message');
-                    if (errorElement) {
-                        errorElement.style.display = 'none';
-                    }
-                }, 5000);
-            </script>
-        <?php endif; ?>
-
-        <!-- Table for Orders -->
         <form method="POST" action="manage_orders.php">
-
-        <div class="orders-table-container">
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>ID</th>
-                        <th>Patient</th>
-                        <th>Medication</th>
-                        <th>Date Ordered</th>
-                        <th>Daily Frequency</th>
-                        <th>Dosage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($orders as $order): ?>
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead>
                         <tr>
-                            <td><input type="checkbox" name="order_ids[]" value="<?php echo $order['id']; ?>"></td>
-                            <td><?php echo $order['id']; ?></td>
-                            <td><?php echo $order['patientName']; ?></td>
-                            <td><?php echo $order['medicationName']; ?></td>
-                            <td><?php echo $order['dateOrdered']; ?></td>
-                            <td><?php echo $order['frequency']; ?></td>
-                            <td><?php echo $order['dosage']; ?></td>
+                            <th>Select</th>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Medication</th>
+                            <th>Date Ordered</th>
+                            <th>Daily Frequency</th>
+                            <th>Dosage</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="orders-list">
+                        <?php foreach ($orders as $order): ?>
+                            <tr data-id="<?php echo $order['id']; ?>" data-name="<?php echo strtolower($order['patientName']); ?>">
+                                <td><input type="checkbox" name="order_ids[]" value="<?php echo $order['id']; ?>"></td>
+                                <td><?php echo $order['id']; ?></td>
+                                <td><?php echo $order['patientName']; ?></td>
+                                <td><?php echo $order['medicationName']; ?></td>
+                                <td><?php echo $order['dateOrdered']; ?></td>
+                                <td><?php echo $order['frequency']; ?></td>
+                                <td><?php echo $order['dosage']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
 
             <button type="submit" name="delete_orders" class="delete-button">Delete Selected Orders</button>
         </form>
     </main>
+
+    <!-- JavaScript for Searching -->
+    <script>
+        function handleSearch(event) {
+            // Check if Enter key was pressed
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default Enter behavior
+
+                const nameInput = document.getElementById('search-name').value.toLowerCase();
+                const idInput = document.getElementById('search-id').value.toLowerCase();
+                const rows = document.querySelectorAll('#orders-list tr');
+
+                rows.forEach(row => {
+                    const rowId = row.getAttribute('data-id');
+                    const rowName = row.getAttribute('data-name');
+
+                    // Determine visibility based on the inputs
+                    if (
+                        (idInput && nameInput && rowId.includes(idInput) && rowName.includes(nameInput)) ||
+                        (idInput && !nameInput && rowId.includes(idInput)) ||
+                        (!idInput && nameInput && rowName.includes(nameInput)) ||
+                        (!idInput && !nameInput) // Show all rows if both inputs are empty
+                    ) {
+                        row.style.display = ''; // Show the row
+                    } else {
+                        row.style.display = 'none'; // Hide the row
+                    }
+                });
+            }
+        }
+    </script>
 </body>
+
 </html>
