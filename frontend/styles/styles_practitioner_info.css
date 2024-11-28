@@ -1,0 +1,354 @@
+* {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins to all elements */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Fallback for body */
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 10px 20px;
+    background: linear-gradient(180deg, #e8f9f0 0%, #ffffff 50%, #e8f9f0 100%);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80px; 
+}
+
+.header-left .logo {
+    width: 150px;
+    height: auto;
+    margin-left: 10%;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.ward-profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ward {
+    background-color: #d9fbe5; /* Light green */
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #005633; /* Dark green */
+    border-radius: 8px;
+}
+
+.profile-name {
+    background-color: #f2fcfc; /* Light blue */
+    padding: 8px 12px;
+    color: #0056b3; /* Dark blue */
+    border-radius: 8px;
+}
+
+.profile-name small {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    font-weight: italic;
+}
+
+/* Dropdown Button */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    background-color: #f2fcfc;
+    border: none;
+    padding: 8px 12px;
+    color: #0056b3;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-button small {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    font-weight: italic;
+}
+
+.dropdown-button:hover {
+    background-color: #e8f3fc;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 100;
+}
+
+.dropdown-content a {
+    color: #0056b3;
+    text-decoration: none;
+    display: block;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    background-color: #e8f3fc;
+}
+
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: center; /* Centers the navbar content */
+    align-items: center;
+    gap: 5px; /* Reduce the gap between items */
+    padding: 5px 10px; /* Smaller padding to reduce overall height */
+    background-color: #f8f8f8;
+    border: 1px solid #b0c4de; /* Thinner border */
+    border-radius: 8px; /* Slightly smaller rounding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 90%; /* Constrain the navbar width */
+    margin: 0 auto; /* Center the navbar */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500; /* Slightly lighter font weight */
+    font-size: 13px; /* Reduce font size slightly */
+    padding: 5px 10px; /* Smaller padding to match navbar size */
+    border-radius: 6px; /* Less rounding */
+    display: flex;
+    align-items: center; /* Align text vertically */
+    justify-content: center;
+    line-height: 1.2; /* Slightly tighter spacing */
+}
+
+.navbar a:hover {
+    background-color: #e6f0ff;
+}
+
+.navbar a.active {
+    background-color: #81bc9b;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Error/success message styling */
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+.success {
+    color: green;
+    font-size: 0.9em;
+}
+
+/* Search and Action Buttons Container */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute items evenly */
+    gap: 15px; /* Spacing between elements */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.search-input {
+    flex: 1; /* Ensure inputs take up equal space */
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 14px;
+    background-color: #f9f9f9; /* Light background */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth focus effect */
+}
+
+.search-input:focus {
+    border-color: #5588c4; /* Highlighted border */
+    box-shadow: 0 0 5px rgba(85, 136, 196, 0.5); /* Subtle glow */
+    outline: none;
+}
+
+.add-button,
+.edit-button,
+.delete-button {
+    padding: 12px 20px; /* Increased padding for better spacing */
+    border: none;
+    border-radius: 8px; /* Rounded corners for buttons */
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover animation */
+}
+
+.add-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.add-button:hover {
+    background-color: #3e8e41; /* Darker green on hover */
+    transform: scale(1.05); /* Slight scale effect */
+}
+
+.edit-button {
+    background-color: #FFA500; /* Orange */
+}
+
+.edit-button:hover {
+    background-color: #e69500; /* Darker orange on hover */
+    transform: scale(1.05);
+}
+
+.delete-button {
+    background-color: #FF6347; /* Red */
+}
+
+.delete-button:hover {
+    background-color: #e55337; /* Darker red on hover */
+    transform: scale(1.05);
+}
+
+.status-icon {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background-color: #e0f7ea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-icon .checkmark {
+    font-size: 48px;
+    color: #4caf50;
+}
+
+/* Back Button Container */
+.back-button-container {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: #ffffff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #4CAF50;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+/* Form Box */
+.form-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.form-box h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 98%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Submit Button */
+.submit-button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #3e8e41;
+    transform: scale(1.05);
+}
+
+
+
