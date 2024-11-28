@@ -68,7 +68,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
-            <a href="dashboard.html">Home</a>
+            <a href="dashboard.php">Home</a>
             <a href="medication_rounds.php">Medication Rounds</a>
             <a href="diet_rounds.php">Diet Regime Rounds</a>
             <a href="patient_records.php">Patient Records</a>
@@ -83,7 +83,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
                         Rachel Sunway<br><small>Nurse</small>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>

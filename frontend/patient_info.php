@@ -18,7 +18,7 @@
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
-            <a href="dashboard.html">Home</a>
+            <a href="dashboard.php">Home</a>
             <a href="medication_rounds.php">Medication Rounds</a>
             <a href="diet_rounds.php">Diet Regime Rounds</a>
             <a href="patient_records.php">Patient Records</a>
@@ -33,7 +33,7 @@
                         Rachel Sunway<br><small>Nurse</small>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
 
     <div class="outer-container">
         <!-- Back Button -->
-        <a href="dashboard.html" class="back-button">
+        <a href="patient_records.php" class="back-button">
             <span>&larr;</span> Back
         </a>
 

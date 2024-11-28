@@ -166,7 +166,7 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
-            <a href="dashboard.html">Home</a>
+            <a href="dashboard.php">Home</a>
             <a href="medication_rounds.php">Medication Rounds</a>
             <a href="diet_rounds.php">Diet Regime Rounds</a>
             <a href="patient_records.php" class="active">Patient Records</a>
@@ -181,7 +181,7 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
                         Rachel Sunway<br><small>Nurse</small>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
@@ -192,6 +192,10 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
     <div class="outer-container">
         <!-- Sidebar with Resident List -->
         <aside class="sidebar">
+
+            <div class="add-new-patient">
+                <a href="patient_info.php" class="add-patient-button">Add New Patient</a>
+            </div>
             <!-- Search inputs -->
             <div class="search">
                 <input type="text" id="search-room" placeholder="Search Room" class="search-input" onkeypress="handleSearch(event)">

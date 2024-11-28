@@ -25,7 +25,7 @@
                         Rachel Sunway<br><small>Nurse</small>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,6 @@
             <button onclick="location.href='patient_records.php'">View Patient Records</button>
             <button onclick="location.href='manage_orders.php'">Manage Prescriptions</button>
             <button onclick="location.href='generate_reports.php'">Generate Reports</button>
-            <button onclick="location.href='patient_info.html'">Add New Patient</button>
         </div>
     </div>
     
