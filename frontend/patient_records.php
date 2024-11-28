@@ -62,14 +62,17 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
     <div class="outer-container">
         <!-- Sidebar with Resident List -->
         <aside class="sidebar">
+            <!-- Search inputs -->
             <div class="search">
-                <input type="text" placeholder="Search Room" class="search-input">
-                <input type="text" placeholder="Search Resident" class="search-input">
+                <input type="text" id="search-room" placeholder="Search Room" class="search-input" onkeypress="handleSearch(event)">
+                <input type="text" id="search-resident" placeholder="Search Resident" class="search-input" onkeypress="handleSearch(event)">
             </div>
-            <div class="resident-list">
+
+            <!-- Resident list -->
+            <div id="resident-list" class="resident-list">
                 <?php if (!empty($patients)): ?>
                     <?php foreach ($patients as $patient): ?>
-                        <div class="resident-item <?php echo ($patient['room'] == $room) ? 'active' : ''; ?>">
+                        <div class="resident-item <?php echo ($patient['room'] == $room) ? 'active' : ''; ?>" data-room="<?php echo $patient['room']; ?>" data-name="<?php echo strtolower($patient['firstName'] . ' ' . $patient['lastName']); ?>">
                             <a href="patient_records.php?room=<?php echo $patient['room']; ?>">
                                 <img src="<?php echo $patient['photo']; ?>" alt="Resident Photo" class="resident-photo">
                                 <span class="room-number"><?php echo $patient['room']; ?></span>
@@ -82,6 +85,41 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
                 <?php endif; ?>
             </div>
         </aside>
+    
+        <script>  
+            function handleSearch(event) {
+                // Check if Enter key was pressed
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent form submission or other default behavior
+
+                    const roomInput = document.getElementById('search-room').value.toLowerCase();
+                    const residentInput = document.getElementById('search-resident').value.toLowerCase();
+                    const residentItems = document.querySelectorAll('.resident-item');
+
+                    residentItems.forEach(item => {
+                        const room = item.getAttribute('data-room').toLowerCase();
+                        const name = item.getAttribute('data-name').toLowerCase();
+
+                        // Only show items that match both inputs, or either input if only one is provided
+                        if (
+                            (roomInput && residentInput && room.includes(roomInput) && name.includes(residentInput)) ||
+                            (roomInput && !residentInput && room.includes(roomInput)) ||
+                            (!roomInput && residentInput && name.includes(residentInput))
+                        ) {
+                            item.style.display = 'flex'; // Show matching items
+                        } else {
+                            item.style.display = 'none'; // Hide non-matching items
+                        }
+                    });
+
+                    // If both inputs are empty, show all items
+                    if (!roomInput && !residentInput) {
+                        residentItems.forEach(item => item.style.display = 'flex');
+                    }
+                }
+            }
+        </script>
+ 
 
         <!-- Main Profile Section -->
         <main class="profile-section">
