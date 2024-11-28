@@ -185,7 +185,7 @@ header {
 .add-button,
 .edit-button,
 .delete-button {
-    padding: 12px 20px; /* Increased padding for better spacing */
+    padding: 12px 15px; /* Increased padding for better spacing */
     border: none;
     border-radius: 8px; /* Rounded corners for buttons */
     color: #ffffff;
@@ -193,6 +193,8 @@ header {
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover animation */
+    text-decoration: none; /* Remove underline */
+
 }
 
 .add-button {
@@ -215,6 +217,7 @@ header {
 
 .delete-button {
     background-color: #FF6347; /* Red */
+    margin-top: 30px;
 }
 
 .delete-button:hover {
@@ -222,7 +225,6 @@ header {
     transform: scale(1.05);
 }
 
-/* Orders Table Section */
 /* Orders Table Container */
 .orders-table-container {
     max-height: 400px; /* Set the max height for the table */
