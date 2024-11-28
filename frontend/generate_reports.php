@@ -1,3 +1,13 @@
+<?php
+include_once 'fetch_report_data.php';
+
+/// get med rounds
+$medRounds = getMedicationRounds();
+
+// get diet rounds
+$dietRounds = getDietRounds();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +46,7 @@
             </div>
         </div> 
     </header>
+    
     <!-- Report Generator Form -->
     <section class="report-generator">
         <h2>Select Report:</h2>
@@ -44,22 +55,27 @@
             <button id="practitionerReportButton" onclick="selectReportType('practitioner')" class="toggle-button">Practitioner Report</button>
         </div>
 
-        <!-- Patient Selection Dropdown, hidden by default -->
+        <!-- Patient Selection Dropdown -->
         <div id="patientSelection" class="conditional-field" style="display: none;">
             <label for="patientSelect">Select Patient:</label>
             <select id="patientSelect">
-                <option value="101">John Doe</option>
-                <option value="102">Jane Smith</option>
-                <option value="103">Mike Johnson</option>
-                <option value="104">Emma Brown</option>
-                <option value="105">Chris White</option>
+                <?php
+                // Get unique patients from medication rounds
+                $patients = array();
+                foreach ($medRounds as $round) {
+                    $patients[$round['patient_name']] = $round['room_number'];
+                }
+                foreach ($patients as $name => $room) {
+                    echo "<option value=\"$room\">$name</option>";
+                }
+                ?>
             </select>
         </div>
 
         <button type="button" onclick="generateReport()" class="generate-button">Generate Report</button>
     </section>
 
-    <!-- Display Table -->
+    <!-- Medication Distribution Table -->
     <section class="data-table">
         <h2>Medication Distribution</h2>
         <table class="report-table">
@@ -70,21 +86,27 @@
                     <th>Medication</th>
                     <th>Administered By</th>
                     <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="reportData">
-                <tr><td>John Doe</td><td>101</td><td>Aspirin</td><td>Dr. Alex Moore</td><td>2024-11-10</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Ibuprofen</td><td>Dr. Alex Moore</td><td>2024-11-11</td></tr>
-                <tr><td>Mike Johnson</td><td>103</td><td>Paracetamol</td><td>Nurse Lisa Wong</td><td>2024-11-12</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Metformin</td><td>Dr. Alex Moore</td><td>2024-11-13</td></tr>
-                <tr><td>Chris White</td><td>105</td><td>Amoxicillin</td><td>Nurse Ben Lee</td><td>2024-11-14</td></tr>
-                <tr><td>John Doe</td><td>101</td><td>Atorvastatin</td><td>Dr. Alex Moore</td><td>2024-11-15</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Lisinopril</td><td>Nurse Lisa Wong</td><td>2024-11-15</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Insulin</td><td>Dr. Alex Moore</td><td>2024-11-16</td></tr>
+                <?php foreach ($medRounds as $round): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($round['patient_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['room_number']); ?></td>
+                    <td><?php echo htmlspecialchars($round['medication_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['practitioner_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['round_date']); ?></td>
+                    <td><?php echo htmlspecialchars($round['round_time']); ?></td>
+                    <td><?php echo htmlspecialchars($round['round_status']); ?></td>
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </section>
 
+    <!-- Food Distribution Table -->
     <section class="data-table">
         <h2>Food Distribution</h2>
         <table class="report-table">
@@ -92,23 +114,36 @@
                 <tr>
                     <th>Patient Name</th>
                     <th>Room Number</th>
-                    <th>Food</th>
+                    <th>Diet</th>
                     <th>Administered By</th>
-                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody id="reportData">
-                <tr><td>John Doe</td><td>101</td><td>Gluten Free</td><td>Dr. Alex Moore</td><td>2024-11-10</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Low GI</td><td>Dr. Alex Moore</td><td>2024-11-11</td></tr>
-                <tr><td>Mike Johnson</td><td>103</td><td>Dairy Free</td><td>Nurse Lisa Wong</td><td>2024-11-12</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Low Sodium</td><td>Dr. Alex Moore</td><td>2024-11-13</td></tr>
-                <tr><td>Chris White</td><td>105</td><td>Vegetarian</td><td>Nurse Ben Lee</td><td>2024-11-14</td></tr>
-                <tr><td>John Doe</td><td>101</td><td>Low Gi</td><td>Dr. Alex Moore</td><td>2024-11-15</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Low Sodium</td><td>Nurse Lisa Wong</td><td>2024-11-15</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Gluten Free</td><td>Dr. Alex Moore</td><td>2024-11-16</td></tr>
+                <?php foreach ($dietRounds as $round): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($round['patient_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['room_number']); ?></td>
+                    <td><?php echo htmlspecialchars($round['diet_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['practitioner_name']); ?></td>
+                    <td><?php echo htmlspecialchars($round['round_time']); ?></td>
+                    <td><?php echo htmlspecialchars($round['round_status']); ?></td>
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </section>
+
+    <script>
+        // Pass PHP data to JavaScript with proper JSON encoding options
+        const medicalRounds = <?php echo json_encode($medRounds, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+        const dietRounds = <?php echo json_encode($dietRounds, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+        
+        // Debug logs with full data expansion
+        console.log('Medical Rounds Data:', JSON.stringify(medicalRounds, null, 2));
+        console.log('Diet Rounds Data:', JSON.stringify(dietRounds, null, 2));
+    </script>
 
     <script src="generate_reports.js"></script>
 </body>

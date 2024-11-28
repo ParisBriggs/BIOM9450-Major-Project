@@ -1,95 +1,234 @@
-// Function to handle the selection of report type and toggle the patient selection dropdown
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Document loaded');
+    console.log('Medical Rounds available:', medicalRounds.length);
+    console.log('Diet Rounds available:', dietRounds.length);
+    
+    // Attach event listeners
+    document.getElementById('patientReportButton').addEventListener('click', () => selectReportType('patient'));
+    document.getElementById('practitionerReportButton').addEventListener('click', () => selectReportType('practitioner'));
+    document.querySelector('.generate-button').addEventListener('click', generateReport);
+});
+
 function selectReportType(type) {
+    console.log('Selecting report type:', type);
     const patientButton = document.getElementById('patientReportButton');
     const practitionerButton = document.getElementById('practitionerReportButton');
     const patientSelection = document.getElementById('patientSelection');
 
-    // Toggle button appearance and show/hide the patient dropdown
     if (type === 'patient') {
         patientButton.classList.add('selected');
         practitionerButton.classList.remove('selected');
-        patientSelection.style.display = 'block'; // Show dropdown for Patient Report
+        patientSelection.style.display = 'block';
     } else {
         practitionerButton.classList.add('selected');
         patientButton.classList.remove('selected');
-        patientSelection.style.display = 'none'; // Hide dropdown for Practitioner Report
+        patientSelection.style.display = 'none';
     }
 }
 
-// Function to generate the report based on the selected report type
 function generateReport() {
+    console.log('Generating report...');
     const isPatientReport = document.getElementById('patientReportButton').classList.contains('selected');
     const reportType = isPatientReport ? 'patient' : 'practitioner';
-    const patientSelect = document.getElementById('patientSelect');
-    const patientID = patientSelect.options[patientSelect.selectedIndex].value;
-    const patientName = patientSelect.options[patientSelect.selectedIndex].text;
-
-    // Validate the report type selection
+    
     if (!reportType) {
         alert('Please select a report type.');
         return;
     }
 
-    // Generate content based on selected report type
-    let reportContent = '';
     if (reportType === 'patient') {
-        reportContent = `<h1>Patient Report for ${patientName}</h1>`;
-        reportContent += generatePatientReport(patientID);
-    } else if (reportType === 'practitioner') {
-        const practitionerName = 'Dr. Alex Moore';
-        reportContent = `<h1>Practitioner Report for ${practitionerName}</h1>`;
-        reportContent += generatePractitionerReport(practitionerName);
+        const patientSelect = document.getElementById('patientSelect');
+        const selectedRoom = patientSelect.value;
+        const patientName = patientSelect.options[patientSelect.selectedIndex].text;
+        console.log('Generating patient report for:', patientName, 'Room:', selectedRoom);
+        generatePatientReport(selectedRoom, patientName);
+    } else {
+        const practitionerName = document.querySelector('.dropdown-button').textContent.split('\n')[0];
+        console.log('Generating practitioner report for:', practitionerName);
+        generatePractitionerReport(practitionerName);
     }
-
-    // Convert reportContent to PDF and initiate download
-    generatePDF(reportContent);
 }
 
-// Helper function to create content for Patient Report
-function generatePatientReport(patientID) {
-    const patientData = [
-        { patientName: "John Doe", room: "101", medication: "Aspirin", food: "Chicken Soup", date: "2024-11-10" },
-        { patientName: "John Doe", room: "101", medication: "Atorvastatin", food: "Sandwich", date: "2024-11-15" },
-        { patientName: "Jane Smith", room: "102", medication: "Ibuprofen", food: "Salad", date: "2024-11-11" },
-        { patientName: "Mike Johnson", room: "103", medication: "Paracetamol", food: "Fruit Mix", date: "2024-11-12" },
-        { patientName: "Emma Brown", room: "104", medication: "Metformin", food: "Vegetable Soup", date: "2024-11-13" },
-        { patientName: "Chris White", room: "105", medication: "Amoxicillin", food: "Yogurt", date: "2024-11-14" }
-    ];
+function generatePatientReport(selectedRoom, patientName) {
+    console.log('Filtering data for room:', selectedRoom);
+    
+    // Filter data for selected patient
+    const patientMedRounds = medicalRounds.filter(round => 
+        round.room_number === selectedRoom
+    );
+    const patientDietRounds = dietRounds.filter(round => 
+        round.room_number === selectedRoom
+    );
 
-    let report = '<table><tr><th>Room</th><th>Medication</th><th>Food</th><th>Date</th></tr>';
-    patientData.forEach((entry) => {
-        if (entry.patientName === document.getElementById('patientSelect').selectedOptions[0].text) {
-            report += `<tr><td>${entry.room}</td><td>${entry.medication}</td><td>${entry.food}</td><td>${entry.date}</td></tr>`;
-        }
-    });
-    report += '</table>';
-    return report;
-}
+    console.log('Found med rounds:', patientMedRounds.length);
+    console.log('Found diet rounds:', patientDietRounds.length);
 
-// Helper function to create content for Practitioner Report
-function generatePractitionerReport(practitionerName) {
-    const practitionerData = [
-        { patientName: "John Doe", room: "101", medication: "Aspirin", food: "Chicken Soup", date: "2024-11-10" },
-        { patientName: "Jane Smith", room: "102", medication: "Ibuprofen", food: "Salad", date: "2024-11-11" },
-        { patientName: "Emma Brown", room: "104", medication: "Metformin", food: "Vegetable Soup", date: "2024-11-13" }
-    ];
-
-    let report = '<table><tr><th>Patient</th><th>Room</th><th>Medication</th><th>Food</th><th>Date</th></tr>';
-    practitionerData.forEach((entry) => {
-        report += `<tr><td>${entry.patientName}</td><td>${entry.room}</td><td>${entry.medication}</td><td>${entry.food}</td><td>${entry.date}</td></tr>`;
-    });
-    report += '</table>';
-    return report;
-}
-
-// PDF generation function
-function generatePDF(content) {
-    const pdfWindow = window.open('', '_blank');
-    pdfWindow.document.write(`
+    let reportContent = `
         <html>
-        <head><title>PDF Report</title></head>
-        <body>${content}</body>
+        <head>
+            <title>Patient Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                h1 { color: #333; margin-bottom: 20px; text-align: center; }
+                h2 { color: #666; margin-top: 30px; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+                th { background-color: #f5f5f5; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+            </style>
+        </head>
+        <body>
+            <h1>Patient Report for ${patientName}</h1>
+            
+            <h2>Medication Distribution</h2>
+            ${patientMedRounds.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Medication</th>
+                            <th>Administered By</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${patientMedRounds.map(round => `
+                            <tr>
+                                <td>${round.medication_name}</td>
+                                <td>${round.practitioner_name}</td>
+                                <td>${round.round_date}</td>
+                                <td>${round.round_time}</td>
+                                <td>${round.round_status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : '<p>No medication records found</p>'}
+
+            <h2>Diet Distribution</h2>
+            ${patientDietRounds.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Diet</th>
+                            <th>Administered By</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${patientDietRounds.map(round => `
+                            <tr>
+                                <td>${round.diet_name}</td>
+                                <td>${round.practitioner_name}</td>
+                                <td>${round.round_time}</td>
+                                <td>${round.round_status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : '<p>No diet records found</p>'}
+        </body>
         </html>
-    `);
-    pdfWindow.print();
+    `;
+
+    const pdfWindow = window.open('', '_blank');
+    pdfWindow.document.write(reportContent);
+    pdfWindow.document.close();
+    setTimeout(() => {
+        pdfWindow.print();
+    }, 500);
+}
+
+function generatePractitionerReport(practitionerName) {
+    // Filter data for selected practitioner
+    const practitionerMedRounds = medicalRounds.filter(round => 
+        round.practitioner_name === practitionerName
+    );
+    const practitionerDietRounds = dietRounds.filter(round => 
+        round.practitioner_name === practitionerName
+    );
+
+    let reportContent = `
+        <html>
+        <head>
+            <title>Practitioner Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                h1 { color: #333; margin-bottom: 20px; text-align: center; }
+                h2 { color: #666; margin-top: 30px; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+                th { background-color: #f5f5f5; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+            </style>
+        </head>
+        <body>
+            <h1>Practitioner Report for ${practitionerName}</h1>
+            
+            <h2>Medications Administered</h2>
+            ${practitionerMedRounds.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Room</th>
+                            <th>Medication</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${practitionerMedRounds.map(round => `
+                            <tr>
+                                <td>${round.patient_name}</td>
+                                <td>${round.room_number}</td>
+                                <td>${round.medication_name}</td>
+                                <td>${round.round_date}</td>
+                                <td>${round.round_time}</td>
+                                <td>${round.round_status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : '<p>No medication records found</p>'}
+
+            <h2>Diets Administered</h2>
+            ${practitionerDietRounds.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Room</th>
+                            <th>Diet</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${practitionerDietRounds.map(round => `
+                            <tr>
+                                <td>${round.patient_name}</td>
+                                <td>${round.room_number}</td>
+                                <td>${round.diet_name}</td>
+                                <td>${round.round_time}</td>
+                                <td>${round.round_status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : '<p>No diet records found</p>'}
+        </body>
+        </html>
+    `;
+
+    const pdfWindow = window.open('', '_blank');
+    pdfWindow.document.write(reportContent);
+    pdfWindow.document.close();
+    setTimeout(() => {
+        pdfWindow.print();
+    }, 500);
 }
