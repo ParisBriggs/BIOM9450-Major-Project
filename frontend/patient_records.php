@@ -86,6 +86,7 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
             </div>
         </aside>
     
+        <!-- JavaScript for searching -->
         <script>  
             function handleSearch(event) {
                 // Check if Enter key was pressed
@@ -120,19 +121,15 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
             }
         </script>
  
-
         <!-- Main Profile Section -->
         <main class="profile-section">
             <?php if ($selectedPatient): ?>
-                <div class="profile-buttons">
-                    <a href="patient_info.html" class="add-button">Add New Patient</a>
-                </div>
+
                 <div class="profile-header">
                     <img src="<?php echo $selectedPatient['photo']; ?>" alt="Profile Photo" class="profile-photo">
                     <h2><?php echo $selectedPatient['firstName'] . ' ' . $selectedPatient['lastName']; ?></h2>
                 </div>
 
-                
                 <!-- Patient Information with Boxes -->
                 <div class="profile-info-grid">
                     <div class="info-box">
@@ -197,7 +194,6 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
                 </section>
 
                 <hr />
-
 
                 <!-- Diet Section -->
                 <section class="diet-section">
