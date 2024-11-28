@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 28, 2024 at 09:10 AM
+-- Generation Time: Nov 28, 2024 at 10:32 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.20
 
@@ -45,7 +45,11 @@ INSERT INTO `Practitioners` (`id`, `firstName`, `lastName`, `userName`, `passwor
 (3, 'Sarah', 'Wilson', 'sarah.wilson', '$2y$10$WH8H40O5P5b.KbfIumnYveamQNnW0taMHtG/Ovp7923TGTCT.1niO'),
 (4, 'James', 'Taylor', 'james.taylor', '$2y$10$aY1xnuMsd02elI4l8zDXaOQfKRVbdWBVXKQqMNUyIHPSVlj85QKqO'),
 (5, 'Lisa', 'Anderson', 'lisa.anderson', '$2y$10$0ZDQleUpHPwFyx9nvcVIdOYy3IqDUua3QQjZKwDN3EZdvlt32m1x2'),
-(6, 'David', 'Martinez', 'david.martinez', '$2y$10$8uL2pvqpNOWwKrsSgQwLJ.hs7Z4/L618ZCbYGps2SVFSQxqfwTjZm');
+(6, 'David', 'Martinez', 'david.martinez', '$2y$10$8uL2pvqpNOWwKrsSgQwLJ.hs7Z4/L618ZCbYGps2SVFSQxqfwTjZm'),
+(7, 'Paris', 'Briggs', 'paris.briggs', '$2y$10$ctUkm8xHh2ycKypCyXRgWOblihB3ol0ZElHvhowsKzvCDrN.YB2Xy'),
+(8, 'Michelle', 'Smith', 'michelle.smith', '$2y$10$84TSjWXsGhfNbGMpJ2iHueciFno37hZ2sROtJxSO2vXAQY.31yIqG'),
+(9, 'Laila', 'Nelson', 'laila.nelson', '$2y$10$EEeYAV1uxz7PFvHnPvQxPexZuwXDYddYg09xns9VUJW4tS6Twbf8i'),
+(10, 'Aayushma', 'Lohani', 'aayushma.lohani', '$2y$10$73XFqzF02kqiCckucjUKweipNaYsu2UxG3Q3ks7WYxTLNYf1abTDm');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +69,7 @@ ALTER TABLE `Practitioners`
 -- AUTO_INCREMENT for table `Practitioners`
 --
 ALTER TABLE `Practitioners`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

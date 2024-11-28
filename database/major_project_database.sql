@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 28, 2024 at 08:25 AM
+-- Generation Time: Nov 28, 2024 at 10:32 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.20
 
@@ -629,7 +629,26 @@ INSERT INTO `MedicationRound` (`id`, `orderId`, `practitioner`, `roundTime`, `st
 (265, 16, 2, 'morning', 'given', 'Morning dose administered as per schedule.', '2024-11-27'),
 (266, 17, 4, 'afternoon', 'fasting', 'Skipped dose due to patient fasting.', '2024-11-27'),
 (267, 18, 6, 'evening', 'given', 'Administered successfully before bed.', '2024-11-27'),
-(268, 19, 1, 'morning', 'given', 'Patient compliant. Dose completed with no issues.', '2024-11-27');
+(268, 19, 1, 'morning', 'given', 'Patient compliant. Dose completed with no issues.', '2024-11-27'),
+(269, 5, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(270, 8, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(271, 12, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(272, 14, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(273, 17, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(274, 20, 4, 'evening', 'given', 'Loved this dinner meal', '2024-11-28'),
+(275, 1, 1, 'afternoon', 'given', '', '2024-11-28'),
+(276, 5, 1, 'afternoon', 'given', '', '2024-11-28'),
+(277, 7, 1, 'afternoon', 'given', '', '2024-11-28'),
+(278, 8, 1, 'afternoon', 'given', '', '2024-11-28'),
+(279, 10, 1, 'afternoon', 'given', '', '2024-11-28'),
+(280, 12, 1, 'afternoon', 'given', '', '2024-11-28'),
+(281, 13, 1, 'afternoon', 'given', '', '2024-11-28'),
+(282, 14, 1, 'afternoon', 'given', '', '2024-11-28'),
+(283, 15, 1, 'afternoon', 'given', '', '2024-11-28'),
+(284, 17, 1, 'afternoon', 'given', '', '2024-11-28'),
+(285, 18, 1, 'afternoon', 'given', '', '2024-11-28'),
+(286, 20, 1, 'afternoon', 'given', '', '2024-11-28'),
+(287, 21, 1, 'afternoon', 'given', '', '2024-11-28');
 
 -- --------------------------------------------------------
 
@@ -726,12 +745,16 @@ CREATE TABLE `Practitioners` (
 --
 
 INSERT INTO `Practitioners` (`id`, `firstName`, `lastName`, `userName`, `password`) VALUES
-(1, 'Emma', 'Brown', 'emma.brown', 'password123'),
-(2, 'Michael', 'Lee', 'michael.lee', 'password456'),
-(3, 'Sarah', 'Wilson', 'sarah.wilson', 'password789'),
-(4, 'James', 'Taylor', 'james.taylor', 'password101'),
-(5, 'Lisa', 'Anderson', 'lisa.anderson', 'password102'),
-(6, 'David', 'Martinez', 'david.martinez', 'password103');
+(1, 'Emma', 'Brown', 'emma.brown', '$2y$10$RFLQTMWSA6d6OTl6vcDVdeQuLBU.8cr.IfHNz4Elx1JEfoa.VHu7K'),
+(2, 'Michael', 'Lee', 'michael.lee', '$2y$10$p1Dtxrx9zaH2UAIZx3sJsOctowyCs7a2Reng7TpUh5/NQgomLKb9y'),
+(3, 'Sarah', 'Wilson', 'sarah.wilson', '$2y$10$WH8H40O5P5b.KbfIumnYveamQNnW0taMHtG/Ovp7923TGTCT.1niO'),
+(4, 'James', 'Taylor', 'james.taylor', '$2y$10$aY1xnuMsd02elI4l8zDXaOQfKRVbdWBVXKQqMNUyIHPSVlj85QKqO'),
+(5, 'Lisa', 'Anderson', 'lisa.anderson', '$2y$10$0ZDQleUpHPwFyx9nvcVIdOYy3IqDUua3QQjZKwDN3EZdvlt32m1x2'),
+(6, 'David', 'Martinez', 'david.martinez', '$2y$10$8uL2pvqpNOWwKrsSgQwLJ.hs7Z4/L618ZCbYGps2SVFSQxqfwTjZm'),
+(7, 'Paris', 'Briggs', 'paris.briggs', '$2y$10$ctUkm8xHh2ycKypCyXRgWOblihB3ol0ZElHvhowsKzvCDrN.YB2Xy'),
+(8, 'Michelle', 'Smith', 'michelle.smith', '$2y$10$84TSjWXsGhfNbGMpJ2iHueciFno37hZ2sROtJxSO2vXAQY.31yIqG'),
+(9, 'Laila', 'Nelson', 'laila.nelson', '$2y$10$EEeYAV1uxz7PFvHnPvQxPexZuwXDYddYg09xns9VUJW4tS6Twbf8i'),
+(10, 'Aayushma', 'Lohani', 'aayushma.lohani', '$2y$10$73XFqzF02kqiCckucjUKweipNaYsu2UxG3Q3ks7WYxTLNYf1abTDm');
 
 --
 -- Indexes for dumped tables
@@ -838,7 +861,7 @@ ALTER TABLE `MedicationOrder`
 -- AUTO_INCREMENT for table `MedicationRound`
 --
 ALTER TABLE `MedicationRound`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=269;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=288;
 
 --
 -- AUTO_INCREMENT for table `Medications`
@@ -856,7 +879,7 @@ ALTER TABLE `Patients`
 -- AUTO_INCREMENT for table `Practitioners`
 --
 ALTER TABLE `Practitioners`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
