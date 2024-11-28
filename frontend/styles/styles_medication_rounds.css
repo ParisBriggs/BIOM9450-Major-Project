@@ -344,11 +344,11 @@ footer {
     color: #134f8c;
     border-radius: 6px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    padding: 10px 100px;
+    padding: 10px 10px;
     text-align: center;
     font-size: 14px;
-    width: 120px;
-    height: 80px; /* Consistent height for all cards */
+    width: 140px;
+    height: 70px; /* Consistent height for all cards */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -358,13 +358,14 @@ footer {
 .contact-card h4 {
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     color: #10793c;
 }
 
 .contact-card p {
     margin: 0;
     font-size: 12px;
+    margin-bottom: 10px;
     color: #555;
 }
 
