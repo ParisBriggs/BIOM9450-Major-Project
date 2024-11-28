@@ -29,6 +29,8 @@ function getPatientByRoomFromDatabase($room) {
             p.sex, 
             p.photo, 
             p.notes, 
+            p.phone, 
+            p.email,
             CONCAT(ec.firstName, ' ', ec.lastName) AS emergencyContactName, 
             ec.phone AS emergencyContactPhone, 
             ec.email AS emergencyContactEmail 
@@ -55,6 +57,73 @@ function getPatientByRoomFromDatabase($room) {
     return $result->fetch_assoc();
 }
 
+// Fetch all medication orders for a specific patient
+function getMedicationsByPatientId($patientId) {
+    global $conn;
+
+    $query = "
+        SELECT 
+            mo.id AS orderId,
+            m.name AS name,
+            mo.dosage,
+            mo.frequency AS frequency,
+            m.routeAdmin AS route,
+            mo.dateOrdered AS datePrescribed,
+            mo.prescribedBy
+        FROM 
+            MedicationOrder AS mo
+        INNER JOIN 
+            Medications AS m 
+        ON 
+            mo.medication = m.id
+        WHERE 
+            mo.patient = ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $patientId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Database query failed: " . $stmt->error);
+    }
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Fetch diet information for a specific patient
+function getDietByPatientId($patientId) {
+    global $conn;
+
+    $query = "
+        SELECT 
+            dr.name AS regimeName,
+            dr.food,
+            dr.exercise,
+            dr.beauty
+        FROM 
+            DietOrder AS do
+        INNER JOIN 
+            DietRegimes AS dr 
+        ON 
+            do.dietRegime = dr.id
+        WHERE 
+            do.patient = ?
+    ";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $patientId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Database query failed: " . $stmt->error);
+    }
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 // Check if the 'room' parameter is set in the URL
 if (!isset($_GET['room'])) {
     // Redirect to the default room (101)
@@ -70,6 +139,13 @@ $patients = getPatientsFromDatabase();
 
 // Fetch selected patient details (if any)
 $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
+
+// Fetch medications for the selected patient
+$medications = ($selectedPatient) ? getMedicationsByPatientId($selectedPatient['id']) : [];
+
+// Fetch diet information for the selected patient
+$diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
+
 ?>
 
 <!DOCTYPE html>
@@ -240,9 +316,10 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
 
                 <!-- Medications Section -->
                 <section class="medication-section">
-                    <h3>Medications</h3>
-                    <?php if (!empty($medications)): ?>
-                        <table>
+                <h3>Medications</h3>
+                <?php if (!empty($medications)): ?>
+                    <table>
+                        <thead>
                             <tr>
                                 <th>Medication Name</th>
                                 <th>Dosage</th>
@@ -251,20 +328,23 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
                                 <th>Date Prescribed</th>
                                 <th>Prescribed By</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             <?php foreach ($medications as $medication): ?>
                                 <tr>
-                                    <td><?php echo $medication['name']; ?></td>
-                                    <td><?php echo $medication['dosage']; ?></td>
-                                    <td><?php echo $medication['frequency']; ?></td>
-                                    <td><?php echo $medication['route']; ?></td>
-                                    <td><?php echo $medication['datePrescribed']; ?></td>
-                                    <td><?php echo $medication['prescribedBy']; ?></td>
+                                    <td><?php echo isset($medication['name']) ? $medication['name'] : 'N/A'; ?></td>
+                                    <td><?php echo isset($medication['dosage']) ? $medication['dosage'] : 'N/A'; ?></td>
+                                    <td><?php echo isset($medication['frequency']) ? $medication['frequency'] : 'N/A'; ?></td>
+                                    <td><?php echo isset($medication['route']) ? $medication['route'] : 'N/A'; ?></td>
+                                    <td><?php echo isset($medication['datePrescribed']) ? $medication['datePrescribed'] : 'N/A'; ?></td>
+                                    <td><?php echo isset($medication['prescribedBy']) ? $medication['prescribedBy'] : 'N/A'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
-                        </table>
-                    <?php else: ?>
-                        <p>No medications found for this patient.</p>
-                    <?php endif; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p>No medications found for this patient.</p>
+                <?php endif; ?>
                 </section>
 
                 <hr />
@@ -273,11 +353,26 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
                 <section class="diet-section">
                     <h3>Diet</h3>
                     <?php if (!empty($diet)): ?>
-                        <?php foreach ($diet as $item): ?>
-                            <div class="diet-item">
-                                <strong><?php echo $item['type']; ?>:</strong> <?php echo $item['description']; ?>
-                            </div>
-                        <?php endforeach; ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Diet Regime</th>
+                                    <th>Food</th>
+                                    <th>Exercise</th>
+                                    <th>Beauty</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($diet as $item): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($item['regimeName']); ?></td>
+                                        <td><?php echo htmlspecialchars($item['food']); ?></td>
+                                        <td><?php echo htmlspecialchars($item['exercise']); ?></td>
+                                        <td><?php echo htmlspecialchars($item['beauty']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     <?php else: ?>
                         <p>No diet information available for this patient.</p>
                     <?php endif; ?>
