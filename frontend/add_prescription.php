@@ -62,7 +62,6 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
         </div> 
     </header>
 
-
     <main class="form-container">
         <div class="form-box">
 
@@ -72,6 +71,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
             </div>
 
             <h2>Add New Prescription</h2>
+
             <form method="POST" action="manage_orders.php" class="prescription-form">
                 <div class="form-group">
                     <label for="patient">Patient:</label>
@@ -101,8 +101,14 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
                 </div>
                 <div class="form-group">
                     <label for="frequency">Daily Frequency:</label>
-                    <input type="number" name="frequency" id="frequency" required>
+                    <select name="frequency" id="frequency" required>
+                        <option value="" disabled selected>Select Frequency</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
+
                 <div class="form-group">
                     <label for="dosage">Dosage (mg):</label>
                     <input type="number" step="0.01" name="dosage" id="dosage" required>
