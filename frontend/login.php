@@ -19,6 +19,7 @@
             echo "<p style='color: red; text-align: center;'>Invalid username or password. Please try again.</p>";
         }
         ?>
+        
 
         <!-- Login Form -->
         <form action="loginvalidation.php" method="POST">
@@ -33,11 +34,6 @@
             </div>
             <button type="submit">Login</button>
         </form>
-        <div class="signup">
-            Don't have an account? <a href="signup.php">Sign up</a>
-        </div>
     </div>
-
-
 </body>
 </html>

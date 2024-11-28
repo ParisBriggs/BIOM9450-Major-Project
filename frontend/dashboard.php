@@ -6,7 +6,6 @@ session_set_cookie_params([
 ]);
 session_start();
 
-
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to login page if the user is not logged in
@@ -61,6 +60,7 @@ if (!isset($_SESSION['user_id'])) {
             <button onclick="location.href='patient_records.php'">View Patient Records</button>
             <button onclick="location.href='manage_orders.php'">Manage Prescriptions</button>
             <button onclick="location.href='generate_reports.php'">Generate Reports</button>
+            <button onclick="location.href='practitioner_info.php'">Create New Practitioner Account</button>
         </div>
     </div>
     

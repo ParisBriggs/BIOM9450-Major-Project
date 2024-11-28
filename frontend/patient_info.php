@@ -6,7 +6,6 @@ session_set_cookie_params([
 ]);
 session_start();
 
-
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // Redirect to login page if the user is not logged in
@@ -43,8 +42,7 @@ if (!isset($_SESSION['user_id'])) {
             <a href="generate_reports.php">Generate Reports</a>
         </nav>
         <div class="header-right">
-            <div class="ward-profile">
-                
+            <div class="ward-profile">     
                 <div class="dropdown">
                     <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
                         <?php echo $_SESSION['user_name']; ?><br>
