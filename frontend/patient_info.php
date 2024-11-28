@@ -68,26 +68,31 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="form-group">
                     <label for="firstname">First Name:<span class="required">*</span></label>
                     <input type="text" id="firstname" name="firstname" required>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="lastname">Last Name:<span class="required">*</span></label>
                     <input type="text" id="lastname" name="lastname" required>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="dob">Date of Birth:<span class="required">*</span></label>
                     <input type="date" id="dob" name="dob" required>
+                    <span class="validation-feedback"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email:<span class="required">*</span></label>
                     <input type="email" id="email" name="email">
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="patient_phone">Phone:<span class="required">*</span></label>
                     <input id="patient_phone" type="tel" name="patient_phone" placeholder="Enter patient's phone number" required>
+                    <span class="validation-feedback"></span>
                 </div>
                 
                 <div class="form-group">
@@ -100,6 +105,7 @@ if (!isset($_SESSION['user_id'])) {
                             <input type="radio" name="sex" value="female" required> Female
                         </label>
                     </div>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
@@ -110,6 +116,7 @@ if (!isset($_SESSION['user_id'])) {
                         <option value="103">WB.103</option>
                         <option value="104">WB.104</option>
                     </select>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
@@ -121,12 +128,14 @@ if (!isset($_SESSION['user_id'])) {
                         <span class="file-name">No file chosen</span>
                         <input type="file" id="photo" name="photo" accept=".png, .jpeg, .jpg" onchange="updateFileName(this)">
                     </div>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="notes">Notes:</label>
                     <textarea id="notes" name="notes" rows="4" placeholder="• Write your note here..."></textarea>
                 </div>
+                <span class="validation-feedback"></span>
             </div>
         
             <!-- Emergency Contact Details Section -->
@@ -136,21 +145,25 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="form-group">
                     <label for="em_firstname">First Name:<span class="required">*</span></label>
                     <input type="text" id="em_firstname" name="em_firstname" required>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="em_lastname">Last Name:<span class="required">*</span></label>
                     <input type="text" id="em_lastname" name="em_lastname" required>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="em_email">Email:<span class="required">*</span></label>
                     <input type="email" id="em_email" name="em_email">
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
                     <label for="em_phone">Phone:<span class="required">*</span></label>
                     <input id="em_phone" type="tel" name="em_phone" placeholder="Enter emergency contact's phone number" required>
+                    <span class="validation-feedback"></span>
                 </div>
         
                 <div class="form-group">
@@ -165,143 +178,127 @@ if (!isset($_SESSION['user_id'])) {
                         <option value="relative">Relative</option>
                         <option value="other">Other</option>
                     </select>
+                    <span class="validation-feedback"></span>
                 </div>
                 <div class="form-group" id="other-relationship-group" style="display: none;">
                     <label for="other-relationship">Please Specify:</label>
                     <input type="text" id="other-relationship" name="other-relationship" placeholder="Specify other relationship">
+                    <span class="validation-feedback"></span>
                 </div>
             
             <div class="form-actions">
                 <button type="submit" class="save-button">Save Patient Details</button>
+                <span class="validation-feedback"></span>
             </div>
         </form>
     </div>
 
 
-<script> 
-//NOTE : the notes section of the form is not validated or required 
 
-function validateForm(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Helper function to display validation messages
+        function setValidationMessage(input, message) {
+            const feedback = input.nextElementSibling;
+            if (feedback) {
+                feedback.textContent = message;
+                feedback.style.color = message ? "red" : "green";
+                input.style.borderColor = message ? "red" : "green";
+            }
+        }
 
-    let isValid = true; // Flag to track overall validity
-    let errorMessages = []; // Array to collect error messages
+        // Name validation: Letters and spaces only
+        const namePattern = /^[A-Za-z\s]+$/;
+        const nameFields = [
+            document.getElementById("firstname"),
+            document.getElementById("lastname"),
+            document.getElementById("em_firstname"),
+            document.getElementById("em_lastname"),
+        ];
+        nameFields.forEach((field) => {
+            field.addEventListener("input", () => {
+                if (!namePattern.test(field.value.trim())) {
+                    setValidationMessage(field, "Only letters and spaces are allowed.");
+                } else {
+                    setValidationMessage(field, "");
+                }
+            });
+        });
 
-    // Get form fields
-    const firstname = document.getElementById('firstname').value.trim();
-    const lastname = document.getElementById('lastname').value.trim();
-    const dob = document.getElementById('dob').value;
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('patient_phone').value.trim();
-    const sex = document.querySelector('input[name="sex"]:checked');
-    const room = document.getElementById('room').value;
-    const emFirstname = document.getElementById('em_firstname').value.trim();
-    const emLastname = document.getElementById('em_lastname').value.trim();
-    const emEmail = document.getElementById('em_email').value.trim();
-    const emPhone = document.getElementById('em_phone').value.trim();
-    const relationship = document.getElementById('relationship').value;
-    const otherRelationship = document.getElementById('other-relationship').value.trim();
+        // Phone validation: International format (+, numbers, spaces, 7-15 characters)
+        const phonePattern = /^\+?[0-9\s]{7,15}$/;
+        const phoneFields = [
+            document.getElementById("patient_phone"),
+            document.getElementById("em_phone"),
+        ];
+        phoneFields.forEach((field) => {
+            field.addEventListener("input", () => {
+                if (!phonePattern.test(field.value.trim())) {
+                    setValidationMessage(field, "Enter a valid international phone number (e.g., +123456789).");
+                } else {
+                    setValidationMessage(field, "");
+                }
+            });
+        });
 
-    // Validate required fields
-    if (!firstname) errorMessages.push("First name is required.");
-    if (!lastname) errorMessages.push("Last name is required.");
-    if (!dob) errorMessages.push("Date of birth is required.");
-    if (!sex) errorMessages.push("Sex must be selected.");
-    if (!room) errorMessages.push("Room must be selected.");
-    if (!emFirstname) errorMessages.push("Emergency contact first name is required.");
-    if (!emLastname) errorMessages.push("Emergency contact last name is required.");
-    if (!relationship) errorMessages.push("Relationship must be selected.");
-    if (relationship === "other" && !otherRelationship) errorMessages.push("Please specify the 'Other' relationship.");
+        // Email validation: Standard email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailFields = [
+            document.getElementById("email"),
+            document.getElementById("em_email"),
+        ];
+        emailFields.forEach((field) => {
+            field.addEventListener("input", () => {
+                if (field.value.trim() && !emailPattern.test(field.value.trim())) {
+                    setValidationMessage(field, "Enter a valid email address (e.g., example@domain.com).");
+                } else {
+                    setValidationMessage(field, "");
+                }
+            });
+        });
 
+        // Relationship validation: Show/hide "Other" textbox dynamically
+        const relationshipField = document.getElementById("relationship");
+        const otherRelationshipGroup = document.getElementById("other-relationship-group");
+        relationshipField.addEventListener("change", () => {
+            if (relationshipField.value === "other") {
+                otherRelationshipGroup.style.display = "block";
+            } else {
+                otherRelationshipGroup.style.display = "none";
+            }
+        });
 
-// Function to validate phone numbers (including international format with '+' and country code)
-function validatePhoneNumber(phoneNumber) {
-    // Regular expression to allow international phone numbers with the '+' symbol at the start
-    const phonePattern = /^[+]{0,1}[0-9]{1,4}[0-9]{6,14}$/;
-    return phonePattern.test(phoneNumber);
-}
+        // Form submission validation
+        document.querySelector("form").addEventListener("submit", (event) => {
+            let isValid = true; // Track overall validity
+            let errorMessages = [];
 
-// Inside your validation function
-function validateForm(event) {
-    event.preventDefault(); // Prevent form submission until validation is complete
+            // Check required fields
+            nameFields.forEach((field) => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    setValidationMessage(field, "This field is required.");
+                }
+            });
 
-    let isValid = true; // Flag to track overall validity
-    let errorMessages = []; // Array to collect error messages
+            if (!document.querySelector('input[name="sex"]:checked')) {
+                isValid = false;
+                alert("Sex must be selected."); // Example for radio buttons
+            }
 
-    // Get form fields
-    const phone = document.getElementById('patient_phone').value.trim();
-    const emPhone = document.getElementById('em_phone').value.trim();
+            if (!relationshipField.value) {
+                isValid = false;
+                alert("Relationship must be selected.");
+            }
 
-    // Validate the patient's phone number
-    if (!validatePhoneNumber(phone)) {
-        isValid = false;
-        errorMessages.push("Valid phone number with country code is required.");
-    }
-
-    // Validate the emergency contact's phone number
-    if (!validatePhoneNumber(emPhone)) {
-        isValid = false;
-        errorMessages.push("Valid emergency contact phone number with country code is required.");
-    }
-
-    // If there are validation errors, display them
-    if (!isValid) {
-        alert("Please fix the following errors:\n" + errorMessages.join("\n"));
-    } else {
-        // Proceed with form submission (for now, you can alert a success message)
-        alert("Details were saved!");
-        // Normally, you'd submit the form here (e.g., document.forms[0].submit())
-    }
-}
-
-    //  email validation
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errorMessages.push("Invalid email format.");
-    if (emEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emEmail)) errorMessages.push("Invalid emergency contact email format.");
-
-    // Check if there are any errors
-    if (errorMessages.length > 0) {
-        alert("Please fix the following errors:\n" + errorMessages.join("\n"));
-        isValid = false;
-    }
-
-    // If form is valid, proceed with submission
-    if (isValid) {
-        alert("Details were saved!"); // Display success message
-        event.target.submit(); // Submit the form programmatically
-    }
-}
-
-// Function to toggle visibility of "Other Relationship" textbox
-function toggleOtherTextbox() {
-    const relationship = document.getElementById('relationship').value;
-    const otherGroup = document.getElementById('other-relationship-group');
-    if (relationship === "other") {
-        otherGroup.style.display = "block";
-    } else {
-        otherGroup.style.display = "none";
-    }
-}
-
-// Function to update the file name display
-function updateFileName(input) {
-    const fileNameSpan = input.parentElement.querySelector('.file-name');
-    fileNameSpan.textContent = input.files[0]?.name || "No file chosen";
-}
-
-// Attach validation and events to the form
-document.addEventListener("DOMContentLoaded", () => {
-    // Attach validation to the form's submit event
-    const form = document.querySelector('form');
-    form.addEventListener('submit', validateForm);
-
-    // Attach change event for "Relationship" dropdown
-    document.getElementById('relationship').addEventListener('change', toggleOtherTextbox);
-
-    // Attach change event for file input
-    document.getElementById('photo').addEventListener('change', (e) => updateFileName(e.target));
-});
-
+            if (!isValid) {
+                event.preventDefault(); // Prevent submission if invalid
+            }
+        });
+    });
 </script>
+
+
 
 </body>
 </html>
