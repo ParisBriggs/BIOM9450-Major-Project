@@ -26,7 +26,8 @@ $query = "
         m.name AS medicationName, 
         mo.dateOrdered, 
         mo.frequency, 
-        mo.dosage 
+        mo.dosage,
+        CONCAT(pr.firstName, ' ', pr.lastName) AS prescribedBy
     FROM 
         MedicationOrder AS mo
     INNER JOIN 
@@ -37,6 +38,10 @@ $query = "
         Patients AS p 
     ON 
         mo.patient = p.id
+    LEFT JOIN
+        Practitioners AS pr
+    ON 
+        mo.prescribedBy = pr.id
 ";
 $result = $conn->query($query);
 
@@ -46,25 +51,6 @@ if (!$result) {
 
 $orders = $result->fetch_all(MYSQLI_ASSOC);
 
-// Fetch medications for the dropdown
-$medicationQuery = "SELECT id, name FROM Medications";
-$medicationResult = $conn->query($medicationQuery);
-
-if (!$medicationResult) {
-    die("Database query failed: " . $conn->error);
-}
-
-$medications = $medicationResult->fetch_all(MYSQLI_ASSOC);
-
-// Fetch patients for the dropdown
-$patientQuery = "SELECT id, CONCAT(firstName, ' ', lastName) AS name FROM Patients";
-$patientResult = $conn->query($patientQuery);
-
-if (!$patientResult) {
-    die("Database query failed: " . $conn->error);
-}
-
-$patients = $patientResult->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -129,6 +115,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
                             <th>Date Ordered</th>
                             <th>Daily Frequency</th>
                             <th>Dosage</th>
+                            <th>Prescribed By</th>
                         </tr>
                     </thead>
                     <tbody id="orders-list">
@@ -141,6 +128,7 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
                                 <td><?php echo $order['dateOrdered']; ?></td>
                                 <td><?php echo $order['frequency']; ?></td>
                                 <td><?php echo $order['dosage']; ?></td>
+                                <td><?php echo $order['prescribedBy'] ?: 'N/A'; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
