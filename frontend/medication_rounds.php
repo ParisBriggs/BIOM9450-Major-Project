@@ -161,11 +161,11 @@ if (empty($medications) && $dateFiltered === $currentDate) {
                         <?php if (!empty($medications)): ?>
                             <?php foreach ($medications as $medication): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($medication['patientName']); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['medicationName']); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['roundTime']); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['status']); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['notes']); ?></td>
+                                    <td><?php echo htmlspecialchars($medication['patientName']  ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($medication['medicationName'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($medication['roundTime'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($medication['status'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($medication['notes'] ?? 'N/A'); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         
@@ -173,9 +173,9 @@ if (empty($medications) && $dateFiltered === $currentDate) {
                         <?php elseif (!empty($generatedRounds)): ?>
                             <?php foreach ($generatedRounds as $index => $round): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($round['patientName']); ?></td>
-                                    <td><?php echo htmlspecialchars($round['medicationName']); ?></td>
-                                    <td><?php echo htmlspecialchars($round['roundTime']); ?></td>
+                                    <td><?php echo htmlspecialchars($round['patientName'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($round['medicationName'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($round['roundTime'] ?? 'N/A'); ?></td>
                                     <td>
                                         <select name="status[]" class="status-select" required>
                                             <option value="">Select</option>

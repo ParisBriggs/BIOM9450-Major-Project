@@ -29,7 +29,7 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param('ss', $dateFiltered, $roundTimeFiltered);
 $stmt->execute();
 $result = $stmt->get_result();
-$medications = $result->fetch_all(MYSQLI_ASSOC);
+$diets = $result->fetch_all(MYSQLI_ASSOC);
 
 // If no rounds exist for the current date and round time, generate dynamically
 if (empty($diets) && $dateFiltered === $currentDate) {
@@ -90,7 +90,7 @@ if (empty($diets) && $dateFiltered === $currentDate) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication Rounds</title>
+    <title>Diet Rounds</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles_medication_rounds.css">
     <script src="logout_dropdown.js" defer></script>
@@ -142,7 +142,7 @@ if (empty($diets) && $dateFiltered === $currentDate) {
             </form>
         </div>
 
-        <!-- Medications Table -->
+        <!-- Diet Table -->
         <form method="POST">
             <div class="table-container">
                 <table class="medication-table">
@@ -157,14 +157,14 @@ if (empty($diets) && $dateFiltered === $currentDate) {
                     </thead>
                     <tbody>
                         <!-- Existing rounds in database -->
-                        <?php if (!empty($medications)): ?>
-                            <?php foreach ($medications as $medication): ?>
+                        <?php if (!empty($diets)): ?>
+                            <?php foreach ($diets as $diet): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($medication['patientName'] ?? 'N/A'); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['dietName'] ?? 'N/A'); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['roundTime'] ?? 'N/A'); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['status'] ?? 'N/A'); ?></td>
-                                    <td><?php echo htmlspecialchars($medication['notes'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($diet['patientName'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($diet['dietName'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($diet['roundTime'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($diet['status'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars($diet['notes'] ?? 'N/A'); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         
