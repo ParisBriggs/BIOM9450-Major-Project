@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
                         <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
