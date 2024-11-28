@@ -32,7 +32,7 @@ foreach ($medRounds as $round) {
 ksort($patients);
 
 // Set placeholder practitioner info
-$currentPractitionerUsername = 'emma.brown';
+$currentPractitionerUsername = $_SESSION['user_name'];
 ?>
 
 <!DOCTYPE html>
@@ -52,22 +52,22 @@ $currentPractitionerUsername = 'emma.brown';
             <img src="images/company_logo.png" alt="Nutrimed Health Logo" class="logo">
         </div>
         <nav class="navbar">
-            <a href="dashboard.html">Home</a>
+            <a href="dashboard.php">Home</a>
             <a href="medication_rounds.php">Medication Rounds</a>
-            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="diet_rounds.php">Diet Regime Rounds</a>
             <a href="patient_records.php">Patient Records</a>
             <a href="manage_orders.php">Manage Orders</a>
-            <a href="generate_reports.html" class="active">Generate Reports</a>
+            <a href="generate_reports.php" class="active">Generate Reports</a>
         </nav>
         <div class="header-right">
             <div class="ward-profile">
-                <span class="ward-info">Ward A</span>
+                
                 <div class="dropdown">
-                    <button class="dropdown-button" onclick="toggleDropdown()">
-                        Rachel Sunway<br><small>Nurse</small>
+                    <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
+                        <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>

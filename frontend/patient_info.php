@@ -12,6 +12,148 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
+
+include_once 'db_connection.php';
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
+    // Patient information
+    $firstName = htmlspecialchars(trim($_POST['firstName']));
+    $lastName = htmlspecialchars(trim($_POST['lastName']));
+    $dob = htmlspecialchars(trim($_POST['dob']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $phone = htmlspecialchars(trim($_POST['patient_phone']));
+    $sex = htmlspecialchars(trim($_POST['sex']));
+    $room = htmlspecialchars(trim($_POST['room']));
+    
+    // Clean notes - remove bullet points and trim each line
+    $notesRaw = htmlspecialchars(trim($_POST['notes']));
+    $notesLines = explode("\n", $notesRaw);
+    $cleanedLines = [];
+    foreach ($notesLines as $line) {
+        // Remove bullet point and trim whitespace
+        $cleanLine = trim(str_replace('• ', '', $line));
+        if (!empty($cleanLine)) {
+            $cleanedLines[] = $cleanLine;
+        }
+    }
+    $notes = implode("\n", $cleanedLines);
+
+    // Emergency contact information
+    $em_firstName = htmlspecialchars(trim($_POST['em_firstname']));
+    $em_lastName = htmlspecialchars(trim($_POST['em_lastname']));
+    $em_email = htmlspecialchars(trim($_POST['em_email']));
+    $em_phone = htmlspecialchars(trim($_POST['em_phone']));
+    $relationship = htmlspecialchars(trim($_POST['relationship']));
+    if ($relationship === 'other') {
+        $relationship = htmlspecialchars(trim($_POST['other-relationship']));
+    }
+
+    // Validation
+    $errors = [];
+
+    // Patient validation
+    if (!preg_match('/^[a-zA-Z]+$/', $firstName)) {
+        $errors[] = 'First Name must contain only letters.';
+    }
+
+    if (!preg_match('/^[a-zA-Z]+$/', $lastName)) {
+        $errors[] = 'Last Name must contain only letters.';
+    }
+
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Invalid email format.';
+    }
+
+    if (!preg_match('/^\d{10}$/', $phone)) {
+        $errors[] = 'Phone number must be 10 digits.';
+    }
+
+    if (!is_numeric($room)) {
+        $errors[] = 'Room number must be numeric.';
+    }
+
+    // Emergency contact validation
+    if (!preg_match('/^[a-zA-Z]+$/', $em_firstName)) {
+        $errors[] = 'Emergency Contact First Name must contain only letters.';
+    }
+
+    if (!preg_match('/^[a-zA-Z]+$/', $em_lastName)) {
+        $errors[] = 'Emergency Contact Last Name must contain only letters.';
+    }
+
+    if (!empty($em_email) && !filter_var($em_email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Invalid emergency contact email format.';
+    }
+
+    if (!preg_match('/^\d{10}$/', $em_phone)) {
+        $errors[] = 'Emergency contact phone number must be 10 digits.';
+    }
+
+    // Handle photo upload
+    $photoPath = ''; // Default empty path
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        $fileType = $_FILES['photo']['type'];
+        
+        if (!in_array($fileType, $allowedTypes)) {
+            $errors[] = 'Invalid file type. Only JPG, JPEG and PNG are allowed.';
+        } else {
+            // Create images directory if it doesn't exist
+            $uploadDir = 'images/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Generate unique filename while keeping original extension
+            $fileExtension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+            $uniqueFilename = 'profile_image_' . uniqid() . '.' . $fileExtension;
+            $uploadPath = $uploadDir . $uniqueFilename;
+            
+            // Attempt to move uploaded file
+            if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadPath)) {
+                $photoPath = $uploadPath;
+            } else {
+                $errors[] = 'Failed to upload image. Error: ' . error_get_last()['message'];
+            }
+        }
+    }
+
+    if (empty($errors)) {
+        // Start transaction
+        $conn->begin_transaction();
+
+        try {
+            // First insert emergency contact
+            $stmt = $conn->prepare('INSERT INTO EmergencyContacts (firstName, lastName, relationship, email, phone) VALUES (?, ?, ?, ?, ?)');
+            $stmt->bind_param('sssss', $em_firstName, $em_lastName, $relationship, $em_email, $em_phone);
+            $stmt->execute();
+            $emergencyContactId = $conn->insert_id;
+            $stmt->close();
+
+            // Then insert patient
+            $stmt = $conn->prepare('INSERT INTO Patients (firstName, lastName, sex, photo, email, phone, notes, emergencyContact, room, DOB) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->bind_param('sssssssiis', $firstName, $lastName, $sex, $photoPath, $email, $phone, $notes, $emergencyContactId, $room, $dob);
+            $stmt->execute();
+
+            // Commit transaction
+            $conn->commit();
+
+            $_SESSION['success_message'] = 'Patient successfully added!';
+            header('Location: patient_success.php');
+            exit();
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            $conn->rollback();
+            $errors[] = 'Error adding patient: ' . $e->getMessage();
+            
+            // If an error occurred after image upload, clean up the uploaded file
+            if (!empty($photoPath) && file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +162,8 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information - Nutrimed Health</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">    
     <link rel="stylesheet" href="styles/styles_edit_patient_info.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
     <script src="logout_dropdown.js" defer></script>
 </head>
 <body>
@@ -42,7 +181,7 @@ if (!isset($_SESSION['user_id'])) {
             <a href="generate_reports.php">Generate Reports</a>
         </nav>
         <div class="header-right">
-            <div class="ward-profile">     
+            <div class="ward-profile">
                 <div class="dropdown">
                     <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
                         <?php echo $_SESSION['user_name']; ?><br>
@@ -56,24 +195,32 @@ if (!isset($_SESSION['user_id'])) {
     </header>
 
     <div class="outer-container">
-        <!-- Back Button -->
         <a href="patient_records.php" class="back-button">
-            <span>&larr;</span> Back
+            <span>←</span> Back
         </a>
 
-        <form method="POST" action="../connections/process_patient.php" enctype="multipart/form-data" class="form-grid">
+        <form method="POST" action="" enctype="multipart/form-data" class="form-grid">
+            <!-- Display errors if any -->
+            <?php if (!empty($errors)): ?>
+                <div class="error-messages">
+                    <?php foreach ($errors as $error): ?>
+                        <p class="error"><?php echo $error; ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
             <!-- Patient Details Section -->
             <div class="form-section">
                 <h2>Create New Patient Account</h2>
                 
                 <div class="form-group">
-                    <label for="firstname">First Name:</label>
-                    <input type="text" id="firstname" name="firstname" required>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="lastname">Last Name:</label>
-                    <input type="text" id="lastname" name="lastname" required>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
                 </div>
         
                 <div class="form-group">
@@ -105,12 +252,7 @@ if (!isset($_SESSION['user_id'])) {
         
                 <div class="form-group">
                     <label for="room">Room:</label>
-                    <select id="room" name="room" required>
-                        <option value="101">WB.101</option>
-                        <option value="102">WB.102</option>
-                        <option value="103">WB.103</option>
-                        <option value="104">WB.104</option>
-                    </select>
+                    <input type="text" id="room" name="room" placeholder="Enter room number" required>
                 </div>
         
                 <div class="form-group">
@@ -167,74 +309,53 @@ if (!isset($_SESSION['user_id'])) {
                         <option value="other">Other</option>
                     </select>
                 </div>
+
                 <div class="form-group" id="other-relationship-group" style="display: none;">
                     <label for="other-relationship">Please Specify:</label>
                     <input type="text" id="other-relationship" name="other-relationship" placeholder="Specify other relationship">
                 </div>
             
-            <div class="form-actions">
-                <button type="submit" class="save-button">Save Patient Details</button>
+                <div class="form-actions">
+                    <button type="submit" name="add_patient" class="save-button">Save Patient Details</button>
+                </div>
             </div>
         </form>
     </div>
+
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
+            input.parentElement.querySelector('.file-name').textContent = fileName;
+        }
+
+        function toggleOtherTextbox() {
+            const relationshipSelect = document.getElementById("relationship");
+            const otherRelationshipGroup = document.getElementById("other-relationship-group");
+            
+            if (relationshipSelect.value === "other") {
+                otherRelationshipGroup.style.display = "block";
+            } else {
+                otherRelationshipGroup.style.display = "none";
+                document.getElementById("other-relationship").value = "";
+            }
+        }
+
+        document.getElementById('notes').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const start = this.selectionStart;
+                const value = this.value;
+                
+                this.value = value.substring(0, start) + '\n• ' + value.substring(start);
+                this.selectionStart = this.selectionEnd = start + 3;
+            }
+        });
+
+        document.getElementById('notes').addEventListener('focus', function() {
+            if (this.value.trim() === '') {
+                this.value = '• ';
+            }
+        });
+    </script>
 </body>
 </html>
-
-<script>
-    function updateFileName(input) {
-        const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
-        input.parentElement.querySelector('.file-name').textContent = fileName;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Initialize intl-tel-input for Patient Phone
-        const patientPhoneInputField = document.querySelector("#patient_phone");
-        const patientPhoneInput = window.intlTelInput(patientPhoneInputField, {
-            preferredCountries: ["au", "us", "gb", "in", "nz"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-
-        // Initialize intl-tel-input for Emergency Contact Phone
-        const emPhoneInputField = document.querySelector("#em_phone");
-        const emPhoneInput = window.intlTelInput(emPhoneInputField, {
-            preferredCountries: ["au", "us", "gb", "in", "nz"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-    });
-
-    function toggleOtherTextbox() {
-    const relationshipSelect = document.getElementById("relationship");
-    const otherRelationshipGroup = document.getElementById("other-relationship-group");
-
-    if (relationshipSelect.value === "other") {
-        otherRelationshipGroup.style.display = "block"; // Show the text box
-    } else {
-        otherRelationshipGroup.style.display = "none"; // Hide the text box
-        document.getElementById("other-relationship").value = ""; // Clear the text box value
-    }
-}
-
-document.getElementById('notes').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        const value = this.value;
-        
-        // Add bullet point on new line
-        this.value = value.substring(0, start) + '\n• ' + value.substring(end);
-        
-        // Adjust cursor position
-        this.selectionStart = this.selectionEnd = start + 3;
-        
-        // Prevent default behavior of Enter key
-        e.preventDefault();
-    }
-});
-
-// Add a bullet point to the first line when the textarea gains focus
-document.getElementById('notes').addEventListener('focus', function () {
-    if (this.value.trim() === '') {
-        this.value = '• ';
-    }
-});
-</script>
