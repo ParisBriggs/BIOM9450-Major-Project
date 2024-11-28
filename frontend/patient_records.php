@@ -312,42 +312,38 @@ $diet = ($selectedPatient) ? getDietByPatientId($selectedPatient['id']) : [];
                     </ul>
                 </section>
 
-                <hr />
-
                 <!-- Medications Section -->
                 <section class="medication-section">
-                <h3>Medications</h3>
-                <?php if (!empty($medications)): ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Medication Name</th>
-                                <th>Dosage</th>
-                                <th>Frequency</th>
-                                <th>Admin Route</th>
-                                <th>Date Prescribed</th>
-                                <th>Prescribed By</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($medications as $medication): ?>
+                    <h3>Medications</h3>
+                    <?php if (!empty($medications)): ?>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td><?php echo isset($medication['name']) ? $medication['name'] : 'N/A'; ?></td>
-                                    <td><?php echo isset($medication['dosage']) ? $medication['dosage'] : 'N/A'; ?></td>
-                                    <td><?php echo isset($medication['frequency']) ? $medication['frequency'] : 'N/A'; ?></td>
-                                    <td><?php echo isset($medication['route']) ? $medication['route'] : 'N/A'; ?></td>
-                                    <td><?php echo isset($medication['datePrescribed']) ? $medication['datePrescribed'] : 'N/A'; ?></td>
-                                    <td><?php echo isset($medication['prescribedBy']) ? $medication['prescribedBy'] : 'N/A'; ?></td>
+                                    <th>Medication Name</th>
+                                    <th>Dosage</th>
+                                    <th>Frequency</th>
+                                    <th>Admin Route</th>
+                                    <th>Date Prescribed</th>
+                                    <th>Prescribed By</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>No medications found for this patient.</p>
-                <?php endif; ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($medications as $medication): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($medication['name'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($medication['dosage'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($medication['frequency'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($medication['route'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($medication['datePrescribed'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($medication['prescribedBy'] ?? 'N/A'); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No medications found for this patient.</p>
+                    <?php endif; ?>
                 </section>
-
-                <hr />
 
                 <!-- Diet Section -->
                 <section class="diet-section">
