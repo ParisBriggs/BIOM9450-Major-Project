@@ -152,6 +152,7 @@ header {
     font-weight: 600;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 /* Selection Bar */
 .selection-bar {
     display: flex;
@@ -161,7 +162,7 @@ header {
     margin: 20px auto;
     width: 90%;
     padding: 15px 20px;
-    background-color: linear-gradient(180deg, #b3ffd6 0%, #ffffff 50%, #e8f9f0 100%);
+    background-color: linear-gradient(180deg, #d5f9e6 0%, #ffffff 50%, #e6faef 100%);
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -187,16 +188,32 @@ header {
 
 /* Table Styling */
 .medication-table {
-    width: 90%;
     margin: 20px auto;
     border-collapse: separate;
     border-spacing: 0;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 92%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures consistent column widths */
 }
 
-.medication-table thead {
+/* Container for Scrollable Table */
+.table-container {
+    max-height: 430px; /* Adjust the height as needed */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+/* Sticky header row */
+.medication-table thead th {
+    position: sticky;
+    top: 0; /* Stick to the top of the container */
+    z-index: 2; /* Ensure it stays above the rows */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+
     background-color: #e8f3fc; /* Light pastel blue */
     text-align: center;
     color: #3A77DB;
@@ -204,11 +221,14 @@ header {
     font-weight: bold;
 }
 
+/* Table rows */
 .medication-table th, .medication-table td {
     padding: 15px;
     font-weight: 500;
     text-align: center; /* Center aligns all content */
 }
+
+
 
 .medication-table th:first-child, 
 .medication-table td:first-child {
@@ -230,11 +250,18 @@ header {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.medication-table td img.patient-photo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
+/* Always show scrollbar */
+.table-container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #464749; /* Scrollbar color */
+    border-radius: 4px; /* Rounded corners for the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Scrollbar track color */
 }
 
 /* Save Button */
@@ -279,3 +306,29 @@ header {
     border-color: #26B567; /* Green border when focused */
     box-shadow: 0px 0px 5px rgba(38, 181, 103, 0.5); /* Subtle glow */
 }
+
+.medication-table input.notes-input {
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 100%; /* Ensures it takes up full width of the column */
+    max-width: 250px; /* Optional: limits the input size */
+    background-color: #f9fcfd; /* Light pastel background */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover/focus effects */
+    outline: none;
+    color: #333; /* Text color */
+    box-sizing: border-box; /* Prevents overflow issues */
+}
+
+.medication-table input.notes-input:hover {
+    background-color: #e8f3fc; /* Light pastel blue on hover */
+    border-color: #3A77DB; /* Blue border on hover */
+}
+
+.medication-table input.notes-input:focus {
+    background-color: #eef7fc; /* Light focus state */
+    border-color: #26B567; /* Green border when focused */
+    box-shadow: 0px 0px 5px rgba(38, 181, 103, 0.5); /* Subtle glow */
+}
+

@@ -2,8 +2,8 @@
 // Include the database connection
 include 'db_connection.php';
 
-// Query to fetch data from a table (update 'your_table' to match a table in your schema)
-$sql = "SELECT * FROM Patients"; // Replace 'your_table' with a valid table name
+// Query to fetch data from table
+$sql = "SELECT * FROM Patients";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
