@@ -1,4 +1,19 @@
 <?php
+session_set_cookie_params([
+    'secure' => false, // For local testing over HTTP
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+session_start();
+
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if the user is not logged in
+    header('Location: login.php');
+    exit();
+}
+
 include_once 'fetch_report_data.php';
 
 // get med rounds

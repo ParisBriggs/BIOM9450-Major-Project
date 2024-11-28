@@ -1,4 +1,19 @@
 <?php
+session_set_cookie_params([
+    'secure' => false, // For local testing over HTTP
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+session_start();
+
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if the user is not logged in
+    header('Location: login.php');
+    exit();
+}
+
 include_once 'db_connection.php';
 include_once 'fetch_medication_orders.php'; // For adding/deleting orders
 
@@ -22,6 +37,7 @@ if (!$patientResult) {
 
 $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,10 +65,10 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
         </nav>
         <div class="header-right">
             <div class="ward-profile">
-                <span class="ward-info">Ward A</span>
+                
                 <div class="dropdown">
-                    <button class="dropdown-button" onclick="toggleDropdown()">
-                        Rachel Sunway<br><small>Nurse</small>
+                    <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
+                        <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="logout.php">Logout</a>

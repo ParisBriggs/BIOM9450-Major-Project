@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 28, 2024 at 08:24 AM
+-- Generation Time: Nov 28, 2024 at 09:10 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.20
 
@@ -40,12 +40,12 @@ CREATE TABLE `Practitioners` (
 --
 
 INSERT INTO `Practitioners` (`id`, `firstName`, `lastName`, `userName`, `password`) VALUES
-(1, 'Emma', 'Brown', 'emma.brown', 'password123'),
-(2, 'Michael', 'Lee', 'michael.lee', 'password456'),
-(3, 'Sarah', 'Wilson', 'sarah.wilson', 'password789'),
-(4, 'James', 'Taylor', 'james.taylor', 'password101'),
-(5, 'Lisa', 'Anderson', 'lisa.anderson', 'password102'),
-(6, 'David', 'Martinez', 'david.martinez', 'password103');
+(1, 'Emma', 'Brown', 'emma.brown', '$2y$10$RFLQTMWSA6d6OTl6vcDVdeQuLBU.8cr.IfHNz4Elx1JEfoa.VHu7K'),
+(2, 'Michael', 'Lee', 'michael.lee', '$2y$10$p1Dtxrx9zaH2UAIZx3sJsOctowyCs7a2Reng7TpUh5/NQgomLKb9y'),
+(3, 'Sarah', 'Wilson', 'sarah.wilson', '$2y$10$WH8H40O5P5b.KbfIumnYveamQNnW0taMHtG/Ovp7923TGTCT.1niO'),
+(4, 'James', 'Taylor', 'james.taylor', '$2y$10$aY1xnuMsd02elI4l8zDXaOQfKRVbdWBVXKQqMNUyIHPSVlj85QKqO'),
+(5, 'Lisa', 'Anderson', 'lisa.anderson', '$2y$10$0ZDQleUpHPwFyx9nvcVIdOYy3IqDUua3QQjZKwDN3EZdvlt32m1x2'),
+(6, 'David', 'Martinez', 'david.martinez', '$2y$10$8uL2pvqpNOWwKrsSgQwLJ.hs7Z4/L618ZCbYGps2SVFSQxqfwTjZm');
 
 --
 -- Indexes for dumped tables
