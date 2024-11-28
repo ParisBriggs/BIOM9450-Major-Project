@@ -1,5 +1,59 @@
 <?php
-include_once 'fetch_patient_data.php';
+
+include_once 'db_connection.php'; // Ensure this connects to your database
+
+// Fetch all patients from the database
+function getPatientsFromDatabase() {
+    global $conn;
+
+    $query = "SELECT room, firstName, lastName, photo, phone, email FROM Patients"; 
+    $result = $conn->query($query);
+
+    if (!$result) {
+        die("Database query failed: " . $conn->error);
+    }
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+// Fetch a specific patient by room
+function getPatientByRoomFromDatabase($room) {
+    global $conn;
+
+    $query = "
+        SELECT 
+            p.id, 
+            p.firstName, 
+            p.lastName, 
+            p.room, 
+            p.sex, 
+            p.photo, 
+            p.notes, 
+            CONCAT(ec.firstName, ' ', ec.lastName) AS emergencyContactName, 
+            ec.phone AS emergencyContactPhone, 
+            ec.email AS emergencyContactEmail 
+        FROM 
+            Patients AS p
+        LEFT JOIN 
+            EmergencyContacts AS ec 
+        ON 
+            p.emergencyContact = ec.id
+        WHERE 
+            p.room = ?
+    ";
+
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $room);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Database query failed: " . $stmt->error);
+    }
+
+    return $result->fetch_assoc();
+}
 
 // Check if the 'room' parameter is set in the URL
 if (!isset($_GET['room'])) {
@@ -150,7 +204,27 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
                     </div>
                     <div class="info-box">
                         <label>Emergency Contact</label>
-                        <span><?php echo isset($selectedPatient['emergencyContact']) ? $selectedPatient['emergencyContact'] : 'N/A'; ?></span>
+                        <span>
+                            <?php echo isset($selectedPatient['emergencyContactName']) 
+                                ? $selectedPatient['emergencyContactName'] 
+                                : 'N/A'; ?>
+                        </span>
+                    </div>
+                    <div class="info-box">
+                        <label>Emergency Contact Phone Number</label>
+                        <span>
+                            <?php echo isset($selectedPatient['emergencyContactPhone']) 
+                                ? $selectedPatient['emergencyContactPhone'] 
+                                : 'N/A'; ?>
+                        </span>
+                    </div>
+                    <div class="info-box">
+                        <label>Phone Number</label>
+                        <span><?php echo isset($selectedPatient['phone']) ? $selectedPatient['phone'] : 'N/A'; ?></span>
+                    </div>
+                    <div class="info-box">
+                        <label>Email Address</label>
+                        <span><?php echo isset($selectedPatient['email']) ? $selectedPatient['email'] : 'N/A'; ?></span>
                     </div>
                 </div>
 
