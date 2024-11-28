@@ -38,7 +38,7 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
         <nav class="navbar">
             <a href="dashboard.html">Home</a>
             <a href="medication_rounds.php">Medication Rounds</a>
-            <a href="diet_rounds.html">Diet Regime Rounds</a>
+            <a href="diet_rounds.php">Diet Regime Rounds</a>
             <a href="patient_records.php" class="active">Patient Records</a>
             <a href="manage_orders.php">Manage Orders</a>
             <a href="generate_reports.php">Generate Reports</a>
