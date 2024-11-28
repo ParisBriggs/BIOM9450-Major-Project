@@ -207,16 +207,11 @@ header {
 
 /* Main Layout */
 .outer-container {
-    background: linear-gradient(180deg, #ffffff 0%, #bedaf6 100%);
-    border-radius: 10px;
-    padding: 20px;
     display: flex;
     gap: 20px;
-    width: 90%;
     margin: 20px auto;
-    overflow: visible;
+    width: 90%;
 }
-
 
 
 /* Sidebar Styling */
@@ -229,6 +224,15 @@ header {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-y: auto; /* Add vertical scrolling */
+    max-height: 80vh; /* Constrain height for the sidebar */
+}
+
+
+.resident-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .search {
@@ -245,11 +249,6 @@ header {
     border-radius: 5px;
 }
 
-.resident-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
 
 .resident-item {
     display: flex;
@@ -528,3 +527,6 @@ hr {
 .diet-item strong {
     color: #333;
 }
+
+
+
