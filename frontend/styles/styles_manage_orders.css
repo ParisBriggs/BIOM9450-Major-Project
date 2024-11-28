@@ -223,6 +223,15 @@ header {
 }
 
 /* Orders Table Section */
+/* Orders Table Container */
+.orders-table-container {
+    max-height: 400px; /* Set the max height for the table */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    margin-top: 10px; /* Add some spacing above the table */
+    border-radius: 8px; /* Optional: Keep table rounded corners */
+}
+
 .orders-section {
     max-width: 1200px;
     margin: 20px auto;
@@ -294,3 +303,4 @@ header {
     text-align: center; /* Center align the status column */
     font-weight: bold;
 }
+

@@ -87,7 +87,6 @@ $selectedPatient = $room ? getPatientByRoomFromDatabase($room) : null;
         <main class="profile-section">
             <?php if ($selectedPatient): ?>
                 <div class="profile-buttons">
-                    <button class="edit-button">Delete this patient</button>
                     <a href="patient_info.html" class="add-button">Add New Patient</a>
                 </div>
                 <div class="profile-header">
