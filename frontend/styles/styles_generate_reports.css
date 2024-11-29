@@ -158,17 +158,21 @@ header {
 .report-generator {
     max-width: 800px;
     margin: 40px auto;
-    background-color: #ffffff;
+    background: linear-gradient(0deg, #ffffff, #cfeecf); /* Subtle gradient for a softer appearance */
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px; /* Slightly more rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    border: 1px solid #d9f7cb; /* Match the green tones */
 }
 
 .report-generator h2 {
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
-    color: #333;
+    color: #2c3e50; /* Darker gray for better contrast */
+    font-weight: bold;
+    margin-top: 0px;
+    letter-spacing: 0.5px; /* Subtle spacing for a modern touch */
 }
 
 /* Toggle Button Group */
@@ -186,71 +190,52 @@ header {
     color: #4CAF50;
     font-weight: bold;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 8px; /* More rounding for a friendly look */
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for hover effects */
 }
 
 .toggle-button.selected {
     background-color: #4CAF50;
     color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly bolder shadow when active */
 }
 
 .toggle-button:hover {
     background-color: #45a049;
     color: #ffffff;
+    transform: translateY(-2px); /* Slight lift on hover */
 }
 
 /* Generate Button Styling */
 .generate-button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    padding: 12px;
+    background: linear-gradient(90deg, #4CAF50, #3e8e41); /* Subtle gradient for visual interest */
     color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
     margin-top: 20px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .generate-button:hover {
-    background-color: #45a049;
-}
-
-/* Patient Selection Dropdown */
-.conditional-field {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.conditional-field label {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.conditional-field select {
-    padding: 10px;
-    width: 60%;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background: #075009; /* Darker green on hover */
 }
 
 /* Data Table Styling */
 .data-table {
     max-width: 1000px;
     margin: 40px auto;
-    background-color: #ffffff;
-    padding: 20px;
+    background: linear-gradient(180deg, #ffffff, #cfeecf); /* Subtle gradient for a softer appearance */
+    padding: 20px 40px; /* Reduced padding at the top */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -258,33 +243,79 @@ header {
 .data-table h2 {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 15px;
     text-align: center;
     color: #333;
+    margin-top: 10px;
+    margin-bottom: 10px; /* Reduced space below the heading */
 }
-
+/* Updated Report Table Styling */
 .report-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    background-color: #f9f9f9; /* Light background for the table */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensure proper corner rounding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
-.report-table th, .report-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
+.report-table th,
+.report-table td {
+    padding: 15px;
     text-align: left;
+    font-size: 14px;
+    color: #2c3e50; /* Dark text color */
 }
 
 .report-table th {
-    background-color: #f0f0f0;
+    background-color: #e8f9f0; /* Light green header */
     font-weight: bold;
-    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 13px;
+    color: #10793c; /* Dark green text */
+    text-align: left;
 }
 
-.report-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.report-table td {
+    border-bottom: 1px solid #ddd; /* Subtle borders between rows */
 }
 
 .report-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f7f3; /* Light green on hover */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+}
+
+.report-table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White for odd rows */
+}
+
+.report-table tbody tr:nth-child(even) {
+    background-color: #f7fbf8; /* Very light green for even rows */
+}
+
+.report-table td:first-child {
+    font-weight: 600; /* Bold the first column */
+}
+
+.report-table td:last-child {
+    text-align: center; /* Center align the last column */
+    font-weight: bold;
+}
+
+/* Optional: Table Header Styling */
+.report-table th:first-child {
+    border-top-left-radius: 10px; /* Round top-left corner */
+}
+
+.report-table th:last-child {
+    border-top-right-radius: 10px; /* Round top-right corner */
+}
+
+.report-table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px; /* Round bottom-left corner */
+}
+
+.report-table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px; /* Round bottom-right corner */
 }
