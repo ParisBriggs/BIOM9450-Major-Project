@@ -152,6 +152,17 @@ header {
     font-weight: 600;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+/* Error/success message styling */
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+.success {
+    color: green;
+    font-size: 0.9em;
+}
+
 /* Search and Action Buttons Container */
 .search-container {
     display: flex;
@@ -185,7 +196,7 @@ header {
 .add-button,
 .edit-button,
 .delete-button {
-    padding: 12px 15px; /* Increased padding for better spacing */
+    padding: 12px 20px; /* Increased padding for better spacing */
     border: none;
     border-radius: 8px; /* Rounded corners for buttons */
     color: #ffffff;
@@ -193,8 +204,6 @@ header {
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover animation */
-    text-decoration: none; /* Remove underline */
-
 }
 
 .add-button {
@@ -217,7 +226,6 @@ header {
 
 .delete-button {
     background-color: #FF6347; /* Red */
-    margin-top: 30px;
 }
 
 .delete-button:hover {
@@ -225,84 +233,122 @@ header {
     transform: scale(1.05);
 }
 
-/* Orders Table Container */
-.orders-table-container {
-    max-height: 400px; /* Set the max height for the table */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
-    margin-top: 10px; /* Add some spacing above the table */
-    border-radius: 8px; /* Optional: Keep table rounded corners */
-}
-
-.orders-section {
-    max-width: 1200px;
+.status-icon {
+    width: 80px;
+    height: 80px;
     margin: 20px auto;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    background-color: #e0f7ea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.orders-section h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #2c3e50; /* Darker text color */
+.status-icon .checkmark {
+    font-size: 48px;
+    color: #4caf50;
 }
 
-.orders-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    background-color: #f9f9f9; /* Light background for the table */
-    border-radius: 10px; /* Rounded corners */
-    overflow: hidden; /* Ensure proper corner rounding */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-}
-
-.orders-table th,
-.orders-table td {
-    padding: 15px;
+/* Back Button Container */
+.back-button-container {
     text-align: left;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: #ffffff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    padding: 8px 15px;
     font-size: 14px;
-    color: #2c3e50; /* Text color */
-}
-
-.orders-table th {
-    background-color: #e8f9f0; /* Light green header */
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 13px;
-    color: #10793c; /* Dark green text */
-    text-align: left; 
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
-.orders-table td {
-    border-bottom: 1px solid #ddd; /* Subtle borders between rows */
+.back-button:hover {
+    background-color: #4CAF50;
+    color: #ffffff;
+    transform: scale(1.05);
 }
 
-.orders-table tr:hover {
-    background-color: #f1f7f3; /* Light green on hover */
-    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
 }
 
-.orders-table tbody tr:nth-child(odd) {
-    background-color: #ffffff; /* White for odd rows */
+/* Form Box */
+.form-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
 }
 
-.orders-table tbody tr:nth-child(even) {
-    background-color: #f7fbf8; /* Very light green for even rows */
+.form-box h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.orders-table td:first-child {
-    font-weight: 600; /* Bold the first column */
-    
+/* Form Group */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
 }
 
-.orders-table td:last-child {
-    text-align: center; /* Center align the status column */
+.form-group label {
+    display: block;
     font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
 }
+
+.form-group input,
+.form-group select {
+    width: 98%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Submit Button */
+.submit-button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #3e8e41;
+    transform: scale(1.05);
+}
+
+
 

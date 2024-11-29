@@ -16,13 +16,11 @@
         </div>
         <nav class="navbar">
             <a href="dashboard.html">Home</a>
-            <a href="medication_rounds.html">Medication Rounds</a>
+            <a href="medication_rounds.php">Medication Rounds</a>
             <a href="diet_rounds.html">Diet Regime Rounds</a>
-            <a href="patient_records.html">Patient Records</a>
-            <a href="manage_orders.html">Manage Orders</a>
-            <a href="generate_reports.html" class="active">Generate Reports</a>
-            <a href="patient_info.html">Patient Information</a>
-
+            <a href="patient_records.php">Patient Records</a>
+            <a href="manage_orders.php">Manage Orders</a>
+            <a href="generate_reports.php" class="active">Generate Reports</a>
         </nav>
         <div class="header-right">
             <div class="ward-profile">
@@ -63,27 +61,51 @@
 
     <!-- Display Table -->
     <section class="data-table">
-        <h2>Medication and Food Distribution</h2>
+        <h2>Medication Distribution</h2>
         <table class="report-table">
             <thead>
                 <tr>
                     <th>Patient Name</th>
                     <th>Room Number</th>
                     <th>Medication</th>
+                    <th>Administered By</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="reportData">
+                <tr><td>John Doe</td><td>101</td><td>Aspirin</td><td>Dr. Alex Moore</td><td>2024-11-10</td></tr>
+                <tr><td>Jane Smith</td><td>102</td><td>Ibuprofen</td><td>Dr. Alex Moore</td><td>2024-11-11</td></tr>
+                <tr><td>Mike Johnson</td><td>103</td><td>Paracetamol</td><td>Nurse Lisa Wong</td><td>2024-11-12</td></tr>
+                <tr><td>Emma Brown</td><td>104</td><td>Metformin</td><td>Dr. Alex Moore</td><td>2024-11-13</td></tr>
+                <tr><td>Chris White</td><td>105</td><td>Amoxicillin</td><td>Nurse Ben Lee</td><td>2024-11-14</td></tr>
+                <tr><td>John Doe</td><td>101</td><td>Atorvastatin</td><td>Dr. Alex Moore</td><td>2024-11-15</td></tr>
+                <tr><td>Jane Smith</td><td>102</td><td>Lisinopril</td><td>Nurse Lisa Wong</td><td>2024-11-15</td></tr>
+                <tr><td>Emma Brown</td><td>104</td><td>Insulin</td><td>Dr. Alex Moore</td><td>2024-11-16</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="data-table">
+        <h2>Food Distribution</h2>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Room Number</th>
                     <th>Food</th>
                     <th>Administered By</th>
                     <th>Date</th>
                 </tr>
             </thead>
             <tbody id="reportData">
-                <tr><td>John Doe</td><td>101</td><td>Aspirin</td><td>Chicken Soup</td><td>Dr. Alex Moore</td><td>2024-11-10</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Ibuprofen</td><td>Salad</td><td>Dr. Alex Moore</td><td>2024-11-11</td></tr>
-                <tr><td>Mike Johnson</td><td>103</td><td>Paracetamol</td><td>Fruit Mix</td><td>Nurse Lisa Wong</td><td>2024-11-12</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Metformin</td><td>Vegetable Soup</td><td>Dr. Alex Moore</td><td>2024-11-13</td></tr>
-                <tr><td>Chris White</td><td>105</td><td>Amoxicillin</td><td>Yogurt</td><td>Nurse Ben Lee</td><td>2024-11-14</td></tr>
-                <tr><td>John Doe</td><td>101</td><td>Atorvastatin</td><td>Sandwich</td><td>Dr. Alex Moore</td><td>2024-11-15</td></tr>
-                <tr><td>Jane Smith</td><td>102</td><td>Lisinopril</td><td>Apple</td><td>Nurse Lisa Wong</td><td>2024-11-15</td></tr>
-                <tr><td>Emma Brown</td><td>104</td><td>Insulin</td><td>Salad</td><td>Dr. Alex Moore</td><td>2024-11-16</td></tr>
+                <tr><td>John Doe</td><td>101</td><td>Gluten Free</td><td>Dr. Alex Moore</td><td>2024-11-10</td></tr>
+                <tr><td>Jane Smith</td><td>102</td><td>Low GI</td><td>Dr. Alex Moore</td><td>2024-11-11</td></tr>
+                <tr><td>Mike Johnson</td><td>103</td><td>Dairy Free</td><td>Nurse Lisa Wong</td><td>2024-11-12</td></tr>
+                <tr><td>Emma Brown</td><td>104</td><td>Low Sodium</td><td>Dr. Alex Moore</td><td>2024-11-13</td></tr>
+                <tr><td>Chris White</td><td>105</td><td>Vegetarian</td><td>Nurse Ben Lee</td><td>2024-11-14</td></tr>
+                <tr><td>John Doe</td><td>101</td><td>Low Gi</td><td>Dr. Alex Moore</td><td>2024-11-15</td></tr>
+                <tr><td>Jane Smith</td><td>102</td><td>Low Sodium</td><td>Nurse Lisa Wong</td><td>2024-11-15</td></tr>
+                <tr><td>Emma Brown</td><td>104</td><td>Gluten Free</td><td>Dr. Alex Moore</td><td>2024-11-16</td></tr>
             </tbody>
         </table>
     </section>

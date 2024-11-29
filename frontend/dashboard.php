@@ -1,3 +1,19 @@
+<?php
+session_set_cookie_params([
+    'secure' => false, // For local testing over HTTP
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if the user is not logged in
+    header('Location: login.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +35,12 @@
         </div>
         <div class="header-right">
             <div class="ward-profile">
-                <span class="ward-info">Ward A</span>
                 <div class="dropdown">
-                    <button class="dropdown-button" onclick="toggleDropdown()">
-                        Rachel Sunway<br><small>Nurse</small>
+                    <button class="dropdown-button" onclick="toggleDropdown()"><br><small>Welcome</small>
+                    <?php echo $_SESSION['user_name']; ?><br>
                     </button>
                     <div id="dropdown-content" class="dropdown-content">
-                        <a href="logout.html">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </div>
                 </div>
             </div>
@@ -40,12 +55,12 @@
     
         <!-- Right Column with Navigation Buttons -->
         <div class="right-column">
-            <button onclick="location.href='medication_rounds.html'">Medication Rounds</button>
-            <button onclick="location.href='diet_rounds.html'">Diet Regime Rounds</button>
-            <button onclick="location.href='patient_records.html'">View Patient Records</button>
-            <button onclick="location.href='generate_reports.html'">Generate Reports</button>
-            <button onclick="location.href='patient_info.html'">Add / Edit Patient Information</button>
-            <button onclick="location.href='dispensing_history.html'">View Dispensing History</button>
+            <button onclick="location.href='medication_rounds.php'">Medication Rounds</button>
+            <button onclick="location.href='diet_rounds.php'">Diet Regime Rounds</button>
+            <button onclick="location.href='patient_records.php'">View Patient Records</button>
+            <button onclick="location.href='manage_orders.php'">Manage Prescriptions</button>
+            <button onclick="location.href='generate_reports.php'">Generate Reports</button>
+            <button onclick="location.href='practitioner_info.php'">Create New Practitioner Account</button>
         </div>
     </div>
     
