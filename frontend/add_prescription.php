@@ -89,7 +89,6 @@ $patients = $patientResult->fetch_all(MYSQLI_ASSOC);
             <h2>Add New Prescription</h2>
 
             <form method="POST" action="manage_orders.php" class="prescription-form">
-                <input type="hidden" name="prescribedBy" value="<?php echo $_SESSION['user_id']; ?>">
                 <div class="form-group">
                     <label for="patient">Patient:</label>
                     <select name="patient" id="patient" required>

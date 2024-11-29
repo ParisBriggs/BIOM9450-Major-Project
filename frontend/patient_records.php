@@ -82,13 +82,17 @@ function getMedicationsByPatientId($patientId) {
             mo.frequency AS frequency,
             m.routeAdmin AS route,
             mo.dateOrdered AS datePrescribed,
-            mo.prescribedBy
+            CONCAT(p.firstName, ' ', p.lastName) AS prescribedBy
         FROM 
             MedicationOrder AS mo
         INNER JOIN 
             Medications AS m 
         ON 
             mo.medication = m.id
+        INNER JOIN 
+            Practitioners AS p
+        ON
+            mo.prescribedBy = p.id
         WHERE 
             mo.patient = ?
     ";

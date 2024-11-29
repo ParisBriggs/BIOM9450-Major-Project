@@ -1,8 +1,21 @@
 <?php
 include_once 'db_connection.php'; // Ensure this connects to your database
 
+// Fetch practitioner ID
+$loggedInUserName = $_SESSION['user_name'];
+$practitionerQuery = "SELECT id FROM Practitioners WHERE userName = ?";
+$practitionerStmt = $conn->prepare($practitionerQuery);
+$practitionerStmt->bind_param('s', $loggedInUserName);
+$practitionerStmt->execute();
+$practitionerResult = $practitionerStmt->get_result();
+$practitionerData = $practitionerResult->fetch_assoc();
 
+if (!$practitionerData) {
+    die("Error: Practitioner not found for username $loggedInUserName.");
+}
 
+// Explicitly cast prescribedBy to integer
+$prescribedBy = $practitionerData['id'];
 
 // Add a new order
 if (isset($_POST['add_order'])) {
@@ -12,10 +25,10 @@ if (isset($_POST['add_order'])) {
     $frequency = $_POST['frequency'];
     $dosage = $_POST['dosage'];
 
-    $query = "INSERT INTO MedicationOrder (patient, medication, dateOrdered, frequency, dosage) 
-              VALUES (?, ?, ?, ?, ?)";
+    $query = "INSERT INTO MedicationOrder (patient, medication, dateOrdered, frequency, dosage, prescribedBy) 
+              VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("iisid", $patient, $medication, $dateOrdered, $frequency, $dosage);
+    $stmt->bind_param("iisidi", $patient, $medication, $dateOrdered, $frequency, $dosage, $prescribedBy);
 
     if ($stmt->execute()) {
         header("Location: manage_orders.php?message=Order added successfully");
@@ -57,4 +70,3 @@ if (isset($_POST['delete_orders'])) {
         exit;
     }
 }
-?>
