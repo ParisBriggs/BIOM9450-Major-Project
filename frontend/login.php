@@ -10,7 +10,7 @@
 
 <body>
 <div class="login-container">
-        <h1><img src="images/company_logo.png" class="company_logo"></h1>
+        <h1><img src="images/large_logo.png" class="company_logo"></h1>
         <h3>Login to get started</h3>
         
         <!-- Error Message -->

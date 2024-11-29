@@ -6,25 +6,31 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: linear-gradient(to bottom,  #ffffff, #b8e0e6, #5a8ab6);
+    background-image: linear-gradient(to bottom, #ffffff, #b8e0e6, #5a8ab6);
 }
 
+/* Login Container */
 .login-container {
-    width: 350px;
-    padding: 40px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px 40px; /* Adjusted for better spacing */
+    background: linear-gradient(180deg, #ffffff, #cfeecf); /* Matching gradient from other pages */
+    border: 1px solid #d9f7cb; /* Light green border */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    border-radius: 12px; /* More rounded corners */
     text-align: center;
 }
 
+/* Heading Style */
 .login-container h1 {
     font-size: 24px;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
+    color: #2c3e50; /* Darker gray for contrast */
 }
 
+/* Input Fields */
 .login-container input {
     width: 100%;
     padding: 12px;
@@ -37,32 +43,36 @@ body {
 .login-container input:focus {
     outline: none;
     border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3); /* Subtle focus effect */
 }
 
+/* Login Button */
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-image: linear-gradient(to right, #66d9d9, #007bff);
+    background-image: linear-gradient(to right, #4CAF50, #66d9d9); /* Gradient to match theme */
     color: white;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px; /* Match the rounded style */
     cursor: pointer;
-    margin: 10px 0;
+    margin: 15px 0;
+    transition: all 0.3s ease-in-out;
 }
-
-
 
 .login-container button:hover {
-    background-color: #454a4e;
+    background-color: #45a049;
+    transform: translateY(-2px); /* Lift effect on hover */
 }
 
+/* Remember Me and Forgot Password */
 .login-container .remember-forgot {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
     align-items: center;
     font-size: 14px;
+    color: #2c3e50; /* Consistent with text color */
 }
 
 .login-container .remember-forgot .remember {
@@ -76,18 +86,34 @@ body {
     font-size: 14px;
 }
 
+/* Signup Section */
+.login-container .signup {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.login-container .signup a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Google Sign-In Button */
 .login-container .google-signin {
     width: 100%;
     padding: 12px;
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid #dcdcdc;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
-    color: #000;
+    color: #2c3e50;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .login-container .google-signin img {
@@ -95,12 +121,6 @@ body {
     margin-right: 10px;
 }
 
-.login-container .signup {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.login-container .signup a {
-    text-decoration: none;
-    color: #007bff;
+.login-container .google-signin:hover {
+    background-color: #f1f1f1;
 }
