@@ -13,7 +13,19 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include_once 'db_connection.php';
+
+$servername = "localhost"; // your database server
+$username = "root"; // your database username
+$password = ""; // your database password
+$dbname = "biom9450"; // the database name
+
+// Create a connection to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check if connection is successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
@@ -65,13 +77,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
         $errors[] = 'Invalid email format.';
     }
 
-// Updated phone validation regex for international format 
+    // International phone number regex
 $phoneRegex = '/^\+?[0-9\s\-()]{7,15}$/';
 
+// Validate phone number format
 if (!preg_match($phoneRegex, $phone)) {
-    $errors[] = 'Phone number is invalid. Please use a valid international format.';
-}
+    $errors[] = ' Patient Phone number is invalid. Please enter in international format (e.g., +123456789).';
+} else {
+    // Normalize the phone number by removing spaces, dashes, and parentheses
+    $normalizedPhone = preg_replace('/[^\d+]/', '', $phone);
 
+    // Ensure it has a valid length after normalization
+    $minLength = 7; // Minimum digits
+    $maxLength = 15; // Maximum digits
+    $digitCount = strlen(preg_replace('/\D/', '', $normalizedPhone)); // Count digits only
+
+    if ($digitCount < $minLength || $digitCount > $maxLength) {
+        $errors[] = "Phone number must have between $minLength and $maxLength digits.";
+    }
+}
 
     if (!is_numeric($room)) {
         $errors[] = 'Room number must be numeric.';
@@ -95,13 +119,25 @@ if (!preg_match($phoneRegex, $phone)) {
     if (!empty($em_email) && !filter_var($em_email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Invalid emergency contact email format.';
     }
+ // International phone number regex
+ $phoneRegex = '/^\+?[0-9\s\-()]{7,15}$/';
 
-// International phone number validation
-$phoneRegex = '/^\+?[0-9\s\-()]{7,15}$/';
-if (!preg_match($phoneRegex, $em_phone)) {
-    $errors[] = 'Emergency contact phone number is invalid. Use a valid international format (e.g., +1234567890).';
-
-}
+ // Validate phone number format
+ if (!preg_match($phoneRegex, $em_phone)) {
+     $errors[] = 'Contact Phone number is invalid. Please enter in international format (e.g., +123456789).';
+ } else {
+     // Normalize the phone number by removing spaces, dashes, and parentheses
+     $normalizedPhone = preg_replace('/[^\d+]/', '', $em_phone);
+ 
+     // Ensure it has a valid length after normalization
+     $minLength = 7; // Minimum digits
+     $maxLength = 15; // Maximum digits
+     $digitCount = strlen(preg_replace('/\D/', '', $normalizedPhone)); // Count digits only
+ 
+     if ($digitCount < $minLength || $digitCount > $maxLength) {
+         $errors[] = "Phone number must have between $minLength and $maxLength digits.";
+     }
+ }
 
 // Validate relationship
 $allowedRelationships = ['parent', 'partner', 'sibling', 'child', 'friend', 'relative', 'other'];
@@ -233,32 +269,32 @@ if (!in_array($relationship, $allowedRelationships)) {
                 <h2>Create New Patient Account</h2>
                 
                 <div class="form-group">
-                    <label for="firstName">First Name:</label>
+                    <label for="firstName">First Name:<span class="required">*</span></label>
                     <input type="text" id="firstName" name="firstName" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="lastName">Last Name:</label>
+                    <label for="lastName">Last Name:<span class="required">*</span></label>
                     <input type="text" id="lastName" name="lastName" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="dob">Date of Birth:</label>
+                    <label for="dob">Date of Birth:<span class="required">*</span></label>
                     <input type="date" id="dob" name="dob" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label for="email">Email:<span class="required">*</span></label>
                     <input type="email" id="email" name="email">
                 </div>
         
                 <div class="form-group">
-                    <label for="patient_phone">Phone:</label>
+                    <label for="patient_phone">Phone (international format):<span class="required">*</span></label>
                     <input id="patient_phone" type="tel" name="patient_phone" placeholder="Enter patient's phone number" required>
                 </div>
                 
                 <div class="form-group">
-                    <label>Sex:</label>
+                    <label>Sex:<span class="required">*</span></label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="sex" value="male" required> Male
@@ -270,7 +306,7 @@ if (!in_array($relationship, $allowedRelationships)) {
                 </div>
         
                 <div class="form-group">
-                    <label for="room">Room:</label>
+                    <label for="room">Room:<span class="required">*</span></label>
                     <input type="text" id="room" name="room" placeholder="Enter room number" required>
                 </div>
         
@@ -296,27 +332,27 @@ if (!in_array($relationship, $allowedRelationships)) {
                 <h2>Emergency Contact Details</h2>
                 
                 <div class="form-group">
-                    <label for="em_firstname">First Name:</label>
+                    <label for="em_firstname">First Name:<span class="required">*</span></label>
                     <input type="text" id="em_firstname" name="em_firstname" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="em_lastname">Last Name:</label>
+                    <label for="em_lastname">Last Name:<span class="required">*</span></label>
                     <input type="text" id="em_lastname" name="em_lastname" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="em_email">Email:</label>
+                    <label for="em_email">Email:<span class="required">*</span></label>
                     <input type="email" id="em_email" name="em_email">
                 </div>
         
                 <div class="form-group">
-                    <label for="em_phone">Phone:</label>
+                    <label for="em_phone">Phone (international format):<span class="required">*</span></label>
                     <input id="em_phone" type="tel" name="em_phone" placeholder="Enter emergency contact's phone number" required>
                 </div>
         
                 <div class="form-group">
-                    <label for="relationship">Relationship:</label>
+                    <label for="relationship">Relationship:<span class="required">*</span></label>
                     <select id="relationship" name="relationship" required onchange="toggleOtherTextbox()">
                         <option value="" disabled selected>Select Relationship</option>
                         <option value="parent">Parent</option>
