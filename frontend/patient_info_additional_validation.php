@@ -12,20 +12,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
-
-
-$servername = "localhost"; // your database server
-$username = "root"; // your database username
-$password = ""; // your database password
-$dbname = "biom9450"; // the database name
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check if connection is successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include_once 'db_connection.php';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
