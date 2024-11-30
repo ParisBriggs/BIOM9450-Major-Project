@@ -52,6 +52,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
     // Server-side validation as backup
     $errors = [];
 
+    // Date of Birth validation
+    $dobDate = new DateTime($dob);
+    $today = new DateTime();
+    $minDate = clone $today;
+    $minDate->modify('-120 years');
+    
+    if ($dobDate > $today) {
+        $errors[] = 'Date of Birth cannot be in the future.';
+    }
+    
+    if ($dobDate < $minDate) {
+        $errors[] = 'Date of Birth cannot be more than 120 years ago.';
+    }
+
     // Patient validation
     if (!preg_match('/^[a-zA-Z\s\'-]+$/', $firstName)) {
         $errors[] = 'First Name must contain only letters, spaces, hyphens, or apostrophes.';

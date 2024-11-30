@@ -11,6 +11,24 @@ function validateForm(event) {
     const nameRegex = /^[a-zA-Z\s'-]+$/;
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const phoneRegex = /^\d{10}$/;
+
+     // Date of Birth validation
+     const dob = new Date(document.getElementById('dob').value);
+     const today = new Date();
+     const minDate = new Date();
+     minDate.setFullYear(today.getFullYear() - 120); // 120 years ago
+     
+     if (dob > today) {
+         errors.push('Date of Birth cannot be in the future.');
+         document.getElementById('dob').classList.add('error-input');
+         isValid = false;
+     }
+     
+     if (dob < minDate) {
+         errors.push('Date of Birth cannot be more than 120 years ago.');
+         document.getElementById('dob').classList.add('error-input');
+         isValid = false;
+     }
     
     // Patient validation
     if (!nameRegex.test(document.getElementById('firstName').value)) {
