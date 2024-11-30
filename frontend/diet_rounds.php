@@ -16,6 +16,8 @@ if (!isset($_SESSION['user_id'])) {
 
 include_once 'db_connection.php';
 
+$isMedication = false;
+
 // Set the timezone
 date_default_timezone_set(timezoneId: 'Australia/Sydney');
 $currentDate = date('Y-m-d');
@@ -34,6 +36,14 @@ if (!$practitionerData) {
 }
 
 $practitioner = $practitionerData['id']; // Retrieve the practitioner's ID
+
+$practitionerNameQuery = "SELECT CONCAT(firstName, ' ', lastName) as fullName FROM Practitioners WHERE id = ?";
+$practitionerNameStmt = $conn->prepare($practitionerNameQuery);
+$practitionerNameStmt->bind_param('i', $practitioner);
+$practitionerNameStmt->execute();
+$practitionerNameResult = $practitionerNameStmt->get_result();
+$practitionerNameData = $practitionerNameResult->fetch_assoc();
+$practitionerName = $practitionerNameData['fullName'];
 
 // Fetch filtered data
 $dateFiltered = isset($_GET['date']) ? $_GET['date'] : $currentDate;
@@ -66,6 +76,7 @@ if (empty($diets) && $dateFiltered === $currentDate) {
     $query = "
         SELECT 
             DietOrder.id AS orderId,
+            Patients.id AS patientId,
             CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName,
             DietRegimes.name AS dietName,
             DietOrder.frequency
@@ -103,17 +114,16 @@ if (empty($diets) && $dateFiltered === $currentDate) {
             ";
             $status = $_POST['status'][$key];
             $notes = $_POST['notes'][$key] ?? NULL;
-
+        
             $insertStmt = $conn->prepare($insertQuery);
             $insertStmt->bind_param('issssi', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes, $practitioner);
             $insertStmt->execute();
         }
-
-        // Redirect to the same page to display the newly created rounds
+    
         header("Location: diet_rounds.php?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Rounds updated successfully");
-        exit; 
+        exit;
     }
-}
+    }
 ?>
 
 <!DOCTYPE html>
@@ -125,6 +135,8 @@ if (empty($diets) && $dateFiltered === $currentDate) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles_medication_rounds.css">
     <script src="logout_dropdown.js" defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="email_handler.js"></script>
 </head>
 <body>
     <!-- Logo and Centered Navigation Bar -->
@@ -207,13 +219,19 @@ if (empty($diets) && $dateFiltered === $currentDate) {
                                     <td><?php echo htmlspecialchars($round['dietName'] ?? 'N/A'); ?></td>
                                     <td><?php echo htmlspecialchars($round['roundTime'] ?? 'N/A'); ?></td>
                                     <td>
-                                        <select name="status[]" class="status-select" required>
-                                            <option value="">Select</option>
-                                            <option value="given">Given</option>
-                                            <option value="refused">Refused</option>
-                                            <option value="no stock">No Stock</option>
-                                            <option value="fasting">Fasting</option>
-                                        </select>
+                                    <select name="status[]" class="status-select" required 
+                                            onchange="if(this.value === 'refused') sendRefusalEmail(
+                                                '<?php echo htmlspecialchars($round['patientId'] ?? ''); ?>', 
+                                                '<?php echo htmlspecialchars($round['patientName'] ?? ''); ?>', 
+                                                '<?php echo htmlspecialchars($practitionerName ?? ''); ?>', 
+                                                '<?php echo $isMedication ? 'Medication' : 'Diet Regime'; ?>'
+                                            )">
+                                        <option value="">Select</option>
+                                        <option value="given">Given</option>
+                                        <option value="refused">Refused</option>
+                                        <option value="no stock">No Stock</option>
+                                        <option value="fasting">Fasting</option>
+                                    </select>
                                     </td>
                                     <td><input type="text" name="notes[]" class="notes-input" placeholder="Add notes..."></td>
                                     <input type="hidden" name="generatedRounds[]" value="<?php echo htmlspecialchars(json_encode($round)); ?>">

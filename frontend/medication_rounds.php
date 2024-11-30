@@ -16,6 +16,8 @@ if (!isset($_SESSION['user_id'])) {
 
 include_once 'db_connection.php';
 
+$isMedication = true;
+
 // Set the timezone
 date_default_timezone_set(timezoneId: 'Australia/Sydney');
 $currentDate = date('Y-m-d');
@@ -34,6 +36,14 @@ if (!$practitionerData) {
 }
 
 $practitioner = $practitionerData['id']; // Retrieve the practitioner's ID
+
+$practitionerNameQuery = "SELECT CONCAT(firstName, ' ', lastName) as fullName FROM Practitioners WHERE id = ?";
+$practitionerNameStmt = $conn->prepare($practitionerNameQuery);
+$practitionerNameStmt->bind_param('i', $practitioner);
+$practitionerNameStmt->execute();
+$practitionerNameResult = $practitionerNameStmt->get_result();
+$practitionerNameData = $practitionerNameResult->fetch_assoc();
+$practitionerName = $practitionerNameData['fullName'];
 
 // Fetch filtered data
 $dateFiltered = isset($_GET['date']) ? $_GET['date'] : $currentDate;
@@ -61,12 +71,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $medications = $result->fetch_all(MYSQLI_ASSOC);
 
-// If no rounds exist for the current date and round time, generate dynamically
 if (empty($medications) && $dateFiltered === $currentDate) {
-
     $query = "
         SELECT 
             MedicationOrder.id AS orderId,
+            Patients.id AS patientId, 
             CONCAT(Patients.firstName, ' ', Patients.lastName) AS patientName,
             Patients.photo AS patientImage,
             Medications.name AS medicationName,
@@ -75,7 +84,6 @@ if (empty($medications) && $dateFiltered === $currentDate) {
         JOIN Patients ON MedicationOrder.patient = Patients.id
         JOIN Medications ON MedicationOrder.medication = Medications.id
     ";
-
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -95,9 +103,7 @@ if (empty($medications) && $dateFiltered === $currentDate) {
         }
     }
 
-    // Handle Form Submission for Dynamic Rounds
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateRounds'])) {
-
         foreach ($_POST['generatedRounds'] as $key => $round) {
             $roundData = json_decode($round, true);
             $insertQuery = "
@@ -111,12 +117,11 @@ if (empty($medications) && $dateFiltered === $currentDate) {
             $insertStmt->bind_param('issssi', $roundData['orderId'], $roundData['roundTime'], $dateFiltered, $status, $notes, $practitioner);
             $insertStmt->execute();
         }
-
-        // Redirect to the same page to display the newly created rounds
-        header("Location: medication_rounds.php?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Rounds updated successfully");
-        exit; // Prevent further execution
+    
+        header("Location: " . $_SERVER['PHP_SELF'] . "?date=$dateFiltered&roundTime=$roundTimeFiltered&message=Rounds updated successfully");
+        exit;
     }
-}
+} // end of if empty medications check
 ?>
 
 <!DOCTYPE html>
@@ -128,8 +133,14 @@ if (empty($medications) && $dateFiltered === $currentDate) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles_medication_rounds.css">
     <script src="logout_dropdown.js" defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="email_handler.js"></script>
 </head>
 <body>
+    <div hidden 
+        data-practitioner-name="<?php echo htmlspecialchars($practitionerName); ?>"
+        data-medication-type="<?php echo $isMedication ? 'true' : 'false'; ?>">
+    </div>
     <!-- Logo and Centered Navigation Bar -->
     <header>
         <div class="header-left">
@@ -210,13 +221,19 @@ if (empty($medications) && $dateFiltered === $currentDate) {
                                     <td><?php echo htmlspecialchars($round['medicationName'] ?? 'N/A'); ?></td>
                                     <td><?php echo htmlspecialchars($round['roundTime'] ?? 'N/A'); ?></td>
                                     <td>
-                                        <select name="status[]" class="status-select" required>
-                                            <option value="">Select</option>
-                                            <option value="given">Given</option>
-                                            <option value="refused">Refused</option>
-                                            <option value="no stock">No Stock</option>
-                                            <option value="fasting">Fasting</option>
-                                        </select>
+                                    <select name="status[]" class="status-select" required 
+                                            onchange="if(this.value === 'refused') sendRefusalEmail(
+                                                '<?php echo htmlspecialchars($round['patientId'] ?? ''); ?>', 
+                                                '<?php echo htmlspecialchars($round['patientName'] ?? ''); ?>', 
+                                                '<?php echo htmlspecialchars($practitionerName ?? ''); ?>', 
+                                                '<?php echo $isMedication ? 'Medication' : 'Diet Regime'; ?>'
+                                            )">
+                                        <option value="">Select</option>
+                                        <option value="given">Given</option>
+                                        <option value="refused">Refused</option>
+                                        <option value="no stock">No Stock</option>
+                                        <option value="fasting">Fasting</option>
+                                    </select>
                                     </td>
                                     <td><input type="text" name="notes[]" class="notes-input" placeholder="Add notes..."></td>
                                     <input type="hidden" name="generatedRounds[]" value="<?php echo htmlspecialchars(json_encode($round)); ?>">
