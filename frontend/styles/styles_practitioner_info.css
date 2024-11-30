@@ -351,4 +351,14 @@ header {
 }
 
 
+.error-input {
+    border: 1px solid #dc2626 !important;
+    background-color: #fef2f2 !important;
+}
 
+#errors {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 20px;
+    line-height: 1.5;
+}

@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
         $relationship = htmlspecialchars(trim($_POST['other-relationship']));
     }
 
-    // Validation
+    // Server-side validation as backup
     $errors = [];
 
     // Patient validation
-    if (!preg_match('/^[a-zA-Z]+$/', $firstName)) {
-        $errors[] = 'First Name must contain only letters.';
+    if (!preg_match('/^[a-zA-Z\s\'-]+$/', $firstName)) {
+        $errors[] = 'First Name must contain only letters, spaces, hyphens, or apostrophes.';
     }
 
-    if (!preg_match('/^[a-zA-Z]+$/', $lastName)) {
-        $errors[] = 'Last Name must contain only letters.';
+    if (!preg_match('/^[a-zA-Z\s\'-]+$/', $lastName)) {
+        $errors[] = 'Last Name must contain only letters, spaces, hyphens, or apostrophes.';
     }
 
-    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!empty($email) && !preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $email)) {
         $errors[] = 'Invalid email format.';
     }
 
@@ -74,15 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
     }
 
     // Emergency contact validation
-    if (!preg_match('/^[a-zA-Z]+$/', $em_firstName)) {
-        $errors[] = 'Emergency Contact First Name must contain only letters.';
+    if (!preg_match('/^[a-zA-Z\s\'-]+$/', $em_firstName)) {
+        $errors[] = 'Emergency Contact First Name must contain only letters, spaces, hyphens, or apostrophes.';
     }
 
-    if (!preg_match('/^[a-zA-Z]+$/', $em_lastName)) {
-        $errors[] = 'Emergency Contact Last Name must contain only letters.';
+    if (!preg_match('/^[a-zA-Z\s\'-]+$/', $em_lastName)) {
+        $errors[] = 'Emergency Contact Last Name must contain only letters, spaces, hyphens, or apostrophes.';
     }
 
-    if (!empty($em_email) && !filter_var($em_email, FILTER_VALIDATE_EMAIL)) {
+    if (!empty($em_email) && !preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $em_email)) {
         $errors[] = 'Invalid emergency contact email format.';
     }
 
@@ -164,7 +164,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
     <title>Patient Information - Nutrimed Health</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">    
     <link rel="stylesheet" href="styles/styles_edit_patient_info.css">
-    <script src="logout_dropdown.js" defer></script>
+    <style>
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-input {
+            border-color: #dc2626 !important;
+            background-color: #fef2f2 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Logo and Centered Navigation Bar -->
@@ -200,15 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
         </a>
 
         <form method="POST" action="" enctype="multipart/form-data" class="form-grid">
-            <!-- Display errors if any -->
-            <?php if (!empty($errors)): ?>
-                <div class="error-messages">
-                    <?php foreach ($errors as $error): ?>
-                        <p class="error"><?php echo $error; ?></p>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-
             <!-- Patient Details Section -->
             <div class="form-section">
                 <h2>Create New Patient Account</h2>
@@ -318,10 +321,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_patient'])) {
                 <div class="form-actions">
                     <button type="submit" name="add_patient" class="save-button">Save Patient Details</button>
                 </div>
+                <p id="errors"></p>
             </div>
         </form>
     </div>
 
+    <script src="form_validation.js"></script>
     <script>
         function updateFileName(input) {
             const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
